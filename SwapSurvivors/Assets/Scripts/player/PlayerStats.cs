@@ -19,13 +19,13 @@ public class PlayerStats : ScriptableObject
     }
 
     // Fields
-    [SerializeField] private int _maxHealth = 100;
-    [SerializeField] private int _damage;
+    [SerializeField] private float _maxHealth = 100;
+    [SerializeField] private float _damage;
 
-    private int _health;
+    private float _health;
 
     // Properties
-    public int PlayerHealth { get { return _health; } }
+    public float PlayerHealth { get { return _health; } }
 
     public void Initialize()
     {
@@ -33,26 +33,26 @@ public class PlayerStats : ScriptableObject
     }
 
     // Health management methods
-    public void DecreaseHealt(int amount)
+    public void DecreaseHealth(float amount)
     {
         _health -= amount;
         if (_health < 0) _health = 0;
     }
 
-    public void IncreaseHealt(int amount)
+    public void IncreaseHealth(float amount)
     {
         _health += amount;
         if (_health > _maxHealth) _health = _maxHealth;
     }
 
     // Damage management methods
-    public void DecreaseDamage(int amount)
+    public void DecreaseDamage(float amount)
     {
         _damage -= amount;
         if (_damage < 0) _damage = 0;
     }
 
-    public void IncreaseDamage(int amount)
+    public void IncreaseDamage(float amount)
     {
         _damage += amount;
     }

@@ -9,7 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47194f9f0675d204aa42e5fcb62294a6, type: 3}
-  m_Name: PlayerStats
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
-  _maxHealth: 100
+  m_Script: {fileID: 11500000, guid: 2b1925a18dbcc8d459173624f179d9e5, type: 3}
+  m_Name: sad
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyData
+  enemyName: 
+  health: 0
+  speed: 0
+  enemyPrefab: {fileID: 0}
