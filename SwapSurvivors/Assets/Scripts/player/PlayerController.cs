@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class playerController : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     Rigidbody2D rb;
     InputActions controls;
