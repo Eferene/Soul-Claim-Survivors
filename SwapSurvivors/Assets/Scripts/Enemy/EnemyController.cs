@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    public int currentHealth;
+    private float currentHealth;
     public EnemyData enemyData;
     private BaseAttackType attackType;
     Rigidbody2D rb;
@@ -24,7 +24,7 @@ public class EnemyController : MonoBehaviour
     void Update()
     {
         // Cooldown ile vurup vuramayacağını kontrol etme.
-        if(Time.time - lastAttackTime >= enemyData.attackCooldown)
+        if (Time.time - lastAttackTime >= enemyData.attackCooldown)
         {
             canAttack = true;
         }
@@ -89,13 +89,7 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, enemyData != null ? enemyData.attackRange : 1f);
-    }
-
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         currentHealth -= damage;
         if (currentHealth <= 0)
@@ -104,4 +98,12 @@ public class EnemyController : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, enemyData != null ? enemyData.attackRange : 1f);
+    }
+
+
 }
