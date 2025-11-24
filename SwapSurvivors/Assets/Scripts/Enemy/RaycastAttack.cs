@@ -72,6 +72,7 @@ public class RaycastAttack : BaseAttackType // ENEMY HAREKET EDİNCE LAZERİN BA
         lr.startColor = col;
         lr.endColor = col;
         lr.positionCount = 2;
+        lr.gameObject.transform.parent = this.gameObject.transform;
         return lr;
     }
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PredictiveProjectileAttack : BaseAttackType
+public class HomingMissileAttack : BaseAttackType
 {
     public override bool Attack(Transform enemyTransform, Transform targetTransform, float damage, float damagePercentage, float range)
     {
@@ -14,7 +14,7 @@ public class PredictiveProjectileAttack : BaseAttackType
                 float dmg = Random.Range(damage * (1 - damagePercentage / 100f), damage * (1 + damagePercentage / 100f)); // Hasar aralığını hesapla
                 dmg = Mathf.Round(dmg * 10f) / 10f; // Ondalık hassasiyetini ayarlamak için
 
-                ProjectilePredictive projectile = projectileGameObject.GetComponent<ProjectilePredictive>();
+                ProjectileHoming projectile = projectileGameObject.GetComponent<ProjectileHoming>();
                 projectile.damage = dmg;
                 projectile.speed = enemyController.enemyData.projectileSpeed;
 

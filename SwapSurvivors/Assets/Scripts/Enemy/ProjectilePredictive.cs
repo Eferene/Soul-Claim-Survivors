@@ -26,14 +26,14 @@ public class ProjectilePredictive : ProjectileBase
             float b = 2f * Vector2.Dot(toPlayer, playerVelocity);
             float c = toPlayer.sqrMagnitude;
 
-            Vector2 aimDirection = toPlayer.normalized; // default aim directly at current position
+            Vector2 aimDirection = toPlayer.normalized;
 
             float t = -1f;
 
             const float eps = 1e-6f;
             if (Mathf.Abs(a) < eps)
             {
-                // Degenerate to linear: b * t + c = 0 => t = -c / b
+                // b * t + c = 0 => t = -c / b
                 if (Mathf.Abs(b) > eps)
                 {
                     float tLinear = -c / b;
@@ -62,7 +62,7 @@ public class ProjectilePredictive : ProjectileBase
                 aimDirection = (toPlayer + playerVelocity * t).normalized;
             }
 
-            currentVelocity = aimDirection * speed; // velocity already includes speed
+            currentVelocity = aimDirection * speed; // speed 
             tracked = true;
         }
         else

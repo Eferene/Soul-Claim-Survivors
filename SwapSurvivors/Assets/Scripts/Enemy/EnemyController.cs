@@ -50,8 +50,8 @@ public class EnemyController : MonoBehaviour
                 MoveTowardsPlayer();
                 break;
             case RaycastAttack _:
-                KeepDistanceMovement();
-                break;
+            case PredictiveProjectileAttack _:
+            case HomingMissileAttack _:
             case ProjectileAttack _:
                 KeepDistanceMovement();
                 break;
