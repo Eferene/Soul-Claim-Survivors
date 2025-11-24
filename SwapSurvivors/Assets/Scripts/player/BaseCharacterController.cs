@@ -2,19 +2,26 @@
 
 public abstract class BaseCharacterController : MonoBehaviour
 {
+    // --- Components ---
     protected Rigidbody2D rb;
     protected InputActions controls;
-    protected Vector2 moveInput;
     protected EnemyController enemyController;
 
-    [SerializeField] protected float playerSpeed;
-    [SerializeField] protected float attackCooldown = 1.0f;
+    // --- Movement ---
+    protected Vector2 moveInput;
+    protected float playerSpeed;
 
+    // --- Combat ---
+    protected float attacCooldown;
+    protected float attackRange;
     protected float lastAttackTime = 0f;
+    protected float upgradesDamageMultiplier = 1.0f;
 
+    // --- Unity Methods ---
     protected virtual void Awake()
     {
         playerSpeed = PlayerStats.Instance.PlayerSpeed;
+        attacCooldown = PlayerStats.Instance.AttackCooldown;
         rb = GetComponent<Rigidbody2D>();
         controls = new InputActions();
 
@@ -27,7 +34,8 @@ public abstract class BaseCharacterController : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (Time.time >= lastAttackTime + attackCooldown)
+        // Saldırı cooldown kontrolü
+        if (Time.time >= lastAttackTime + attacCooldown)
         {
             Attack();
             lastAttackTime = Time.time;
@@ -39,5 +47,6 @@ public abstract class BaseCharacterController : MonoBehaviour
         rb.linearVelocity = new Vector2(moveInput.x * playerSpeed, moveInput.y * playerSpeed);
     }
 
-    protected abstract void Attack();
+    // --- Abstract Methods ---
+    protected abstract void Attack(); // Saldırı yöntemi, türetilmiş sınıflarda uygulanacak
 }
