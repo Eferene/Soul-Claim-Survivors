@@ -3,37 +3,38 @@
 public class ScyhteCharacter : BaseCharacterController
 {
     [Header("Tırpan Özellikleri")]
-    [SerializeField] private float cooldownMultiplier = 1.0f; // Tırpan için saldırı hızı çarpanı
-    [SerializeField] private float damageMultiplier = 1.0f;         // Tırpan için hasar çarpanı
-    [SerializeField] private float speedMultiplier = 1.0f;          // Tırpan karakteri için hız çarpanı
-    [SerializeField] private float rangeMultiplier = 5f;
-    [SerializeField] private float offset; // Tırpanın karakterden ne kadar uzakta başlayacağını belirler
+    [SerializeField] private float cooldownMultiplier = 1.0f;   // Tırpan için saldırı hızı çarpanı
+    [SerializeField] private float healthMultiplier = 1.0f;     // Tırpan karakteri için hız
+    [SerializeField] private float damageMultiplier = 1.0f;     // Tırpan için hasar çarpanı
+    [SerializeField] private float rangeMultiplier = 5.0f;      // Tırpan için menzil çarpanı
+    [SerializeField] private float speedMultiplier = 1.0f;      // Tırpan karakteri için hız çarpanı
+    [SerializeField] private float offset;                      // Tırpanın karakterden ne kadar uzakta başlayacağını belirler
     [SerializeField] private LayerMask enemyLayer;
 
-    private float currentCooldown;
-    private float currentRange;
-    private float currentDamage;
-    private float currentSpeed;
+    // Her çağrıldığında güncellenmesi için property olarak tanımlandı
+    private float ScyhteCooldown => PlayerStats.Instance.AttackCooldown * cooldownMultiplier;
+    private float ScyhteHealth => PlayerStats.Instance.PlayerMaxHealth * healthMultiplier;
+    private float ScyhteDamage => PlayerStats.Instance.PlayerDamage * damageMultiplier;
+    private float ScyhteRange => PlayerStats.Instance.AttackRange * rangeMultiplier;
+    private float ScyhteSpeed => PlayerStats.Instance.PlayerSpeed * speedMultiplier;    // Tırpan karakteri için hız
 
     // --- Attack State ---
     private bool isRight = true;
-    private Vector3 attackDir;
+    private Vector3 attackPos;
 
     // --- Unity Methods ---
     protected override void Awake()
     {
         base.Awake();
-        ApplyUpgrades();
+        playerSpeed = ScyhteSpeed;
     }
 
     protected override void Attack()
     {
-        float damage = PlayerStats.Instance.GiveDamage();
-
-        attackDir = transform.position + new Vector3(isRight ? offset : -offset, 0f, 0f);
+        attackPos = transform.position + new Vector3(isRight ? offset : -offset, 0f, 0f);
 
         // Yakındaki düşmanları bul
-        Collider2D[] enemies = Physics2D.OverlapCircleAll(attackDir, currentRange, enemyLayer);
+        Collider2D[] enemies = Physics2D.OverlapCircleAll(attackPos, ScyhteRange, enemyLayer);
 
         foreach (var enemy in enemies)
         {
@@ -43,25 +44,27 @@ public class ScyhteCharacter : BaseCharacterController
             bool isEnemyOnRight = Vector2.Dot(dir, transform.right) > 0;
 
             if (isRight == isEnemyOnRight)
-                ApplyDamage(enemy, damage);
+                ApplyDamage(enemy, PlayerStats.Instance.GiveDamage(ScyhteDamage));
         }
 
         isRight = !isRight;
     }
 
+    protected override float GetCooldown() => ScyhteCooldown;
+
     void ApplyDamage(Collider2D enemy, float damage)
     {
-        enemyController = enemy.GetComponent<EnemyController>();
-        enemyController.TakeDamage(damage);
-        Debug.Log($"{enemy.name} gelen {damage} hasarı yedi.");
+        if (enemy.TryGetComponent(out EnemyController enemyController))
+        {
+            enemyController.TakeDamage(damage);
+            Debug.Log($"{enemy.name} gelen {damage} hasarı yedi.");
+        }
     }
 
-    void ApplyUpgrades()
+    protected override void FixedUpdate()
     {
-        currentCooldown = attacCooldown * cooldownMultiplier;  // Tırpan için saldırı hızı
-        currentRange = attackRange * rangeMultiplier;           // Tırpan için saldırı menzili
-        currentDamage = PlayerStats.Instance.PlayerDamage * damageMultiplier * upgradesDamageMultiplier; // Tırpan için hasar
-        currentSpeed = playerSpeed * speedMultiplier;               // Tırpan karakteri için hız
+        playerSpeed = ScyhteSpeed;
+        base.FixedUpdate();
     }
 
     private void OnDrawGizmosSelected()
@@ -70,11 +73,11 @@ public class ScyhteCharacter : BaseCharacterController
         Gizmos.color = Color.red;
 
         // Karakterin yönü
-        Vector3 rightDir = transform.right * currentRange;
-        Vector3 leftDir = -transform.right * currentRange;
+        Vector3 rightDir = transform.right * ScyhteRange;
+        Vector3 leftDir = -transform.right * ScyhteRange;
 
 
-        Gizmos.DrawLine(attackDir, attackDir + (isRight ? leftDir : rightDir));
+        Gizmos.DrawLine(attackPos, attackPos + (isRight ? leftDir : rightDir));
 
     }
 }

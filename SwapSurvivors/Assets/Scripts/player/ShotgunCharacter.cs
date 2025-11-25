@@ -3,33 +3,35 @@
 public class ShotgunCharacter : BaseCharacterController
 {
     [Header("Shotgun Özellikleri")]
-    [SerializeField] private float cooldownMultiplier = 1.0f; // Tırpan için saldırı hızı çarpanı
-    [SerializeField] private float damageMultiplier = 1.0f;         // Tırpan için hasar çarpanı
-    [SerializeField] private float speedMultiplier = 1.0f;          // Tırpan karakteri için hız çarpanı
-    [SerializeField] private float rangeMultiplier = 5f;
+    [SerializeField] private float cooldownMultiplier = 1.0f;   // Shotgun için saldırı hızı çarpanı
+    [SerializeField] private float healthMultiplier = 1.0f;     // Shotgun karakteri için hız
+    [SerializeField] private float damageMultiplier = 1.0f;     // Shotgun için hasar çarpanı
+    [SerializeField] private float rangeMultiplier = 5.0f;      // Shotgun için menzil çarpanı
+    [SerializeField] private float speedMultiplier = 1.0f;      // Shotgun karakteri için hız çarpanı
     [SerializeField] private LayerMask enemyLayer;
 
-    private float currentCooldown;
-    private float currentRange;
-    private float currentDamage;
-    private float currentSpeed;
+    // Her çağrıldığında güncellenmesi için property olarak tanımlandı
+    private float ShotgunCooldown => PlayerStats.Instance.AttackCooldown * cooldownMultiplier;
+    private float ShotgunHealth => PlayerStats.Instance.PlayerMaxHealth * healthMultiplier;
+    private float ShotgunDamage => PlayerStats.Instance.PlayerDamage * damageMultiplier;
+    private float ShotgunRange => PlayerStats.Instance.AttackRange * rangeMultiplier;
+    private float ShotgunSpeed => PlayerStats.Instance.PlayerSpeed * speedMultiplier;  // Shotgun karakteri için hız
 
     protected override void Awake()
     {
         base.Awake();
-        ApplyUpgrades();
-    }
-
-    void ApplyUpgrades()
-    {
-        currentCooldown = attacCooldown * cooldownMultiplier;  // Tırpan için saldırı hızı
-        currentRange = attackRange * rangeMultiplier;           // Tırpan için saldırı menzili
-        currentDamage = PlayerStats.Instance.PlayerDamage * damageMultiplier * upgradesDamageMultiplier; // Tırpan için hasar
-        currentSpeed = playerSpeed * speedMultiplier;               // Tırpan karakteri için hız
     }
 
     protected override void Attack()
     {
         throw new System.NotImplementedException();
     }
+
+    protected override void FixedUpdate()
+    {
+        playerSpeed = ShotgunSpeed;
+        base.FixedUpdate();
+    }
+
+    protected override float GetCooldown() => ShotgunCooldown;
 }

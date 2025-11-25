@@ -20,21 +20,32 @@ public class PlayerStats : ScriptableObject
     }
 
     // --- Fields ---
-    [Header("Health")]
-    [SerializeField] private float _maxHealth = 100f;
+    [Header("Base Stats")]
+    [SerializeField] private float _baseMaxHealth = 100f;
+    [SerializeField] private float _baseDamage = 50f;
+    [SerializeField] private float _baseAttackCooldown = 1f;
+    [SerializeField] private float _baseAttackRange = 1f;
+    [SerializeField] private float _baseSpeed = 5f;
+
+    private float _maxHealth;
     private float _health;
+    private float _damage;
+    private float _attackCooldown;
+    private float _attackRange;
+    private float _speed;
 
     [Header("Combat")]
-    [SerializeField] private float _damage = 50f;
     [SerializeField] private float _damageRange = 10f; // Hasar dalgalanma yüzdesi
-    [SerializeField] private float _attackCooldown = 1f;
-    [SerializeField] private float _attackRange = 1f;
 
-    [Header("Movement")]
-    [SerializeField] private float _speed = 5f;
+    [Header("Upgrades")]
+    [SerializeField] private float upgradesCooldownMultiplier = 1.0f;
+    [SerializeField] private float upgradesDamageMultiplier = 1.0f;
+    [SerializeField] private float upgradesRangeMultiplier = 1.0f;
+    [SerializeField] private float upgradesSpeedMultiplier = 1.0f;
+    [SerializeField] private float upgradesHealthMultiplier = 1.0f;
 
     [Header("Stats")]
-    [SerializeField] private int _level = 1;  
+    [SerializeField] private int _level = 1;
     [SerializeField] private int _score = 0;
     [SerializeField] private int _wave = 0;
 
@@ -52,7 +63,12 @@ public class PlayerStats : ScriptableObject
     // --- Initialization ---
     public void Initialize()
     {
+        _maxHealth = _baseMaxHealth;
         _health = _maxHealth;
+        _damage = _baseDamage;
+        _attackCooldown = _baseAttackCooldown;
+        _attackRange = _baseAttackRange;
+        _speed = _baseSpeed;
     }
 
     // --- Health Management Methods ---
@@ -80,10 +96,27 @@ public class PlayerStats : ScriptableObject
         _damage += amount;
     }
 
-    public float GiveDamage() // hasar verme
+    public float GiveDamage(float damage) // hasar verme
     {
         float multiplier = (Random.Range(-_damageRange, _damageRange) + 100) / 100;
-        float currentDamage = _damage * multiplier; // Nihai hasar
+        float currentDamage = damage * multiplier; // Nihai hasar
         return currentDamage;
     }
+
+    // --- Upgrade Management Methods ---
+    public void ApplyUpgrades(float damageMultiplier, float rangeMultiplier, float cooldownMultiplier, float speedMultiplier)
+    {
+        upgradesDamageMultiplier *= damageMultiplier;
+        upgradesRangeMultiplier *= rangeMultiplier;
+        upgradesCooldownMultiplier *= cooldownMultiplier;
+        upgradesSpeedMultiplier *= speedMultiplier;
+
+        _damage = _baseDamage * upgradesDamageMultiplier;
+        _attackRange = _baseAttackRange * upgradesRangeMultiplier;
+        _attackCooldown = _baseAttackCooldown / upgradesCooldownMultiplier;
+        _speed = _baseSpeed * upgradesSpeedMultiplier;
+        _maxHealth = _baseMaxHealth * upgradesHealthMultiplier;
+    }
+
+    // --- Score and Level Management Methods ---
 }
