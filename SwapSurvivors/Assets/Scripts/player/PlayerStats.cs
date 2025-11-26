@@ -22,11 +22,11 @@ public class PlayerStats : ScriptableObject
 
     // --- Fields ---
     [Header("Base Stats")]
-    [SerializeField] private const float BaseAttackCooldown = 1f;
-    [SerializeField] private const float BaseMaxHealth = 100f;
-    [SerializeField] private const float BaseDamage = 50f;
-    [SerializeField] private const float BaseRange = 1f;
-    [SerializeField] private const float BaseSpeed = 5f;
+    [SerializeField] private float BaseAttackCooldown = 1f;
+    [SerializeField] private float BaseMaxHealth = 100f;
+    [SerializeField] private float BaseDamage = 50f;
+    [SerializeField] private float BaseRange = 1f;
+    [SerializeField] private float BaseSpeed = 5f;
 
     private float _attackCooldown;
     private float _maxHealth;
@@ -37,7 +37,7 @@ public class PlayerStats : ScriptableObject
     private float _characterLevel;
 
     [Header("Combat")]
-    [SerializeField] private const float _damageRange = 10f; // Hasar dalgalanma yüzdesi
+    [SerializeField] private float _damageRange = 10f; // Hasar dalgalanma yüzdesi
 
     [Header("Upgrades")]
     [SerializeField] private float _upgradesCooldownMultiplier = 1.0f;
@@ -51,10 +51,10 @@ public class PlayerStats : ScriptableObject
     [SerializeField] private int _wave = 1;
 
     // --- Properties ---
-    public float AttackCooldown => _attackCooldown;
+    public float AttackCooldown => _attackCooldown; // Yalnızca get için lambda ifadesi kullanılabilir
     public float CharacterLevel => _characterLevel;
     public float PlayerMaxHealth => _maxHealth;
-    public float PlayerHealth => _health; // Yalnızca get için lambda ifadesi kullanılabilir
+    public float PlayerHealth => _health;
     public float PlayerDamage => _damage;
     public float PlayerSpeed => _speed;
     public float AttackRange => _range;

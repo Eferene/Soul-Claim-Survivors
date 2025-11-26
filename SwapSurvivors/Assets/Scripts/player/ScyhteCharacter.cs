@@ -12,11 +12,11 @@ public class ScyhteCharacter : BaseCharacterController
     [SerializeField] private LayerMask enemyLayer;
 
     // Her çağrıldığında güncellenmesi için property olarak tanımlandı
-    private float ScyhteCooldown => PlayerStats.Instance.AttackCooldown * cooldownMultiplier;
-    private float ScyhteHealth => PlayerStats.Instance.PlayerMaxHealth * healthMultiplier;
-    private float ScyhteDamage => PlayerStats.Instance.PlayerDamage * damageMultiplier;
-    private float ScyhteRange => PlayerStats.Instance.AttackRange * rangeMultiplier;
-    private float ScyhteSpeed => PlayerStats.Instance.PlayerSpeed * speedMultiplier;    // Tırpan karakteri için hız
+    private float ScytheCooldown => PlayerStats.Instance.AttackCooldown * cooldownMultiplier;
+    private float ScytheHealth => PlayerStats.Instance.PlayerMaxHealth * healthMultiplier;
+    private float ScytheDamage => PlayerStats.Instance.PlayerDamage * damageMultiplier;
+    private float ScytheRange => PlayerStats.Instance.AttackRange * rangeMultiplier;
+    private float ScytheSpeed => PlayerStats.Instance.PlayerSpeed * speedMultiplier;    // Tırpan karakteri için hız
 
     // --- Attack State ---
     private bool isRight = true;
@@ -30,7 +30,7 @@ public class ScyhteCharacter : BaseCharacterController
     protected override void Awake()
     {
         base.Awake();
-        playerSpeed = ScyhteSpeed;
+        playerSpeed = ScytheSpeed;
         semiCircle1 = transform.GetChild(0).gameObject;
         semiCircle2 = transform.GetChild(1).gameObject;
     }
@@ -40,7 +40,7 @@ public class ScyhteCharacter : BaseCharacterController
         attackPos = transform.position + new Vector3(isRight ? offset : -offset, 0f, 0f);
 
         // Yakındaki düşmanları bul
-        Collider2D[] enemies = Physics2D.OverlapCircleAll(attackPos, ScyhteRange, enemyLayer);
+        Collider2D[] enemies = Physics2D.OverlapCircleAll(attackPos, ScytheRange, enemyLayer);
 
         foreach (var enemy in enemies)
         {
@@ -50,7 +50,7 @@ public class ScyhteCharacter : BaseCharacterController
             bool isEnemyOnRight = Vector2.Dot(dir, transform.right) > 0;
 
             if (isRight == isEnemyOnRight)
-                ApplyDamage(enemy, PlayerStats.Instance.GiveDamage(ScyhteDamage));
+                ApplyDamage(enemy, PlayerStats.Instance.GiveDamage(ScytheDamage));
         }
 
         if (isRight)
@@ -67,7 +67,7 @@ public class ScyhteCharacter : BaseCharacterController
         isRight = !isRight;
     }
 
-    protected override float GetCooldown() => ScyhteCooldown;
+    protected override float GetCooldown() => ScytheCooldown;
 
     void ApplyDamage(Collider2D enemy, float damage)
     {
@@ -80,7 +80,7 @@ public class ScyhteCharacter : BaseCharacterController
 
     protected override void FixedUpdate()
     {
-        playerSpeed = ScyhteSpeed;
+        playerSpeed = ScytheSpeed;
         base.FixedUpdate();
     }
 
@@ -90,8 +90,8 @@ public class ScyhteCharacter : BaseCharacterController
         Gizmos.color = Color.red;
 
         // Karakterin yönü
-        Vector3 rightDir = transform.right * ScyhteRange;
-        Vector3 leftDir = -transform.right * ScyhteRange;
+        Vector3 rightDir = transform.right * ScytheRange;
+        Vector3 leftDir = -transform.right * ScytheRange;
 
 
         Gizmos.DrawLine(attackPos, attackPos + (isRight ? leftDir : rightDir));

@@ -108,7 +108,7 @@ public class EnemyController : MonoBehaviour
             float fScoreGain = Random.Range(min, max);
             int scoreGain = Mathf.RoundToInt(fScoreGain);
             PlayerStats.Instance.AddScore(scoreGain);
-            GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIController>().UpdateScoreText(PlayerStats.Instance.PlayerScore);
+            //GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIController>().UpdateScoreText(PlayerStats.Instance.PlayerScore);
             Destroy(gameObject);
         }
     }

@@ -12,17 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47194f9f0675d204aa42e5fcb62294a6, type: 3}
   m_Name: PlayerStats
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
-  _baseMaxHealth: 100
-  _baseDamage: 50
-  _baseAttackCooldown: 1
-  _baseAttackRange: 1
-  _baseSpeed: 5
+  BaseAttackCooldown: 1
+  BaseMaxHealth: 500
+  BaseDamage: 500
+  BaseRange: 1
+  BaseSpeed: 5
   _damageRange: 10
-  upgradesCooldownMultiplier: 1
-  upgradesDamageMultiplier: 1
-  upgradesRangeMultiplier: 1
-  upgradesSpeedMultiplier: 1
-  upgradesHealthMultiplier: 1
-  _level: 1
+  _upgradesCooldownMultiplier: 1
+  _upgradesHealthMultiplier: 1
+  _upgradesDamageMultiplier: 1
+  _upgradesRangeMultiplier: 1
+  _upgradesSpeedMultiplier: 1
   _score: 0
-  _wave: 0
+  _wave: 1

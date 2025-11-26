@@ -3,15 +3,15 @@
 public abstract class BaseCharacterController : MonoBehaviour
 {
     // --- Components ---
-    protected Rigidbody2D rb;
-    protected InputActions controls;
+    private Rigidbody2D rb;
+    private InputActions controls;
 
     // --- Movement ---
-    protected Vector2 moveInput;
+    private Vector2 moveInput;
     protected float playerSpeed;
 
     // --- Combat ---
-    protected float lastAttackTime = 0f;
+    private float lastAttackTime = 0f;
 
     // --- Unity Methods ---
     protected virtual void Awake()
@@ -23,8 +23,8 @@ public abstract class BaseCharacterController : MonoBehaviour
         controls.Player.Move.canceled += ctx => { moveInput = Vector2.zero; };
     }
 
-    protected virtual void OnEnable() => controls.Player.Enable();
-    protected virtual void OnDisable() => controls.Player.Disable();
+    private void OnEnable() => controls.Player.Enable();
+    private void OnDisable() => controls.Player.Disable();
 
     protected virtual void Update()
     {
