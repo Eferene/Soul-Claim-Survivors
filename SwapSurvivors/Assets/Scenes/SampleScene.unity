@@ -203,6 +203,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &687386901 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7876041246156826853, guid: 006ff7242a8cbb048b232e36ee5fa6c8, type: 3}
+  m_PrefabInstance: {fileID: 563031666649065385}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &829065640
 GameObject:
   m_ObjectHideFlags: 0
@@ -532,6 +537,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScyhteCharacter
       objectReference: {fileID: 0}
+    - target: {fileID: 4286113036971727745, guid: 006ff7242a8cbb048b232e36ee5fa6c8, type: 3}
+      propertyPath: m_Name
+      value: Scythe
+      objectReference: {fileID: 0}
     - target: {fileID: 4503722777682798489, guid: 006ff7242a8cbb048b232e36ee5fa6c8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -570,6 +579,38 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4503722777682798489, guid: 006ff7242a8cbb048b232e36ee5fa6c8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7633658507645141816, guid: 006ff7242a8cbb048b232e36ee5fa6c8, type: 3}
+      propertyPath: rangeMultiplier
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7633658507645141816, guid: 006ff7242a8cbb048b232e36ee5fa6c8, type: 3}
+      propertyPath: scytheTransform
+      value: 
+      objectReference: {fileID: 687386901}
+    - target: {fileID: 7633658507645141816, guid: 006ff7242a8cbb048b232e36ee5fa6c8, type: 3}
+      propertyPath: cooldownMultiplier
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7876041246156826853, guid: 006ff7242a8cbb048b232e36ee5fa6c8, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7876041246156826853, guid: 006ff7242a8cbb048b232e36ee5fa6c8, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7876041246156826853, guid: 006ff7242a8cbb048b232e36ee5fa6c8, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7876041246156826853, guid: 006ff7242a8cbb048b232e36ee5fa6c8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7876041246156826853, guid: 006ff7242a8cbb048b232e36ee5fa6c8, type: 3}
+      propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

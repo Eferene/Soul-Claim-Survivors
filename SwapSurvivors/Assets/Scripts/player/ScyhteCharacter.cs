@@ -25,7 +25,8 @@ public class ScyhteCharacter : BaseCharacterController
     // --- Visuals ---
     [Header("Visuals")]
     [SerializeField] private Animator scytheAnimator; // Tırpanın Animator'ını buraya sürükle
-    [SerializeField] private Transform scytheVisualTransform; // Tırpan objesinin Transform'u (yön çevirmek için)
+    [SerializeField] private Transform scytheTransform; // Tırpan objesinin Transform'u (yön çevirmek için)
+    Vector3 scytheScale;
 
     // --- Unity Methods ---
     protected override void Awake()
@@ -34,23 +35,47 @@ public class ScyhteCharacter : BaseCharacterController
         playerSpeed = ScytheSpeed;
     }
 
+    protected override void Update()
+    {
+        Debug.Log(PlayerStats.Instance.AttackCooldown + " " + ScytheCooldown);
+        base.Update();
+    }
+
     protected override void Attack()
+    {
+        switch (PlayerStats.Instance.CharacterLevel)
+        {
+            case 1:
+                LevelOneAttack();
+                break;
+            case 2:
+                LevelTwoAttack();
+                break;
+            case 3:
+                LevelThreeAttack();
+                break;
+            default:
+                LevelOneAttack();
+                break;
+        }
+    }
+
+    private void LevelOneAttack()
     {
         float currentOffset = isRight ? offset : -offset;
 
         attackPos = transform.position + new Vector3(currentOffset, 0f, 0f);
 
-        // Tırpan görselini yönlendir
-        Vector3 visualScale = scytheVisualTransform.localScale;
-        visualScale.x = isRight ? Mathf.Abs(visualScale.x) : -Mathf.Abs(visualScale.x);
-        scytheVisualTransform.localScale = visualScale;
+        // Scythe animation yönünü ayarlar
+        scytheTransform.position = attackPos;
 
-        scytheVisualTransform.position = attackPos;
-        Debug.Log(attackPos);
+        scytheScale = scytheTransform.localScale * ScytheRange;
+        scytheScale.x = isRight ? Mathf.Abs(scytheScale.x) : -Mathf.Abs(scytheScale.x);
+        scytheTransform.localScale = scytheScale;
 
         scytheAnimator.SetTrigger("Attack");
 
-        // Yakındaki düşmanları bul
+        // Yakındaki düşmanları bulur
         Collider2D[] enemies = Physics2D.OverlapCircleAll(attackPos, ScytheRange, enemyLayer);
 
         foreach (var enemy in enemies)
@@ -65,6 +90,15 @@ public class ScyhteCharacter : BaseCharacterController
         }
 
         isRight = !isRight;
+    }
+
+    private void LevelTwoAttack()
+    {
+
+    }
+
+    private void LevelThreeAttack()
+    {
     }
 
     protected override float GetCooldown() => ScytheCooldown;

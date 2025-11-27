@@ -12,7 +12,8 @@ public class ShotgunCharacter : BaseCharacterController
 
     // Her çağrıldığında güncellenmesi için property olarak tanımlandı
     private float ShotgunCooldown => PlayerStats.Instance.AttackCooldown * cooldownMultiplier;
-    private float ShotgunHealth => PlayerStats.Instance.PlayerMaxHealth * healthMultiplier;
+    private float ShotgunMaxHealth => PlayerStats.Instance.PlayerMaxHealth * PlayerStats.Instance.UpgradesHealthMultiplier * healthMultiplier;
+    private float ShotgunHealth => PlayerStats.Instance.PlayerHealth * healthMultiplier;
     private float ShotgunDamage => PlayerStats.Instance.PlayerDamage * damageMultiplier;
     private float ShotgunRange => PlayerStats.Instance.AttackRange * rangeMultiplier;
     private float ShotgunSpeed => PlayerStats.Instance.PlayerSpeed * speedMultiplier;  // Shotgun karakteri için hız

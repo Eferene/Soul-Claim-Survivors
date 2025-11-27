@@ -1,6 +1,4 @@
-﻿using System.Security.Cryptography.X509Certificates;
-using Unity.VisualScripting;
-using UnityEngine;
+﻿using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerStats", menuName = "Stats/PlayerStats")]
 public class PlayerStats : ScriptableObject
@@ -61,9 +59,17 @@ public class PlayerStats : ScriptableObject
     public int PlayerScore => _score;
     public int CurrentWave => _wave;
 
+    public float UpgradesCooldownMultiplier => _upgradesCooldownMultiplier;
+    public float UpgradesHealthMultiplier => _upgradesHealthMultiplier;
+    public float UpgradesDamageMultiplier => _upgradesDamageMultiplier;
+    public float UpgradesRangeMultiplier => _upgradesRangeMultiplier;
+    public float UpgradesSpeedMultiplier => _upgradesSpeedMultiplier;
+
     // --- Initialization ---
     public void Initialize()
     {
+        Debug.Log("PlayerStats Initialized");
+
         _maxHealth = BaseMaxHealth;
         _health = _maxHealth;
         _damage = BaseDamage;
@@ -133,5 +139,15 @@ public class PlayerStats : ScriptableObject
     public void AddScore(int amount)
     {
         _score += amount;
+    }
+
+
+
+    // --- Auto Reset Logic ---
+    // Bu kod oyun her "Play" tuşuna basıldığında otomatik çalışır.
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    public static void ResetStatics()
+    {
+        _instance = null;
     }
 }
