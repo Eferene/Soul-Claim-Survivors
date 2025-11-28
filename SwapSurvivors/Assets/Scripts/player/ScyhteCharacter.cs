@@ -14,8 +14,8 @@ public class ScyhteCharacter : BaseCharacterController
     // Her çağrıldığında güncellenmesi için property olarak tanımlandı
     private float ScytheCooldown => PlayerStats.Instance.AttackCooldown - (PlayerStats.Instance.AttackCooldown * (cooldownPercantage / 100));
     private float ScytheMaxHealth => PlayerStats.Instance.PlayerMaxHealth * healthMultiplier;
-    private float ScytheDamage => PlayerStats.Instance.PlayerDamage * damageMultiplier;
-    private float ScytheRange => PlayerStats.Instance.AttackRange * rangeMultiplier;
+    public float ScytheDamage => PlayerStats.Instance.PlayerDamage * damageMultiplier;
+    public float ScytheRange => PlayerStats.Instance.AttackRange * rangeMultiplier;
     private float ScytheSpeed => PlayerStats.Instance.PlayerSpeed * speedMultiplier;    // Tırpan karakteri için hız
 
     // --- Attack State ---
@@ -27,6 +27,7 @@ public class ScyhteCharacter : BaseCharacterController
     [SerializeField] private Animator scytheAnimator; // Tırpanın Animator'ını buraya sürükle
     [SerializeField] private GameObject scytheTransform; // Tırpan objesinin Transform'u (yön çevirmek için)
     Vector3 scytheScale;
+    [SerializeField] private Transform staticScythe;
 
     // --- Unity Methods ---
     protected override void Awake()
@@ -37,8 +38,11 @@ public class ScyhteCharacter : BaseCharacterController
 
     protected override void Update()
     {
-        Debug.Log(PlayerStats.Instance.AttackCooldown + " " + ScytheCooldown);
         base.Update();
+        if (PlayerStats.Instance.CharacterLevel == 3)
+        {
+            LevelThreeAttack();
+        }
     }
 
     protected override void Attack()
@@ -46,37 +50,40 @@ public class ScyhteCharacter : BaseCharacterController
         switch (PlayerStats.Instance.CharacterLevel)
         {
             case 1:
+                staticScythe.gameObject.SetActive(false);
                 LevelOneAttack();
                 break;
             case 2:
+                staticScythe.gameObject.SetActive(false);
                 LevelTwoAttack();
                 break;
             case 3:
-                LevelThreeAttack();
                 break;
             default:
+                staticScythe.gameObject.SetActive(false);
                 LevelOneAttack();
                 break;
         }
     }
 
-    private void LevelOneAttack()
+    private void DoScytheHit()
     {
         float currentOffset = isRight ? offset : -offset;
 
         attackPos = transform.position + new Vector3(currentOffset, 0f, 0f);
 
-        // Scythe animation yönünü ayarlar
+        // Tırpanı pozisyona koy
         scytheTransform.transform.position = attackPos;
 
+        // Yön skalası
         scytheScale = new Vector3(ScytheRange, ScytheRange);
         scytheScale.x = isRight ? Mathf.Abs(scytheScale.x) : -Mathf.Abs(scytheScale.x);
         scytheTransform.transform.localScale = scytheScale;
 
+        // Görseli aktif et
         scytheTransform.gameObject.SetActive(true);
-        scytheAnimator.SetTrigger("Attack");
 
-        // Yakındaki düşmanları bulur
+        // Yakındaki düşmanları bul
         Collider2D[] enemies = Physics2D.OverlapCircleAll(attackPos, ScytheRange, enemyLayer);
 
         foreach (var enemy in enemies)
@@ -89,17 +96,45 @@ public class ScyhteCharacter : BaseCharacterController
             if (isRight == isEnemyOnRight)
                 ApplyDamage(enemy, PlayerStats.Instance.GiveDamage(ScytheDamage));
         }
+    }
 
+
+    private void LevelOneAttack()
+    {
+        DoScytheHit();
+        scytheAnimator.SetTrigger("Attack");
         isRight = !isRight;
     }
 
     private void LevelTwoAttack()
     {
+        isRight = true;
+        DoScytheHit();
+        scytheAnimator.SetTrigger("Attack");
+    }
 
+    private void LevelTwoAttackSecond()
+    {
+        isRight = false;
+        DoScytheHit();
+        scytheAnimator.SetTrigger("Attack");
     }
 
     private void LevelThreeAttack()
     {
+        staticScythe.gameObject.SetActive(true);
+        staticScythe.RotateAround(transform.position, Vector3.forward, -100 * Time.deltaTime);
+    }
+
+    public bool CheckCombo()
+    {
+        if (PlayerStats.Instance.CharacterLevel == 2 && isRight)
+        {
+            LevelTwoAttackSecond();
+            return true;
+        }
+
+        return false;
     }
 
     protected override float GetCooldown() => ScytheCooldown;

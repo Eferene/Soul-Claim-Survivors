@@ -1,9 +1,14 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class HideScytheAnim : MonoBehaviour
 {
-    public void HideScythe()
+    [SerializeField] private ScyhteCharacter scytheCharacter;
+
+    public void OnAnimationFinish()
     {
-        gameObject.SetActive(false);
+        if (!scytheCharacter.CheckCombo())
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

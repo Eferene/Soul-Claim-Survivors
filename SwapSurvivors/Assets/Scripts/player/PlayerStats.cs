@@ -137,7 +137,12 @@ public class PlayerStats : ScriptableObject
         _score += amount;
     }
 
-
+    public void IncreaseCharacterLevel(int amount)
+    {
+        if (CharacterLevel < 4)
+            _characterLevel += amount;
+        Debug.Log("Character Level Increased to: " + _characterLevel);
+    }
 
     // --- Auto Reset Logic ---
     // Bu kod oyun her "Play" tuşuna basıldığında otomatik çalışır.

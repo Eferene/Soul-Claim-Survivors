@@ -1,4 +1,4 @@
-using Unity.VisualScripting;
+﻿using Unity.VisualScripting;
 using UnityEngine;
 
 public class CharacterTransformManager : MonoBehaviour
@@ -32,4 +32,8 @@ public class CharacterTransformManager : MonoBehaviour
             isT = true;
         }
     }
+
+    // deneme amaçlı
+    public void IncLevel() => PlayerStats.Instance.IncreaseCharacterLevel(1);
+    public void DecLevel() => PlayerStats.Instance.IncreaseCharacterLevel(-1);
 }

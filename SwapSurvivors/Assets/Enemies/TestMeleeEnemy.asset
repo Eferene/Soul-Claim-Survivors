@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TestMeleeEnemy
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
   enemyName: Test Melee Enemy
-  baseHealth: 1000
+  baseHealth: 200
   speed: 0
   enemyPrefab: {fileID: 8188010001063349383, guid: 8dfd150f6cebc1b42a8de189ce55db08, type: 3}
   attackDamage: 50
@@ -23,3 +23,4 @@ MonoBehaviour:
   projectilePrefab: {fileID: 0}
   projectileSpeed: 0
   scoreGain: 50
+  scoreGainPercentage: 10
