@@ -1,10 +1,11 @@
 using UnityEngine;
+using System;
 
 public class ThrowObject : MonoBehaviour
 {
     public EnemyData enemyData;
     private float startTime;
-    private float finalDamage;
+    private int finalDamage;
     private float radius;
 
     // OverTime
@@ -17,9 +18,13 @@ public class ThrowObject : MonoBehaviour
 
         transform.localScale = new Vector3(enemyData.damageRadius, enemyData.damageRadius, enemyData.damageRadius);
         radius = GetComponent<SpriteRenderer>().bounds.extents.x;
-        
-        finalDamage = Random.Range(enemyData.attackDamage * (1 - enemyData.attackDamagePercentage / 100f), enemyData.attackDamage * (1 + enemyData.attackDamagePercentage / 100f)); // Hasar aralığını hesapla
-        finalDamage = Mathf.Round(finalDamage * 10f) / 10f; // Ondalık hassasiyetini ayarlamak için
+
+        finalDamage = Convert.ToInt32(UnityEngine.Random.Range(enemyData.attackDamage * (1 - enemyData.attackDamagePercentage / 100f), enemyData.attackDamage * (1 + enemyData.attackDamagePercentage / 100f))); // Hasar aralığını hesapla
+
+        if (enemyData.throwDamageType == ThrowDamageType.Instant)
+        {
+            InstantDamage();
+        }
     }
 
     void Update()
@@ -27,13 +32,11 @@ public class ThrowObject : MonoBehaviour
         switch (enemyData.throwDamageType)
         {
             case ThrowDamageType.Instant:
-                InstantDamage();
                 if (Time.time - startTime >= enemyData.attackCooldown - 0.25f)
                 {
                     Destroy(gameObject);
                 }
                 break;
-
             case ThrowDamageType.OverTime:
                 if (Time.time - overTimeDamageStartTime >= enemyData.overTimeDamageInterval)
                 {
@@ -41,14 +44,14 @@ public class ThrowObject : MonoBehaviour
                     overTimeDamageStartTime = Time.time;
                 }
 
-                if (Time.time - startTime >=  enemyData.damageOverTimeDuration)
+                if (Time.time - startTime >= enemyData.damageOverTimeDuration)
                 {
                     Destroy(gameObject);
                 }
                 break;
             default:
                 break;
-        }   
+        }
     }
 
     void InstantDamage()
@@ -57,7 +60,7 @@ public class ThrowObject : MonoBehaviour
 
         foreach (var h in hits)
         {
-            if(h != null && h.CompareTag("Player"))
+            if (h != null && h.CompareTag("Player"))
             {
                 PlayerStats.Instance.DecreaseHealth(finalDamage);
                 finalDamage = 0;
@@ -71,10 +74,9 @@ public class ThrowObject : MonoBehaviour
 
         foreach (var h in hits)
         {
-            if(h != null && h.CompareTag("Player"))
+            if (h != null && h.CompareTag("Player"))
             {
-                finalDamage = Random.Range(enemyData.attackDamage * (1 - enemyData.attackDamagePercentage / 100f), enemyData.attackDamage * (1 + enemyData.attackDamagePercentage / 100f)); // Hasar aralığını hesapla
-                finalDamage = Mathf.Round(finalDamage * 10f) / 10f;
+                int finalDamage = Convert.ToInt32(UnityEngine.Random.Range(enemyData.attackDamage * (1 - enemyData.attackDamagePercentage / 100f), enemyData.attackDamage * (1 + enemyData.attackDamagePercentage / 100f))); // Hasar aralığını hesapla
                 PlayerStats.Instance.DecreaseHealth(finalDamage);
             }
         }

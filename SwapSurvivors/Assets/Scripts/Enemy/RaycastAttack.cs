@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
 public class RaycastAttack : EnemyAttack
 {
@@ -14,8 +15,7 @@ public class RaycastAttack : EnemyAttack
 
         if (hit.collider != null)
         {
-            float dmg = Random.Range(damage * (1 - damagePercentage / 100f), damage * (1 + damagePercentage / 100f));
-            dmg = Mathf.Round(dmg * 10f) / 10f;
+            int dmg = Convert.ToInt32(UnityEngine.Random.Range(damage * (1 - damagePercentage / 100f), damage * (1 + damagePercentage / 100f))); // Hasar aralığını hesapla
 
             StartCoroutine(FireLaser(enemyTransform.GetComponent<EnemyController>(), origin, hit.point, dir, 0.2f, 0.3f, dmg));
             return true;

@@ -10,7 +10,7 @@ public class EnemyData : ScriptableObject
     public GameObject enemyPrefab;
 
     [Header("Attack Info")]
-    public float attackDamage;
+    public int attackDamage;
     public float attackDamagePercentage = 10; // +- oranını belirler.
     public float attackRange;
     public float attackCooldown;

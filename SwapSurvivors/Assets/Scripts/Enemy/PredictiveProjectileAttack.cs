@@ -1,18 +1,18 @@
 using UnityEngine;
+using System;
 
 public class PredictiveProjectileAttack : EnemyAttack
 {
     public override bool Attack(Transform enemyTransform, Transform targetTransform, float damage, float damagePercentage, float range)
     {
-        if(Vector3.Distance(enemyTransform.position, targetTransform.position) <= range) // Menzil kontrolü
+        if(Vector2.Distance(enemyTransform.position, targetTransform.position) <= range) // Menzil kontrolü
         {
             EnemyController enemyController = enemyTransform.GetComponent<EnemyController>();
             if (enemyController != null && enemyController.enemyData.projectilePrefab != null)
             {
                 GameObject projectileGameObject = Instantiate(enemyController.enemyData.projectilePrefab, enemyTransform.position, Quaternion.identity);
 
-                float dmg = Random.Range(damage * (1 - damagePercentage / 100f), damage * (1 + damagePercentage / 100f)); // Hasar aralığını hesapla
-                dmg = Mathf.Round(dmg * 10f) / 10f; // Ondalık hassasiyetini ayarlamak için
+                int dmg = Convert.ToInt32(UnityEngine.Random.Range(damage * (1 - damagePercentage / 100f), damage * (1 + damagePercentage / 100f))); // Hasar aralığını hesapla
 
                 ProjectilePredictive projectile = projectileGameObject.GetComponent<ProjectilePredictive>();
                 projectile.damage = dmg;

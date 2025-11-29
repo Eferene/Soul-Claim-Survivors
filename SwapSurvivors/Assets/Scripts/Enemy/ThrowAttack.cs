@@ -5,7 +5,6 @@ public class ThrowAttack : EnemyAttack
 {
     List <Vector3> selectedPoints = new List<Vector3>();
     List <GameObject> instantiatedThrows = new List<GameObject>();
-    float radius;
     public override bool Attack(Transform enemyTransform, Transform targetTransform, float damage, float damagePercentage, float range)
     {
         // Temizleme
@@ -13,13 +12,11 @@ public class ThrowAttack : EnemyAttack
         instantiatedThrows.Clear();
 
         // Saldırı
-        if(Vector3.Distance(enemyTransform.position, targetTransform.position) <= range) // Menzil kontrolü
+        if(Vector2.Distance(enemyTransform.position, targetTransform.position) <= range) // Menzil kontrolü
         {
             EnemyController enemyController = enemyTransform.GetComponent<EnemyController>();
             if (enemyController != null)
             {
-                radius = enemyController.enemyData.damageRadius;
-
                 for(int i = 0; i < enemyController.enemyData.throwCount; i++)
                 {
                     Vector3 randomPoint = targetTransform.position + Random.insideUnitSphere * enemyController.enemyData.throwRadius;
@@ -35,14 +32,5 @@ public class ThrowAttack : EnemyAttack
             }
         }
         return false;
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        foreach (Vector3 point in selectedPoints)
-        {
-            Gizmos.DrawSphere(point, radius);
-        }
     }
 }

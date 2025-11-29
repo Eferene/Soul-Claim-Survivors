@@ -90,12 +90,14 @@ public class PlayerStats : ScriptableObject
     {
         _health -= amount;
         if (_health < 0) _health = 0;
+        UIController.Instance.UpdateHealthSlider();
     }
 
     public void IncreaseHealth(float amount) // can yenileme
     {
         _health += amount;
         if (_health > _maxHealth) _health = _maxHealth;
+        UIController.Instance.UpdateHealthSlider();
     }
 
     // --- Damage Management Methods ---
