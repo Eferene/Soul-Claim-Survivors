@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class RaycastAttack : BaseAttackType // ENEMY HAREKET EDİNCE LAZERİN BAŞLANGICI SABİT KALIYOR!
+public class RaycastAttack : EnemyAttack
 {
     public override bool Attack(Transform enemyTransform, Transform targetTransform, float damage, float damagePercentage, float range)
     {

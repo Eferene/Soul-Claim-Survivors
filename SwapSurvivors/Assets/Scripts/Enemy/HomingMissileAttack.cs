@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HomingMissileAttack : BaseAttackType
+public class HomingMissileAttack : EnemyAttack
 {
     public override bool Attack(Transform enemyTransform, Transform targetTransform, float damage, float damagePercentage, float range)
     {

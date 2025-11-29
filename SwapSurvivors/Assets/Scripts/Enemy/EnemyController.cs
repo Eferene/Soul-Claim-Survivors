@@ -4,7 +4,7 @@ public class EnemyController : MonoBehaviour
 {
     private float currentHealth;
     public EnemyData enemyData;
-    private BaseAttackType attackType;
+    private EnemyAttack attackType;
     Rigidbody2D rb;
     Transform playerTransform;
 
@@ -16,7 +16,7 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
         currentHealth = enemyData.baseHealth;
-        attackType = GetComponent<BaseAttackType>();
+        attackType = GetComponent<EnemyAttack>();
         rb = GetComponent<Rigidbody2D>();
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null) playerTransform = playerObj.transform;
@@ -52,6 +52,7 @@ public class EnemyController : MonoBehaviour
             case RaycastAttack _:
             case PredictiveProjectileAttack _:
             case HomingMissileAttack _:
+            case ThrowAttack _:
             case ProjectileAttack _:
                 KeepDistanceMovement();
                 break;

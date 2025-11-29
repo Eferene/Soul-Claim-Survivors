@@ -10,7 +10,7 @@ public abstract class ProjectileBase : MonoBehaviour
         Destroy(gameObject, lifeTime);
     }
 
-    protected virtual void Update()
+    protected virtual void FixedUpdate()
     {
         Move();
     }   

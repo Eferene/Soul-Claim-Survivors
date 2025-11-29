@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MeleeAttack : BaseAttackType
+public class MeleeAttack : EnemyAttack
 {
     public override bool Attack(Transform enemyTransform, Transform targetTransform, float damage, float damagePercentage, float range)
     {
