@@ -13,6 +13,7 @@ public class ScyhteCharacter : BaseCharacterController
 
     // Her çağrıldığında güncellenmesi için property olarak tanımlandı
     private float ScytheCooldown => PlayerStats.Instance.AttackCooldown - (PlayerStats.Instance.AttackCooldown * (cooldownPercantage / 100));
+    protected override float GetCooldown() => ScytheCooldown;
     private float ScytheMaxHealth => PlayerStats.Instance.PlayerMaxHealth * healthMultiplier;
     public float ScytheDamage => PlayerStats.Instance.PlayerDamage * damageMultiplier;
     public float ScytheRange => PlayerStats.Instance.AttackRange * rangeMultiplier;
@@ -22,12 +23,14 @@ public class ScyhteCharacter : BaseCharacterController
     private bool isRight = true;
     private Vector3 attackPos;
 
+    private Collider2D[] hitBuffer = new Collider2D[100];
+
     // --- Visuals ---
     [Header("Visuals")]
     [SerializeField] private Animator scytheAnimator; // Tırpanın Animator'ını buraya sürükle
     [SerializeField] private GameObject scytheTransform; // Tırpan objesinin Transform'u (yön çevirmek için)
-    Vector3 scytheScale;
     [SerializeField] private Transform staticScythe;
+    Vector3 scytheScale;
 
     // --- Unity Methods ---
     protected override void Awake()
@@ -83,11 +86,19 @@ public class ScyhteCharacter : BaseCharacterController
         // Görseli aktif et
         scytheTransform.gameObject.SetActive(true);
 
-        // Yakındaki düşmanları bul
-        Collider2D[] enemies = Physics2D.OverlapCircleAll(attackPos, ScytheRange, enemyLayer);
+        // Bu struct stack'te oluşur, yani new'lemek performans yemez (GC free).
+        ContactFilter2D filter = new ContactFilter2D();
+        filter.SetLayerMask(enemyLayer);
+        filter.useTriggers = true;
 
-        foreach (var enemy in enemies)
+        // Yakındaki düşmanları bul
+        int hitCount = Physics2D.OverlapCircle(attackPos, ScytheRange, filter, hitBuffer);
+
+        for (int i = 0; i < hitCount; i++)
         {
+            var enemy = hitBuffer[i];
+            if (enemy == null) continue;
+             
             Vector2 dir = enemy.transform.position - transform.position;
             dir.Normalize();
 
@@ -136,8 +147,6 @@ public class ScyhteCharacter : BaseCharacterController
 
         return false;
     }
-
-    protected override float GetCooldown() => ScytheCooldown;
 
     void ApplyDamage(Collider2D enemy, float damage)
     {

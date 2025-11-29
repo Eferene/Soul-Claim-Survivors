@@ -28,6 +28,6 @@ MonoBehaviour:
   throwRadius: 5
   throwCount: 3
   damageRadius: 2
-  throwDamageType: 0
+  throwDamageType: 1
   damageOverTimeDuration: 3
   overTimeDamageInterval: 0.1

@@ -77,8 +77,7 @@
               "title": "Bookmarks"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -188,11 +187,12 @@
       "bases:Create new base": false
     }
   },
-  "active": "a9f406837648cf05",
+  "active": "ebeaa18249fee15f",
   "lastOpenFiles": [
+    "Untitled",
+    "Swap Survivors.canvas",
     "Pasted image 20251128154925.png",
     "adsadsa.md",
-    "Swap Survivors.canvas",
     "2025-11-26.md",
     "Untitled.base",
     "Swap Survivors.md",

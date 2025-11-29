@@ -175,7 +175,7 @@ MonoBehaviour:
   cooldownPercantage: 10
   healthMultiplier: 1
   damageMultiplier: 1
-  rangeMultiplier: 4
+  rangeMultiplier: 3
   speedMultiplier: 1
   offset: 1
   enemyLayer:
@@ -183,6 +183,7 @@ MonoBehaviour:
     m_Bits: 128
   scytheAnimator: {fileID: 8262389396236582481}
   scytheTransform: {fileID: 4286113036971727745}
+  staticScythe: {fileID: 8846786622232416682}
 --- !u!114 &7809938715700787236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,13 +225,14 @@ GameObject:
   - component: {fileID: 8846786622232416682}
   - component: {fileID: 206115004117705567}
   - component: {fileID: 6417641406436039250}
+  - component: {fileID: 2502767743426882428}
   m_Layer: 6
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8846786622232416682
 Transform:
   m_ObjectHideFlags: 0
@@ -240,8 +242,8 @@ Transform:
   m_GameObject: {fileID: 2721380444205236799}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: 0}
-  m_LocalScale: {x: 0.5, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 1.75, z: 0}
+  m_LocalScale: {x: 0.625, y: 1.25, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4503722777682798489}
@@ -341,6 +343,18 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1, y: 2}
   m_Direction: 0
+--- !u!114 &2502767743426882428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2721380444205236799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9da32fac6177384a940e3f6f74df493, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScytheOnTrigger
 --- !u!1 &4286113036971727745
 GameObject:
   m_ObjectHideFlags: 0
