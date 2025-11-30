@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour
@@ -7,12 +8,13 @@ public class EnemyController : MonoBehaviour
     private EnemyAttack attackType;
     Rigidbody2D rb;
     Transform playerTransform;
+    Material flashMat;
+    Material mainMat;
 
     // Cooldown
     [SerializeField] float lastAttackTime;
     [SerializeField] bool canAttack = true;
     public bool isAttacking = false;
-
     void Start()
     {
         currentHealth = enemyData.baseHealth;
@@ -20,6 +22,8 @@ public class EnemyController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null) playerTransform = playerObj.transform;
+        flashMat = Resources.Load<Material>("HitFlashMaterial");
+        mainMat = GetComponent<SpriteRenderer>().material;
     }
 
     void Update()
@@ -74,6 +78,14 @@ public class EnemyController : MonoBehaviour
             Vector2 currentPos = rb.position;
             Vector2 targetPos = (Vector2)playerTransform.position;
             Vector2 direction = (targetPos - currentPos).normalized;
+            if(direction.x < 0)
+            {
+                GetComponent<SpriteRenderer>().flipX = true;
+            }
+            else
+            {
+                GetComponent<SpriteRenderer>().flipX = false;
+            }
 
             rb.MovePosition(currentPos + direction * enemyData.speed * Time.fixedDeltaTime);
         }
@@ -102,6 +114,7 @@ public class EnemyController : MonoBehaviour
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;
+        StartCoroutine(Flash());
         if (currentHealth <= 0)
         {
             float min = enemyData.scoreGain * (1f - enemyData.scoreGainPercentage / 100f);
@@ -112,6 +125,13 @@ public class EnemyController : MonoBehaviour
             UIController.Instance.UpdateScoreText();
             Destroy(gameObject);
         }
+    }
+
+    IEnumerator Flash()
+    {
+        GetComponent<SpriteRenderer>().material = flashMat;
+        yield return new WaitForSeconds(0.075f);
+        GetComponent<SpriteRenderer>().material = mainMat;
     }
 
     void OnDrawGizmosSelected()
