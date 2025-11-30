@@ -31,16 +31,16 @@ public abstract class BaseCharacterController : MonoBehaviour
 
     protected virtual void Update()
     {
-        ApplyAttack();
-    }
-
-    protected virtual void ApplyAttack()
-    {
         if (moveInput.x > 0)
             spriteRenderer.flipX = false;
         else if (moveInput.x < 0)
             spriteRenderer.flipX = true;
 
+        ApplyAttack();
+    }
+
+    protected virtual void ApplyAttack()
+    {
         // Saldırı cooldown kontrolü
         if (Time.time >= lastAttackTime + GetCooldown())
         {

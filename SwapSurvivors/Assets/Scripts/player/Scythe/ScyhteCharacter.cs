@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class ScyhteCharacter : BaseCharacterController
 {
@@ -23,7 +24,7 @@ public class ScyhteCharacter : BaseCharacterController
     private bool isRight = true;
     private Vector3 attackPos;
 
-    private Collider2D[] hitBuffer = new Collider2D[100];
+    private List<Collider2D> hitBuffer = new List<Collider2D>();
     ContactFilter2D filter = new ContactFilter2D();
 
     // --- Visuals ---
@@ -39,6 +40,9 @@ public class ScyhteCharacter : BaseCharacterController
         base.Awake();
         filter.SetLayerMask(enemyLayer);
         filter.useTriggers = true;
+
+        scytheScale = new Vector3(ScytheRange, ScytheRange);
+        scythe.transform.localScale = scytheScale;
     }
 
     protected override void Update()
@@ -77,24 +81,32 @@ public class ScyhteCharacter : BaseCharacterController
         }
     }
 
-    private void DoScytheHit()
+    private void SetPositionsAndScales()
     {
+        // offset değerini yöne göre ayarlar
         float currentOffset = isRight ? offset : -offset;
 
+        // Saldırı pozisyonunu hesaplar
         attackPos = transform.position + new Vector3(currentOffset, 0f, 0f);
 
-        // Tırpanı pozisyona koy
-        scythe.transform.position = attackPos;
+        // Tırpan pozisyonunu hesaplar
+        int additionalOffset = isRight ? 1 : -1;
+        Vector3 scythePos = transform.position + new Vector3(currentOffset + additionalOffset, 0f, 0f);
+        scythe.transform.position = scythePos;
 
-        // Yön skalası
-        scytheScale = new Vector3(ScytheRange, ScytheRange);
+        // Tırpan yönünü hesaplar
         scytheScale.x = isRight ? Mathf.Abs(scytheScale.x) : -Mathf.Abs(scytheScale.x);
         scythe.transform.localScale = scytheScale;
 
-        // Görseli aktif et
+        // Tırpanı aktif eder
         scythe.gameObject.SetActive(true);
+    }
 
-        // Yakındaki düşmanları bul
+    private void DoScytheHit()
+    {
+        SetPositionsAndScales();
+
+        // Yakındaki düşmanları bulur
         int hitCount = Physics2D.OverlapCircle(attackPos, ScytheRange, filter, hitBuffer);
 
         for (int i = 0; i < hitCount; i++)
@@ -102,11 +114,14 @@ public class ScyhteCharacter : BaseCharacterController
             var enemy = hitBuffer[i];
             if (enemy == null) continue;
 
+            // Düşmanın karaktere göre konumunu belirler
             Vector2 dir = enemy.transform.position - transform.position;
             dir.Normalize();
 
+            // Düşmanın karakterin sağında mı solunda mı olduğunu kontrol eder
             bool isEnemyOnRight = Vector2.Dot(dir, transform.right) > 0;
 
+            // Sadece tırpanın vurduğu taraftaki düşmanlara hasar uygular
             if (isRight == isEnemyOnRight)
                 ApplyDamage(enemy, PlayerStats.Instance.GiveDamage(ScytheDamage));
         }
@@ -136,8 +151,9 @@ public class ScyhteCharacter : BaseCharacterController
 
     private void LevelThreeAttack()
     {
+        scythe.SetActive(false);
         staticScythe.gameObject.SetActive(true);
-        staticScythe.RotateAround(transform.position, Vector3.forward, -100 * Time.deltaTime);
+        staticScythe.RotateAround(transform.position, Vector3.forward, -(360f / ScytheCooldown) * Time.deltaTime);
     }
 
     public bool CheckCombo()
@@ -147,7 +163,6 @@ public class ScyhteCharacter : BaseCharacterController
             LevelTwoAttackSecond();
             return true;
         }
-
         return false;
     }
 

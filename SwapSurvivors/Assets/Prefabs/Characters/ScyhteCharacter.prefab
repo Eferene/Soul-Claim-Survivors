@@ -174,10 +174,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   cooldownPercantage: 10
   healthMultiplier: 1
-  damageMultiplier: 1
+  damageMultiplier: 0
   rangeMultiplier: 3
   speedMultiplier: 1
-  offset: 1
+  offset: 0
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -366,14 +366,14 @@ GameObject:
   - component: {fileID: 7876041246156826853}
   - component: {fileID: 2896658235688565509}
   - component: {fileID: 8262389396236582481}
-  - component: {fileID: 8420123064697593835}
+  - component: {fileID: 7230906532448373282}
   m_Layer: 0
   m_Name: Scythe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7876041246156826853
 Transform:
   m_ObjectHideFlags: 0
@@ -469,7 +469,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &8420123064697593835
+--- !u!114 &7230906532448373282
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
