@@ -6,7 +6,7 @@ public class UIController : MonoBehaviour
 {
     public static UIController Instance;
     [SerializeField] TextMeshProUGUI scoreText;
-    [SerializeField] Slider healthSlider;
+    [SerializeField] Image healthImage;
     [SerializeField] TextMeshProUGUI healthText;
 
     private void Awake()
@@ -31,6 +31,6 @@ public class UIController : MonoBehaviour
     public void UpdateHealthSlider()
     {
         healthText.text = PlayerStats.Instance.PlayerHealth + "/" + PlayerStats.Instance.PlayerMaxHealth;
-        healthSlider.value = PlayerStats.Instance.PlayerHealth / PlayerStats.Instance.PlayerMaxHealth;
+        healthImage.fillAmount = PlayerStats.Instance.PlayerHealth / PlayerStats.Instance.PlayerMaxHealth;
     }
 }

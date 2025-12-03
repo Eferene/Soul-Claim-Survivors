@@ -16,6 +16,7 @@ MonoBehaviour:
   baseHealth: 150
   speed: 2
   enemyPrefab: {fileID: 6755691749114657334, guid: d91644b07c4f89e4aa4712e3ef608ed4, type: 3}
+  enemyType: 0
   attackDamage: 50
   attackDamagePercentage: 10
   attackRange: 1.5
@@ -23,8 +24,6 @@ MonoBehaviour:
   attackOffset: {x: -0.015, y: 0.005, z: 0}
   projectilePrefab: {fileID: 0}
   projectileSpeed: 0
-  scoreGain: 25
-  scoreGainPercentage: 10
   throwPrefab: {fileID: 0}
   throwRadius: 5
   throwCount: 3
@@ -32,3 +31,5 @@ MonoBehaviour:
   throwDamageType: 0
   damageOverTimeDuration: 2
   overTimeDamageInterval: 0.1
+  scoreGain: 25
+  scoreGainPercentage: 10

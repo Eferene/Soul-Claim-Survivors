@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    private float currentHealth;
+    public float currentHealth;
     public EnemyData enemyData;
     private EnemyAttack attackType;
     Rigidbody2D rb;
@@ -124,7 +124,7 @@ public class EnemyController : MonoBehaviour
         StartCoroutine(Flash());
 
         TextMeshProUGUI newText = Instantiate(damageTMP, wsCanvas);
-        newText.text = "-" + damage;
+        newText.text = damage.ToString();
         newText.color = Color.white;
         newText.transform.position = transform.position + new Vector3(0, 1.5f, 0f);
         Destroy(newText.gameObject, 1f);
@@ -149,7 +149,7 @@ public class EnemyController : MonoBehaviour
         GetComponent<SpriteRenderer>().material = mainMat;
     }
 
-    IEnumerator MoveUp(TextMeshProUGUI t)
+    IEnumerator MoveUp(TextMeshProUGUI t) //Kütüphane kullanımı yapılabilir. Karakter öldükten sonra yükselmeyi bırakıyor.
     {
         Vector3 start = t.transform.position;
         Vector3 end = start + new Vector3(0, 1f, 0);
