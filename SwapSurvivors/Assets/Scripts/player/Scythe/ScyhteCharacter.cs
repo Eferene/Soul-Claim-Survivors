@@ -22,6 +22,7 @@ public class ScyhteCharacter : BaseCharacterController
 
     // --- Attack State ---
     private bool isRight = true;
+    private bool rightCheck = true;
     private Vector3 attackPos;
 
     private List<Collider2D> hitBuffer = new List<Collider2D>();
@@ -64,17 +65,17 @@ public class ScyhteCharacter : BaseCharacterController
     {
         switch (PlayerStats.Instance.CharacterLevel)
         {
-            case 1:
+            case 1: // level 1
                 staticScythe.gameObject.SetActive(false);
                 LevelOneAttack();
                 break;
-            case 2:
+            case 2: // level 2
                 staticScythe.gameObject.SetActive(false);
                 LevelTwoAttack();
                 break;
-            case 3:
+            case 3: // level 3
                 break;
-            default:
+            default: // default level 1
                 staticScythe.gameObject.SetActive(false);
                 LevelOneAttack();
                 break;
@@ -83,6 +84,8 @@ public class ScyhteCharacter : BaseCharacterController
 
     private void SetPositionsAndScales()
     {
+        rightCheck = isRight;
+
         // offset değerini yöne göre ayarlar
         float currentOffset = isRight ? offset : -offset;
 
@@ -102,10 +105,8 @@ public class ScyhteCharacter : BaseCharacterController
         scythe.gameObject.SetActive(true);
     }
 
-    private void DoScytheHit()
+    public void DoScytheHit()
     {
-        SetPositionsAndScales();
-
         // Yakındaki düşmanları bulur
         int hitCount = Physics2D.OverlapCircle(attackPos, ScytheRange, filter, hitBuffer);
 
@@ -122,7 +123,7 @@ public class ScyhteCharacter : BaseCharacterController
             bool isEnemyOnRight = Vector2.Dot(dir, transform.right) > 0;
 
             // Sadece tırpanın vurduğu taraftaki düşmanlara hasar uygular
-            if (isRight == isEnemyOnRight)
+            if (rightCheck == isEnemyOnRight)
                 ApplyDamage(enemy, PlayerStats.Instance.GiveDamage(ScytheDamage));
         }
     }
@@ -130,7 +131,7 @@ public class ScyhteCharacter : BaseCharacterController
 
     private void LevelOneAttack()
     {
-        DoScytheHit();
+        SetPositionsAndScales();
         scytheAnimator.SetTrigger("Attack");
         isRight = !isRight;
     }
@@ -138,14 +139,14 @@ public class ScyhteCharacter : BaseCharacterController
     private void LevelTwoAttack()
     {
         isRight = true;
-        DoScytheHit();
+        SetPositionsAndScales();
         scytheAnimator.SetTrigger("Attack");
     }
 
     private void LevelTwoAttackSecond()
     {
         isRight = false;
-        DoScytheHit();
+        SetPositionsAndScales();
         scytheAnimator.SetTrigger("Attack");
     }
 

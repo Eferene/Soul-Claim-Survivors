@@ -22,6 +22,9 @@ public class EnemyController : MonoBehaviour
     Material flashMat;
     TextMeshProUGUI damageTMP;
     GameObject effectPrefab;
+
+    public bool IsDead => currentHealth <= 0;
+
     void Start()
     {
         currentHealth = enemyData.baseHealth;
@@ -51,7 +54,7 @@ public class EnemyController : MonoBehaviour
         if (attackType != null && canAttack && !isAttacking)
         {
             bool attackSuccessful = attackType.Attack(transform, playerTransform, enemyData.attackDamage, enemyData.attackDamagePercentage, enemyData.attackRange);
-            if(attackSuccessful)
+            if (attackSuccessful)
             {
                 lastAttackTime = Time.time;
                 canAttack = false;
@@ -91,7 +94,7 @@ public class EnemyController : MonoBehaviour
             Vector2 currentPos = rb.position;
             Vector2 targetPos = (Vector2)playerTransform.position;
             Vector2 direction = (targetPos - currentPos).normalized;
-            if(direction.x < 0)
+            if (direction.x < 0)
             {
                 GetComponent<SpriteRenderer>().flipX = true;
             }
@@ -105,7 +108,7 @@ public class EnemyController : MonoBehaviour
     }
 
     void KeepDistanceMovement()
-    {        
+    {
         if (playerTransform == null)
         {
             GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
@@ -114,7 +117,7 @@ public class EnemyController : MonoBehaviour
 
         if (rb != null && playerTransform != null && enemyData != null && Vector2.Distance(rb.position, playerTransform.position) > enemyData.attackRange)
         {
-            if(isAttacking) return;
+            if (isAttacking) return;
 
             Vector2 currentPos = rb.position;
             Vector2 targetPos = (Vector2)playerTransform.position;
@@ -135,7 +138,7 @@ public class EnemyController : MonoBehaviour
         newText.transform.position = transform.position + new Vector3(0, 1.5f, 0f);
         Destroy(newText.gameObject, 1f);
         StartCoroutine(MoveUp(newText));
-        
+
         if (currentHealth <= 0)
         {
             float min = enemyData.scoreGain * (1f - enemyData.scoreGainPercentage / 100f);
@@ -166,7 +169,7 @@ public class EnemyController : MonoBehaviour
 
         while (time < lifeTime)
         {
-            if(t == null) break;
+            if (t == null) break;
             time += Time.deltaTime;
             t.transform.position = Vector3.Lerp(start, end, time / lifeTime);
             yield return null;

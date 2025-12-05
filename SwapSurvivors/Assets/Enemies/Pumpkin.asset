@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Pumpkin
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
   enemyName: Pumpkin
-  baseHealth: 150
+  baseHealth: 10
   speed: 2
   enemyPrefab: {fileID: 6755691749114657334, guid: d91644b07c4f89e4aa4712e3ef608ed4, type: 3}
   enemyType: 0
