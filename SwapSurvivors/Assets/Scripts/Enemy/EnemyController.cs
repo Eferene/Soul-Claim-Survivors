@@ -37,9 +37,6 @@ public class EnemyController : MonoBehaviour
         mainMat = GetComponent<SpriteRenderer>().material;
         wsCanvas = GameObject.FindGameObjectWithTag("WorldSpaceCanvas").transform;
         effectPrefab = Resources.Load<GameObject>("DeathEffect");
-
-        var mainSettings = effectPrefab.GetComponent<ParticleSystem>().main;
-        mainSettings.startColor = new ParticleSystem.MinMaxGradient(enemyData.colors[0], enemyData.colors[1]);
     }
 
     void Update()
@@ -103,7 +100,11 @@ public class EnemyController : MonoBehaviour
                 GetComponent<SpriteRenderer>().flipX = false;
             }
 
-            rb.MovePosition(currentPos + direction * enemyData.speed * Time.fixedDeltaTime);
+            rb.linearVelocity = direction * enemyData.speed;
+        }
+        else
+        {
+            rb.linearVelocity = Vector2.zero;
         }
     }
 
@@ -123,7 +124,11 @@ public class EnemyController : MonoBehaviour
             Vector2 targetPos = (Vector2)playerTransform.position;
             Vector2 direction = (targetPos - currentPos).normalized;
 
-            rb.MovePosition(currentPos + direction * enemyData.speed * Time.fixedDeltaTime);
+            rb.linearVelocity = direction * enemyData.speed;
+        }
+        else
+        {
+            rb.linearVelocity = Vector2.zero;
         }
     }
 
@@ -136,8 +141,6 @@ public class EnemyController : MonoBehaviour
         newText.text = damage.ToString();
         newText.color = Color.white;
         newText.transform.position = transform.position + new Vector3(0, 1.5f, 0f);
-        Destroy(newText.gameObject, 1f);
-        StartCoroutine(MoveUp(newText));
 
         if (currentHealth <= 0)
         {
@@ -148,6 +151,10 @@ public class EnemyController : MonoBehaviour
             PlayerStats.Instance.AddScore(scoreGain);
             UIController.Instance.UpdateScoreText();
             GameObject newEffect = Instantiate(effectPrefab, transform.position, Quaternion.identity);
+
+            var mainSettings = newEffect.GetComponent<ParticleSystem>().main;
+            mainSettings.startColor = new ParticleSystem.MinMaxGradient(enemyData.colors[0], enemyData.colors[1]);
+
             Destroy(newEffect, 1f);
             Destroy(gameObject);
         }
@@ -159,23 +166,6 @@ public class EnemyController : MonoBehaviour
         yield return new WaitForSeconds(0.075f);
         GetComponent<SpriteRenderer>().material = mainMat;
     }
-
-    IEnumerator MoveUp(TextMeshProUGUI t) //Kütüphane kullanımı yapılabilir. Karakter öldükten sonra yükselmeyi bırakıyor.
-    {
-        Vector3 start = t.transform.position;
-        Vector3 end = start + new Vector3(0, 1f, 0);
-        float lifeTime = 1f;
-        float time = 0;
-
-        while (time < lifeTime)
-        {
-            if (t == null) break;
-            time += Time.deltaTime;
-            t.transform.position = Vector3.Lerp(start, end, time / lifeTime);
-            yield return null;
-        }
-    }
-
 
     void OnDrawGizmosSelected()
     {
