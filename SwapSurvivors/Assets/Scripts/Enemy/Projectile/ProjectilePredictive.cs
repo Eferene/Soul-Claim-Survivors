@@ -84,7 +84,10 @@ public class ProjectilePredictive : ProjectileBase
     {
         if (collision.CompareTag("Player"))
         {
-            PlayerStats.Instance.DecreaseHealth(damage);
+            if (collision.TryGetComponent<PlayerManager>(out PlayerManager playerManager))
+            {
+                playerManager.TakeDamageCharacter(damage);
+            }
             Destroy(gameObject);
         }
     }

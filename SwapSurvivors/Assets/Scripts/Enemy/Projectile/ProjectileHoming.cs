@@ -61,7 +61,8 @@ public class ProjectileHoming : ProjectileBase
     {
         if (collision.CompareTag("Player"))
         {
-            PlayerStats.Instance.DecreaseHealth(damage);
+            if (collision.TryGetComponent(out PlayerManager playerManager))
+                playerManager.TakeDamageCharacter(damage);
             Destroy(gameObject);
         }
     }

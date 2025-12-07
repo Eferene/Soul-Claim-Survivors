@@ -9,10 +9,14 @@ public class UIController : MonoBehaviour
     [SerializeField] Image healthImage;
     [SerializeField] TextMeshProUGUI healthText;
 
+    private PlayerManager playerManager;
+
     private void Awake()
     {
-        if(Instance == null)
+        if (Instance == null)
         {
+            GameObject playerobj = GameObject.FindWithTag("Player");
+            playerManager = playerobj.GetComponent<PlayerManager>();
             Instance = this;
             UpdateScoreText();
             UpdateHealthSlider();
@@ -25,12 +29,12 @@ public class UIController : MonoBehaviour
 
     public void UpdateScoreText()
     {
-        scoreText.text = "Score: " + PlayerStats.Instance.PlayerScore;
+        scoreText.text = "Score: " + playerManager.Score;
     }
 
     public void UpdateHealthSlider()
     {
-        healthText.text = PlayerStats.Instance.PlayerHealth + "/" + PlayerStats.Instance.PlayerMaxHealth;
-        healthImage.fillAmount = PlayerStats.Instance.PlayerHealth / PlayerStats.Instance.PlayerMaxHealth;
+        healthText.text = playerManager.CurrentHealth + "/" + playerManager.MaxHealth;
+        healthImage.fillAmount = playerManager.CurrentHealth / playerManager.MaxHealth;
     }
 }

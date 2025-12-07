@@ -37,7 +37,10 @@ public class ProjectileStraight : ProjectileBase
     {
         if (collision.CompareTag("Player"))
         {
-            PlayerStats.Instance.DecreaseHealth(damage);
+            if(collision.TryGetComponent<PlayerManager>(out PlayerManager player))
+            {
+                player.TakeDamageCharacter(damage);
+            }
             Destroy(gameObject);
         }
     }

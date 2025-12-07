@@ -49,17 +49,20 @@ public class RaycastAttack : EnemyAttack
         }
 
         yield return new WaitForSeconds(laserDuration);
-    
+
         Destroy(core.gameObject);
 
         int mask = LayerMask.GetMask("Player");
         RaycastHit2D finalHit = Physics2D.Raycast(origin, direction, Vector2.Distance(origin, laserEndPoint), mask);
-    
-        if (finalHit.collider != null && finalHit.collider.CompareTag("Player"))
+        Collider2D collision = finalHit.collider;
+
+        if (collision != null && collision.CompareTag("Player"))
         {
-            PlayerStats.Instance.DecreaseHealth(damage);
+            if (collision.TryGetComponent<PlayerManager>(out PlayerManager player))
+            {
+                player.TakeDamageCharacter(damage);
+            }
         }
-        
         enemy.isAttacking = false;
     }
 

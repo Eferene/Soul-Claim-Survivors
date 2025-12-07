@@ -8,6 +8,7 @@ public class WaveController : MonoBehaviour
     public List<Wave> waves = new List<Wave>();
     public int edgeLength = 50; // Alan kare olacak.
     public TextMeshProUGUI waveText;
+    private int currentWave = 1;
 
     void Start()
     {
@@ -16,11 +17,11 @@ public class WaveController : MonoBehaviour
 
     public void NewWave()
     {
-        waveText.text = "Wave " + PlayerStats.Instance.CurrentWave;
+        waveText.text = "Wave " + currentWave;
         Transform enemiesParent = GameObject.FindGameObjectWithTag("Enemies").transform;
-        for(int i = 0; i < waves[PlayerStats.Instance.CurrentWave - 1].enemiesToSpawn.Count; i++)
+        for(int i = 0; i < waves[currentWave - 1].enemiesToSpawn.Count; i++)
         {
-            int count = Convert.ToInt32(UnityEngine.Random.Range(waves[PlayerStats.Instance.CurrentWave - 1].enemiesToSpawn[i].count * (1 - waves[PlayerStats.Instance.CurrentWave - 1].enemiesToSpawn[i].countPercentage / 100f), waves[PlayerStats.Instance.CurrentWave - 1].enemiesToSpawn[i].count * (1 + waves[PlayerStats.Instance.CurrentWave - 1].enemiesToSpawn[i].countPercentage / 100f)));
+            int count = Convert.ToInt32(UnityEngine.Random.Range(waves[currentWave - 1].enemiesToSpawn[i].count * (1 - waves[currentWave - 1].enemiesToSpawn[i].countPercentage / 100f), waves[currentWave - 1].enemiesToSpawn[i].count * (1 + waves[currentWave - 1].enemiesToSpawn[i].countPercentage / 100f)));
             for(int j = 0; j < count; j++)
             {
                 int attempts = 0;
@@ -29,7 +30,7 @@ public class WaveController : MonoBehaviour
                     Vector3 newPoint = GetRandomPoint();
                     if (!IsVisibleByCamera(newPoint))
                     {
-                        GameObject newEnemy = Instantiate(waves[PlayerStats.Instance.CurrentWave - 1].enemiesToSpawn[i].enemy.enemyPrefab, newPoint, Quaternion.identity, enemiesParent);
+                        GameObject newEnemy = Instantiate(waves[currentWave - 1].enemiesToSpawn[i].enemy.enemyPrefab, newPoint, Quaternion.identity, enemiesParent);
                         newEnemy.name += " " + j;
                         break;
                     }

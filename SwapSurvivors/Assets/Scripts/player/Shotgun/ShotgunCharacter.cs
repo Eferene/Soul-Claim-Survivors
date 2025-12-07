@@ -3,11 +3,6 @@
 public class ShotgunCharacter : BaseCharacterController
 {
     [Header("Shotgun Stats")]
-    [SerializeField] private float cooldownPercantage = 0.0f;
-    [SerializeField] private float healthMultiplier = 1.0f;
-    [SerializeField] private float damageMultiplier = 1.0f;
-    [SerializeField] private float rangeMultiplier = 5.0f;
-    [SerializeField] private float speedMultiplier = 1.0f;
     [SerializeField] private float detectionRadius = 10.0f;
     [SerializeField] private float spreadAngle = 30.0f;
     [SerializeField] private float bulletSpeed = 20.0f;
@@ -22,13 +17,7 @@ public class ShotgunCharacter : BaseCharacterController
 
     private Transform currentTarget;
 
-    // Her çağrıldığında güncellenmesi için property olarak tanımlandı
-    private float ShotgunCooldown => PlayerStats.Instance.AttackCooldown - (PlayerStats.Instance.AttackCooldown * (cooldownPercantage / 100));
-    protected override float GetCooldown() => ShotgunCooldown;
-    private float ShotgunMaxHealth => PlayerStats.Instance.PlayerMaxHealth * healthMultiplier;
-    private float ShotgunDamage => PlayerStats.Instance.PlayerDamage * damageMultiplier;
-    private float ShotgunRange => PlayerStats.Instance.AttackRange * rangeMultiplier;
-    private float ShotgunSpeed => PlayerStats.Instance.PlayerSpeed * speedMultiplier;  // Shotgun karakteri için hız
+    protected override float GetCooldown() => playerManager.CurrentCooldown;
 
     protected override void Awake()
     {
@@ -37,7 +26,7 @@ public class ShotgunCharacter : BaseCharacterController
 
     protected override void Attack()
     {
-        switch (PlayerStats.Instance.CharacterLevel)
+        switch (playerManager.CharacterLevel)
         {
             case 1:
                 LevelOneAttack();
@@ -70,7 +59,6 @@ public class ShotgunCharacter : BaseCharacterController
 
     protected override void FixedUpdate()
     {
-        playerSpeed = ShotgunSpeed;
         base.FixedUpdate();
     }
 
@@ -89,11 +77,12 @@ public class ShotgunCharacter : BaseCharacterController
         Quaternion bulletRotation = Quaternion.Euler(0, 0, aimRotation.eulerAngles.z + randomZ);
 
         GameObject bullet = Instantiate(BulletPrefab, FirePoint.position, bulletRotation);
+        bullet.transform.parent = this.transform;
 
         // Bullet bileşenini alıp gerekli ayarları yapar
         if (bullet.TryGetComponent(out ShotgunBullet bulletScript))
         {
-            bulletScript.Setup(ShotgunDamage, bulletSpeed, ShotgunRange, bulletExplosionRadius);
+            bulletScript.Setup(playerManager.CurrentDamage, bulletSpeed, playerManager.CurrentSpeed, bulletExplosionRadius);
         }
     }
 
@@ -125,9 +114,9 @@ public class ShotgunCharacter : BaseCharacterController
         // Düşmana giden yol vektörü
         Vector3 direction = currentTarget.position - WeaponHolder.position;
         float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        Debug.Log("targetangle: " + targetAngle);
+        //Debug.Log("targetangle: " + targetAngle);
         float newAngle = Mathf.MoveTowardsAngle(WeaponHolder.rotation.eulerAngles.z, targetAngle, 5f);
-        Debug.Log("newAngle:" + newAngle);
+        //Debug.Log("newAngle:" + newAngle);
 
         WeaponHolder.rotation = Quaternion.Euler(0, 0, newAngle);
 
@@ -178,6 +167,6 @@ public class ShotgunCharacter : BaseCharacterController
 
         // Mermi menzili
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(FirePoint.position, ShotgunRange);
+        Gizmos.DrawWireSphere(FirePoint.position, playerManager.CurrentRange);
     }
 }

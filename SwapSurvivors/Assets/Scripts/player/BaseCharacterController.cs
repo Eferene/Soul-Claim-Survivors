@@ -3,14 +3,14 @@ using UnityEngine;
 
 public abstract class BaseCharacterController : MonoBehaviour
 {
-    // --- Components ---
+    // --- References ---
+    protected PlayerManager playerManager;
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
     private InputActions controls;
 
     // --- Movement ---
     private Vector2 moveInput;
-    protected float playerSpeed;
     private float lastStepTime = 0f;
 
     // --- Combat ---
@@ -21,8 +21,10 @@ public abstract class BaseCharacterController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        controls = new InputActions();
 
+        playerManager = GetComponent<PlayerManager>();
+
+        controls = new InputActions();
         controls.Player.Move.performed += ctx => { moveInput = ctx.ReadValue<Vector2>(); };
         controls.Player.Move.canceled += ctx => { moveInput = Vector2.zero; };
     }
@@ -52,11 +54,12 @@ public abstract class BaseCharacterController : MonoBehaviour
 
     protected virtual void FixedUpdate()
     {
-        rb.linearVelocity = new Vector2(moveInput.x * playerSpeed, moveInput.y * playerSpeed);
+        float currentSpeed = playerManager.CurrentSpeed;
+        rb.linearVelocity = new Vector2(moveInput.x * currentSpeed, moveInput.y * currentSpeed);
 
-        if(rb.linearVelocity != Vector2.zero && Time.time >= lastStepTime + 0.2f)
+        if (rb.linearVelocity != Vector2.zero && Time.time >= lastStepTime + 0.2f)
         {
-            AudioManager.Instance.PlayPlayerStepSFX();
+            //AudioManager.Instance.PlayPlayerStepSFX();
             lastStepTime = Time.time;
         }
     }

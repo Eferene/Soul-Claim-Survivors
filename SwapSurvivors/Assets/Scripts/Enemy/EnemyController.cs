@@ -12,6 +12,7 @@ public class EnemyController : MonoBehaviour
     Transform playerTransform;
     Material mainMat;
     Transform wsCanvas;
+    PlayerManager playerManager;
 
     // Cooldown
     [SerializeField] float lastAttackTime;
@@ -37,6 +38,7 @@ public class EnemyController : MonoBehaviour
         mainMat = GetComponent<SpriteRenderer>().material;
         wsCanvas = GameObject.FindGameObjectWithTag("WorldSpaceCanvas").transform;
         effectPrefab = Resources.Load<GameObject>("DeathEffect");
+        playerManager = playerObj.GetComponent<PlayerManager>();
     }
 
     void Update()
@@ -149,7 +151,7 @@ public class EnemyController : MonoBehaviour
             float max = enemyData.scoreGain * (1f + enemyData.scoreGainPercentage / 100f);
             float fScoreGain = Random.Range(min, max);
             int scoreGain = Mathf.RoundToInt(fScoreGain);
-            PlayerStats.Instance.AddScore(scoreGain);
+            playerManager.AddScore(scoreGain);
             UIController.Instance.UpdateScoreText();
             GameObject newEffect = Instantiate(effectPrefab, transform.position, Quaternion.identity);
 

@@ -5,6 +5,7 @@ public class CharacterTransformManager : MonoBehaviour
 {
     [SerializeField] private GameObject scytheCharacter;
     [SerializeField] private GameObject shotgunCharacter;
+    [SerializeField] private PlayerManager playerManager;
 
     private GameObject currentCharacter;
     private bool isT = true;
@@ -34,6 +35,6 @@ public class CharacterTransformManager : MonoBehaviour
     }
 
     // deneme amaçlı
-    public void IncLevel() => PlayerStats.Instance.IncreaseCharacterLevel(1);
-    public void DecLevel() => PlayerStats.Instance.IncreaseCharacterLevel(-1);
+    public void IncLevel() => playerManager.IncreaseCharacterLevel(1);
+    public void DecLevel() => playerManager.IncreaseCharacterLevel(-1);
 }

@@ -62,7 +62,10 @@ public class ThrowObject : MonoBehaviour
         {
             if (h != null && h.CompareTag("Player"))
             {
-                PlayerStats.Instance.DecreaseHealth(finalDamage);
+                if (h.TryGetComponent<PlayerManager>(out PlayerManager player))
+                {
+                    player.TakeDamageCharacter(finalDamage);
+                }
                 finalDamage = 0;
             }
         }
@@ -77,7 +80,10 @@ public class ThrowObject : MonoBehaviour
             if (h != null && h.CompareTag("Player"))
             {
                 int finalDamage = Convert.ToInt32(UnityEngine.Random.Range(enemyData.attackDamage * (1 - enemyData.attackDamagePercentage / 100f), enemyData.attackDamage * (1 + enemyData.attackDamagePercentage / 100f))); // Hasar aralığını hesapla
-                PlayerStats.Instance.DecreaseHealth(finalDamage);
+                if (h.TryGetComponent<PlayerManager>(out PlayerManager player))
+                {
+                    player.TakeDamageCharacter(finalDamage);
+                }
             }
         }
     }

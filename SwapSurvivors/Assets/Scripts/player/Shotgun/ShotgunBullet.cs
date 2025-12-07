@@ -7,6 +7,7 @@ public class ShotgunBullet : MonoBehaviour
     private float bulletRange;
     private float bulletExplosionRange;
     private Vector3 startPosition;
+    private PlayerManager playerManager;
 
     // Bu metod, mermi özelliklerini ayarlamak için çağrılır
     public void Setup(float bulletDamage, float bulletSpeed, float bulletRange, float bulletExplosionRange)
@@ -15,6 +16,8 @@ public class ShotgunBullet : MonoBehaviour
         this.bulletRange = bulletRange;
         this.bulletExplosionRange = bulletExplosionRange;
         startPosition = transform.position;
+
+        playerManager = GetComponentInParent<PlayerManager>();
 
         // Hız ayarı
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
@@ -41,12 +44,13 @@ public class ShotgunBullet : MonoBehaviour
         {
             if (collision.TryGetComponent(out EnemyController enemyController))
             {
+                Debug.Log(collision);
                 if (enemyController.IsDead) return;
-                float newBulletDamage = PlayerStats.Instance.GiveDamage(bulletDamage);
+                int newBulletDamage = playerManager.GiveDamageCharacter();
                 enemyController.TakeDamage(newBulletDamage);
                 //Debug.Log($"{collision.name} gelen {newBulletDamage} hasarı yedi.");
 
-                if (PlayerStats.Instance.CharacterLevel == 3)
+                if (playerManager.CharacterLevel == 3)
                     BulletExplosion();
 
                 Destroy(gameObject);
@@ -56,7 +60,7 @@ public class ShotgunBullet : MonoBehaviour
         // Mermi engelle çarpıştığında yok et
         else if (collision.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
         {
-            if (PlayerStats.Instance.CharacterLevel == 3)
+            if (playerManager.CharacterLevel == 3)
                 BulletExplosion();
             Destroy(gameObject);
         }
@@ -72,7 +76,7 @@ public class ShotgunBullet : MonoBehaviour
             {
                 if (enemy.TryGetComponent(out EnemyController enemyController))
                 {
-                    float newBulletDamage = PlayerStats.Instance.GiveDamage(bulletDamage);
+                    float newBulletDamage = playerManager.GiveDamageCharacter();
                     enemyController.TakeDamage(newBulletDamage);
                     Debug.Log($"{enemy.name} gelen {newBulletDamage} hasarı yedi.");
                 }
