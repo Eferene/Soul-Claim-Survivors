@@ -10,7 +10,7 @@ public class ProjectileAttack : EnemyAttack
             EnemyController enemyController = enemyTransform.GetComponent<EnemyController>();
             if (enemyController != null && enemyController.enemyData.projectilePrefab != null)
             {
-                GameObject projectileGameObject = Instantiate(enemyController.enemyData.projectilePrefab, enemyTransform.position, Quaternion.identity);
+                GameObject projectileGameObject = Instantiate(enemyController.enemyData.projectilePrefab, enemyTransform.position + enemyController.enemyData.attackOffset, Quaternion.identity);
 
                 int dmg = Convert.ToInt32(UnityEngine.Random.Range(damage * (1 - damagePercentage / 100f), damage * (1 + damagePercentage / 100f))); // Hasar aralığını hesapla
 

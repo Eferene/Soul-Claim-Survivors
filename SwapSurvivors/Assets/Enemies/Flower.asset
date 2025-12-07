@@ -21,7 +21,7 @@ MonoBehaviour:
   attackDamagePercentage: 10
   attackRange: 9
   attackCooldown: 1
-  attackOffset: {x: -0.06, y: 0, z: 0}
+  attackOffset: {x: 0.7, y: 0.375, z: 0}
   projectilePrefab: {fileID: 3082521190359396072, guid: ccf90275d4172af41ab37c0459f252d3, type: 3}
   projectileSpeed: 5
   throwPrefab: {fileID: 0}
