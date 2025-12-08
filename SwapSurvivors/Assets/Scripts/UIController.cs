@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
-    public static UIController Instance;
     [SerializeField] TextMeshProUGUI scoreText;
     [SerializeField] Image healthImage;
     [SerializeField] TextMeshProUGUI healthText;
@@ -13,16 +12,8 @@ public class UIController : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            GameObject playerobj = GameObject.FindWithTag("Player");
-            playerManager = playerobj.GetComponent<PlayerManager>();
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        GameObject playerobj = GameObject.FindWithTag("Player");
+        playerManager = playerobj.GetComponent<PlayerManager>();
     }
 
     private void OnEnable()
