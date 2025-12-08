@@ -6,9 +6,12 @@ public class ScytheOnTrigger : MonoBehaviour
     private void Awake()
     {
         playerManager = GetComponentInParent<PlayerManager>();
+    }
+
+    private void Start()
+    {
         transform.localScale = new Vector3(playerManager.CurrentRange / 8, playerManager.CurrentRange / 4, 1f);
         transform.localPosition = new Vector3(0f, transform.localScale.y + 0.5f, 0f);
-        Debug.Log(transform.localScale.y);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -19,7 +22,7 @@ public class ScytheOnTrigger : MonoBehaviour
             {
                 float damage = playerManager.GiveDamageCharacter();
                 enemyController.TakeDamage(damage);
-                Debug.Log($"{collision.name} gelen {damage} hasarı yedi.");
+                //Debug.Log($"{collision.name} gelen {damage} hasarı yedi.");
             }
         }
     }

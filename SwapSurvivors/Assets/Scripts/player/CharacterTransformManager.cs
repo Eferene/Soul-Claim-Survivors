@@ -5,7 +5,7 @@ public class CharacterTransformManager : MonoBehaviour
 {
     [SerializeField] private GameObject scytheCharacter;
     [SerializeField] private GameObject shotgunCharacter;
-    [SerializeField] private PlayerManager playerManager;
+    private PlayerManager playerManager;
 
     private GameObject currentCharacter;
     private bool isT = true;
@@ -13,6 +13,7 @@ public class CharacterTransformManager : MonoBehaviour
     private void Start()
     {
         currentCharacter = GameObject.FindWithTag("Player");
+        playerManager = currentCharacter.GetComponent<PlayerManager>();
     }
 
     public void TransformCharacter()

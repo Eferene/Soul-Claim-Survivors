@@ -6,18 +6,18 @@ public class ShotgunBullet : MonoBehaviour
     private float bulletDamage;
     private float bulletRange;
     private float bulletExplosionRange;
+    private float bulletExplosionDamage;
     private Vector3 startPosition;
     private PlayerManager playerManager;
 
     // Bu metod, mermi özelliklerini ayarlamak için çağrılır
-    public void Setup(float bulletDamage, float bulletSpeed, float bulletRange, float bulletExplosionRange)
+    public void Setup(float bulletDamage, float bulletSpeed, float bulletRange, float bulletExplosionRange, float bulletExplosionDamage)
     {
         this.bulletDamage = bulletDamage;
         this.bulletRange = bulletRange;
         this.bulletExplosionRange = bulletExplosionRange;
+        this.bulletExplosionDamage = bulletExplosionDamage;
         startPosition = transform.position;
-
-        playerManager = GetComponentInParent<PlayerManager>();
 
         // Hız ayarı
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
@@ -46,9 +46,8 @@ public class ShotgunBullet : MonoBehaviour
             {
                 Debug.Log(collision);
                 if (enemyController.IsDead) return;
-                int newBulletDamage = playerManager.GiveDamageCharacter();
-                enemyController.TakeDamage(newBulletDamage);
-                //Debug.Log($"{collision.name} gelen {newBulletDamage} hasarı yedi.");
+                enemyController.TakeDamage(bulletDamage);
+                //Debug.Log($"{collision.name} gelen {bulletDamage} hasarı yedi.");
 
                 if (playerManager.CharacterLevel == 3)
                     BulletExplosion();
@@ -76,9 +75,8 @@ public class ShotgunBullet : MonoBehaviour
             {
                 if (enemy.TryGetComponent(out EnemyController enemyController))
                 {
-                    float newBulletDamage = playerManager.GiveDamageCharacter();
-                    enemyController.TakeDamage(newBulletDamage);
-                    Debug.Log($"{enemy.name} gelen {newBulletDamage} hasarı yedi.");
+                    enemyController.TakeDamage(bulletExplosionDamage);
+                    Debug.Log($"{enemy.name} gelen {bulletExplosionDamage} hasarı yedi.");
                 }
             }
         }

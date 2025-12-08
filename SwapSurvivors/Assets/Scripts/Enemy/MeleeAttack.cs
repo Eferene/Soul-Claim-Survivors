@@ -13,7 +13,7 @@ public class MeleeAttack : EnemyAttack
 
             PlayerManager playerManager = targetTransform.GetComponent<PlayerManager>();
             playerManager.TakeDamageCharacter(dmg);
-            Debug.Log("| " + dmg + " | Player hit! Current Health: " + playerManager.CurrentHealth);
+            //Debug.Log("| " + dmg + " | Player hit! Current Health: " + playerManager.CurrentHealth);
             return true;
         }
         return false;

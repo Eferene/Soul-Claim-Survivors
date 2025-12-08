@@ -82,7 +82,7 @@ public class ShotgunCharacter : BaseCharacterController
         // Bullet bileşenini alıp gerekli ayarları yapar
         if (bullet.TryGetComponent(out ShotgunBullet bulletScript))
         {
-            bulletScript.Setup(playerManager.CurrentDamage, bulletSpeed, playerManager.CurrentSpeed, bulletExplosionRadius);
+            bulletScript.Setup(playerManager.CurrentDamage, bulletSpeed, playerManager.CurrentSpeed, bulletExplosionRadius, (playerManager.CurrentDamage / 2));
         }
     }
 
@@ -114,9 +114,7 @@ public class ShotgunCharacter : BaseCharacterController
         // Düşmana giden yol vektörü
         Vector3 direction = currentTarget.position - WeaponHolder.position;
         float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        //Debug.Log("targetangle: " + targetAngle);
         float newAngle = Mathf.MoveTowardsAngle(WeaponHolder.rotation.eulerAngles.z, targetAngle, 5f);
-        //Debug.Log("newAngle:" + newAngle);
 
         WeaponHolder.rotation = Quaternion.Euler(0, 0, newAngle);
 
@@ -161,6 +159,9 @@ public class ShotgunCharacter : BaseCharacterController
 
     private void OnDrawGizmosSelected()
     {
+        if (playerManager == null)
+            return;
+
         // Algılama menzili
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, detectionRadius);

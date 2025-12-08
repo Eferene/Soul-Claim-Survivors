@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: ScytheStats
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
   BaseMaxHealth: 100
-  BaseDamage: 50
-  BaseSpeed: 5
-  BaseAttackCooldown: 1
-  BaseRange: 1
+  BaseDamage: 25
+  BaseSpeed: 3
+  BaseAttackCooldown: 0.3
+  BaseRange: 2
   DamageRangePercentage: 10
