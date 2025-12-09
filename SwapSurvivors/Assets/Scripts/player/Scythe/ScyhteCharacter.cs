@@ -130,7 +130,7 @@ public class ScyhteCharacter : BaseCharacterController
 
         for (int i = 0; i < hitCount; i++)
         {
-            int currentDamage = playerManager.GiveDamageCharacter();
+            float currentDamage = playerManager.GiveDamageCharacter();
 
             var enemy = hitBuffer[i];
             if (enemy == null) continue;

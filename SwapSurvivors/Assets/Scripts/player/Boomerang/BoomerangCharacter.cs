@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -34,16 +34,29 @@ public class BoomerangCharacter : BaseCharacterController
             default: LevelOneAttack(); break;
         }
     }
-    private void LevelOneAttack()
+    private void LevelOneAttack() => ThrowBoomerang();
+    private void LevelTwoAttack() => ThrowBoomerang();
+    private void LevelThreeAttack() { }
+
+    private void ThrowBoomerang()
     {
-        ThrowBoomerang();
+        if (currentTarget == null) return;
+
+        // Yön ve rotasyon hesabı
+        Vector3 direction = (currentTarget.position - ThrowPoint.position).normalized;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        Quaternion rotation = Quaternion.Euler(0, 0, angle);
+
+        // Havuzdan çekme
+        GameObject boomerang = GetBoomerangFromPool(rotation);
+        boomerang.transform.position = ThrowPoint.position;
+
+        // Setup boomerang
+        if (boomerang.TryGetComponent(out BoomerangController boomerangScript))
+            boomerang.GetComponent<BoomerangController>().Setup(playerManager.GiveDamageCharacter(), playerManager.CurrentRange, boomerangSpeed,
+                playerManager.CharacterLevel, this.gameObject);
     }
-    private void LevelTwoAttack()
-    {
-    }
-    private void LevelThreeAttack()
-    {
-    }
+
     private GameObject GetBoomerangFromPool(Quaternion rotation)
     {
         foreach (GameObject obj in boomerangPool)
@@ -80,21 +93,6 @@ public class BoomerangCharacter : BaseCharacterController
         }
 
         currentTarget = closestEnemy;
-    }
-
-    private void ThrowBoomerang()
-    {
-        if (currentTarget == null) return;
-
-        Vector3 direction = (currentTarget.position - ThrowPoint.position).normalized;
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        Quaternion rotation = Quaternion.Euler(0, 0, angle);
-
-        GameObject boomerang = GetBoomerangFromPool(rotation);
-        boomerang.transform.position = ThrowPoint.position;
-
-        if (boomerang.TryGetComponent(out BoomerangController boomerangScript))
-            boomerang.GetComponent<BoomerangController>().Setup(playerManager.GiveDamageCharacter(), playerManager.CurrentRange, boomerangSpeed, this.gameObject);
     }
 
     private void OnDrawGizmosSelected()

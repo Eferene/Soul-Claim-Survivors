@@ -1268,49 +1268,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1127005543273080499, guid: 79be40db6ead75c4c8c1450a226c84f9, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 1127005543273080499, guid: 79be40db6ead75c4c8c1450a226c84f9, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 2613769644247769062, guid: 79be40db6ead75c4c8c1450a226c84f9, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: -2408530018317867212, guid: 35c481abab1d4134689acb1bfc637aef, type: 3}
     - target: {fileID: 3934399534572532902, guid: 79be40db6ead75c4c8c1450a226c84f9, type: 3}
       propertyPath: m_Name
       value: ShotgunCharacter
       objectReference: {fileID: 0}
-    - target: {fileID: 3934399534572532902, guid: 79be40db6ead75c4c8c1450a226c84f9, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7206107359254844425, guid: 79be40db6ead75c4c8c1450a226c84f9, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8010327508427879018, guid: 79be40db6ead75c4c8c1450a226c84f9, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: -372299716443178353, guid: d3f3d636db87118408f557ac7cc0df12, type: 3}
-    - target: {fileID: 8010327508427879018, guid: 79be40db6ead75c4c8c1450a226c84f9, type: 3}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8010327508427879018, guid: 79be40db6ead75c4c8c1450a226c84f9, type: 3}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8010327508427879018, guid: 79be40db6ead75c4c8c1450a226c84f9, type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 3659730273702499359, guid: 79be40db6ead75c4c8c1450a226c84f9, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 79be40db6ead75c4c8c1450a226c84f9, type: 3}
@@ -2095,18 +2058,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: BoomerangCharacter
       objectReference: {fileID: 0}
-    - target: {fileID: 4828165198587778148, guid: 8b57ad5ec9d0fd945a5076058b8bf7b1, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8285025517722870144, guid: 8b57ad5ec9d0fd945a5076058b8bf7b1, type: 3}
-      propertyPath: m_FlipX
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8285025517722870144, guid: 8b57ad5ec9d0fd945a5076058b8bf7b1, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: -5806343079849259862, guid: fbec20efd7c787049a60a1f4001e8736, type: 3}
     - target: {fileID: 8482241069000800003, guid: 8b57ad5ec9d0fd945a5076058b8bf7b1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

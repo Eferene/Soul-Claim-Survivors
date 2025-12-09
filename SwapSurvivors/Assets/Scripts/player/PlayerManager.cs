@@ -70,7 +70,7 @@ public class PlayerManager : MonoBehaviour
     }
 
     // --- Damage Management Methods ---
-    public int GiveDamageCharacter()
+    public float GiveDamageCharacter()
     {
         // Silah çarpanı * Base Damage * Upgrade Çarpanı
         float rawDamage = CurrentDamage * _damageMult;
