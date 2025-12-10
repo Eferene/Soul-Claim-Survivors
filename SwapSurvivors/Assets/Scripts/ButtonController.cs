@@ -3,11 +3,6 @@ using UnityEngine.SceneManagement;
 
 public class ButtonController : MonoBehaviour
 {
-    public void PlayButton(){
-        SceneData.sceneToLoad = 2;  
-        SceneManager.LoadScene("LoadingScene");
-    }
-    
     public void QuitButton(){
         Application.Quit();
     }
@@ -18,5 +13,11 @@ public class ButtonController : MonoBehaviour
 
     public void CloseUIButton(GameObject ui){
         ui.SetActive(false);
+    }
+
+    public void LoadScene(int id)
+    {
+        SceneData.sceneToLoad = id;
+        SceneManager.LoadScene("LoadingScene");
     }
 }

@@ -45,13 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   waves:
-  - enemiesToSpawn:
-    - enemy: {fileID: 11400000, guid: 24e2696f564f68a4fb25be1c1c05526f, type: 2}
-      count: 50
-      countPercentage: 10
-    - enemy: {fileID: 11400000, guid: 2b5e2582eda1c6d428b5d6c980a9ee19, type: 2}
-      count: 2
-      countPercentage: 10
-    difficultyMultiplier: 1
+  - {fileID: 11400000, guid: bf7de6197f582e04f971e59bb37c2feb, type: 2}
+  - {fileID: 11400000, guid: caa56fbb3114cd946afff1419b9dd27e, type: 2}
+  enemies: []
   edgeLength: 75
   waveText: {fileID: 0}

@@ -2,25 +2,30 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class WaveController : MonoBehaviour
 {
     public static WaveController Instance;
+    private UIController uiController;
 
     [Header("Main Wave Settings")]
     public List<WaveConfig> waves = new List<WaveConfig>();
 
     [Header("General Settings")]
-    public int edgeLength = 50; // Alan kare olacak.
+    public int radius;
     public TextMeshProUGUI waveText;
     private int currentWave = 0;
     private bool isEndlessMode = false;
+
+    public List<EnemyData> enemies = new List<EnemyData>();
 
     void Awake()
     {
         if(Instance == null)
         {
             Instance = this;
+            uiController = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIController>();
         }
         else
         {
@@ -30,30 +35,25 @@ public class WaveController : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(GameLoop());
+        NewWave();
     }
 
-    IEnumerator GameLoop()
+    void NewWave()
     {
-        while(currentWave < waves.Count)
+        WaveConfig cWave = waves[currentWave];
+        waveText.text = "Wave " + (currentWave + 1);
+
+        if(!isEndlessMode)
         {
-            WaveConfig cWave = waves[currentWave];
-
-            yield return StartCoroutine(ExecuteMainWaves(cWave)); 
-            currentWave++;
-
-            yield return new WaitForSeconds(2);
+            StartCoroutine(ExecuteMainWaves(cWave));
         }
-
-        while (isEndlessMode)
-        {
-            Debug.Log("Endless Mode tamamlanmadı.");
-            break;
-        }
+        currentWave++;
     }
+
 
     IEnumerator ExecuteMainWaves(WaveConfig wave)
     {
+        StartCoroutine(uiController.StartWaveTimer(wave.waveDurationSec));
         float timer = 0f;
         float spawnRate = 1f;
 
@@ -85,15 +85,16 @@ public class WaveController : MonoBehaviour
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(transform.position, new Vector3(edgeLength, edgeLength, edgeLength));
+        Gizmos.DrawWireSphere(transform.position, radius);
     }
 
     Vector3 GetRandomPoint()
     {
-        Vector3 half = new Vector3(edgeLength, edgeLength, edgeLength) / 2;
+        float r = Mathf.Sqrt(UnityEngine.Random.Range(0f, 1f)) * radius;
+        float angle = UnityEngine.Random.Range(0, Mathf.PI * 2f);
         return new Vector3(
-            Random.Range(-half.x, half.x),
-            Random.Range(-half.y, half.y),
+            Mathf.Cos(angle) * r,
+            Mathf.Sin(angle) * r,
             -1
         );
     }

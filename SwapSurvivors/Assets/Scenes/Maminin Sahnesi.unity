@@ -747,6 +747,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+--- !u!1 &2139844233
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2139844234}
+  - component: {fileID: 2139844235}
+  m_Layer: 0
+  m_Name: ButtonController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2139844234
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2139844233}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1594.5149, y: 441.65363, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2139844235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2139844233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d3ffce7f2260704985f8ea69a89df42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonController
 --- !u!1001 &210140391159231566
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -756,33 +800,13 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1729086141276757880, guid: bb6fb95eab668e5468854add1422d109, type: 3}
+      propertyPath: radius
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1729086141276757880, guid: bb6fb95eab668e5468854add1422d109, type: 3}
       propertyPath: waveText
       value: 
       objectReference: {fileID: 1693682294}
-    - target: {fileID: 1729086141276757880, guid: bb6fb95eab668e5468854add1422d109, type: 3}
-      propertyPath: waves.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1729086141276757880, guid: bb6fb95eab668e5468854add1422d109, type: 3}
-      propertyPath: 'waves.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: bf7de6197f582e04f971e59bb37c2feb, type: 2}
-    - target: {fileID: 1729086141276757880, guid: bb6fb95eab668e5468854add1422d109, type: 3}
-      propertyPath: 'waves.Array.data[1]'
-      value: 
-      objectReference: {fileID: 11400000, guid: caa56fbb3114cd946afff1419b9dd27e, type: 2}
-    - target: {fileID: 1729086141276757880, guid: bb6fb95eab668e5468854add1422d109, type: 3}
-      propertyPath: 'waves.Array.data[2]'
-      value: 
-      objectReference: {fileID: 11400000, guid: bf7de6197f582e04f971e59bb37c2feb, type: 2}
-    - target: {fileID: 1729086141276757880, guid: bb6fb95eab668e5468854add1422d109, type: 3}
-      propertyPath: waves.Array.data[0].enemiesToSpawn.Array.data[0].count
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1729086141276757880, guid: bb6fb95eab668e5468854add1422d109, type: 3}
-      propertyPath: waves.Array.data[0].enemiesToSpawn.Array.data[1].count
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6490266387763034192, guid: bb6fb95eab668e5468854add1422d109, type: 3}
       propertyPath: m_Name
       value: WaveController
@@ -884,6 +908,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4663264560331498381, guid: 1b6b556d6628f7e4e8998aacf5733f3a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2139844235}
     - target: {fileID: 6393846247805845977, guid: 1b6b556d6628f7e4e8998aacf5733f3a, type: 3}
       propertyPath: m_Camera
       value: 
@@ -965,3 +993,4 @@ SceneRoots:
   - {fileID: 301539241}
   - {fileID: 3802504937368407403}
   - {fileID: 833314420}
+  - {fileID: 2139844234}
