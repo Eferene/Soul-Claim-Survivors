@@ -1,42 +1,84 @@
 using System.Collections.Generic;
-using System;
+using System.Collections;
 using UnityEngine;
 using TMPro;
 
 public class WaveController : MonoBehaviour
 {
-    public List<Wave> waves = new List<Wave>();
+    public static WaveController Instance;
+
+    [Header("Main Wave Settings")]
+    public List<WaveConfig> waves = new List<WaveConfig>();
+
+    [Header("General Settings")]
     public int edgeLength = 50; // Alan kare olacak.
     public TextMeshProUGUI waveText;
-    private int currentWave = 1;
+    private int currentWave = 0;
+    private bool isEndlessMode = false;
+
+    void Awake()
+    {
+        if(Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void Start()
     {
-        NewWave();
+        StartCoroutine(GameLoop());
     }
 
-    public void NewWave()
+    IEnumerator GameLoop()
     {
-        waveText.text = "Wave " + currentWave;
-        Transform enemiesParent = GameObject.FindGameObjectWithTag("Enemies").transform;
-        for(int i = 0; i < waves[currentWave - 1].enemiesToSpawn.Count; i++)
+        while(currentWave < waves.Count)
         {
-            int count = Convert.ToInt32(UnityEngine.Random.Range(waves[currentWave - 1].enemiesToSpawn[i].count * (1 - waves[currentWave - 1].enemiesToSpawn[i].countPercentage / 100f), waves[currentWave - 1].enemiesToSpawn[i].count * (1 + waves[currentWave - 1].enemiesToSpawn[i].countPercentage / 100f)));
-            for(int j = 0; j < count; j++)
+            WaveConfig cWave = waves[currentWave];
+
+            yield return StartCoroutine(ExecuteMainWaves(cWave)); 
+            currentWave++;
+
+            yield return new WaitForSeconds(2);
+        }
+
+        while (isEndlessMode)
+        {
+            Debug.Log("Endless Mode tamamlanmadı.");
+            break;
+        }
+    }
+
+    IEnumerator ExecuteMainWaves(WaveConfig wave)
+    {
+        float timer = 0f;
+        float spawnRate = 1f;
+
+        while (timer < wave.waveDurationSec)
+        {
+            if(wave.enemiesToSpawn.Count > 0)
             {
-                int attempts = 0;
-                while (attempts < 50)
+                foreach(var enemyPattern in wave.enemiesToSpawn)
                 {
-                    Vector3 newPoint = GetRandomPoint();
-                    if (!IsVisibleByCamera(newPoint))
+                    foreach(var enemySequence in enemyPattern.enemySequence)
                     {
-                        GameObject newEnemy = Instantiate(waves[currentWave - 1].enemiesToSpawn[i].enemy.enemyPrefab, newPoint, Quaternion.identity, enemiesParent);
-                        newEnemy.name += " " + j;
-                        break;
+                        for(int i = 0; i < enemySequence.quantity; i++)
+                        {
+                            GameObject newEnemy = EnemyPool.Instance.GetEnemyFromPool(enemySequence.enemyData.enemyPrefab);
+                            Vector3 randomPoint = GetRandomPoint();
+                            while(IsVisibleByCamera(randomPoint)) randomPoint = GetRandomPoint();
+
+                            newEnemy.transform.position = randomPoint;
+                        }
                     }
-                    attempts++;
                 }
             }
+
+            yield return new WaitForSeconds(spawnRate);
+            timer += spawnRate;
         }
     }
 
@@ -50,8 +92,8 @@ public class WaveController : MonoBehaviour
     {
         Vector3 half = new Vector3(edgeLength, edgeLength, edgeLength) / 2;
         return new Vector3(
-            UnityEngine.Random.Range(-half.x, half.x),
-            UnityEngine.Random.Range(-half.y, half.y),
+            Random.Range(-half.x, half.x),
+            Random.Range(-half.y, half.y),
             -1
         );
     }
@@ -61,19 +103,4 @@ public class WaveController : MonoBehaviour
         Vector2 view = Camera.main.WorldToViewportPoint(point);
         return view.x > 0 && view.x < 1 && view.y > 0 && view.y < 1;
     }
-}
-
-[System.Serializable]
-public class Wave
-{
-    public List<EnemyToSpawn> enemiesToSpawn = new List<EnemyToSpawn>();
-    public int difficultyMultiplier = 1;
-}
-
-[System.Serializable]
-public class EnemyToSpawn
-{
-    public EnemyData enemy;
-    public int count;
-    public int countPercentage = 10;
 }

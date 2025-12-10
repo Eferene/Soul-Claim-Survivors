@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 3870463433508570283}
   - component: {fileID: 8071657717286977910}
   - component: {fileID: 8720751563596647136}
-  - component: {fileID: 6497590431863721205}
   - component: {fileID: 2430650570015756602}
   - component: {fileID: 3065747468037142615}
+  - component: {fileID: 813636152735748015}
   m_Layer: 7
   m_Name: Raycast-Enemy
   m_TagString: Enemy
@@ -138,18 +138,9 @@ MonoBehaviour:
   lastAttackTime: 0
   canAttack: 1
   isAttacking: 0
---- !u!114 &6497590431863721205
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7771316006053425177}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c320e5d8896df6e48b98ddacbde986ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
+  flashMat: {fileID: 2100000, guid: 2033525844189c74c9a8efe7fcfd90b1, type: 2}
+  damageTMP: {fileID: 6596860959123858565, guid: 4e8bb5aead498594c8487b6d70166e82, type: 3}
+  effectPrefab: {fileID: 1089789980245224067, guid: d3daaa0287982f74c94dffe73b734e18, type: 3}
 --- !u!61 &2430650570015756602
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -232,3 +223,15 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.27
+--- !u!114 &813636152735748015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7771316006053425177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8ef54190562ea248bbe7f7838a214d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RaycastAttack

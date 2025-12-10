@@ -15,6 +15,7 @@ public class EnemyData : ScriptableObject
     public float speed;
     public GameObject enemyPrefab;
     public EnemyType enemyType;
+    [Range(0,4)] public int enemyHardness; 
 
     [Header("Attack Info")]
     public int attackDamage;
@@ -27,7 +28,7 @@ public class EnemyData : ScriptableObject
     [ShowIf("ProjectileEnemy")] public GameObject projectilePrefab;
     [ShowIf("ProjectileEnemy")] public float projectileSpeed;
 
-    [Header("Throw Info")] // Throw attackalr için damage, cooldown Attack Info kısmında belirtilir.
+    [Header("Throw Info")] // Throw attacklar için damage, cooldown Attack Info kısmında belirtilir.
     [ShowIf("ThrowEnemy")] public GameObject throwPrefab;
     [ShowIf("ThrowEnemy")] public float throwRadius = 5f;
     [ShowIf("ThrowEnemy")] public int throwCount = 3;

@@ -5,40 +5,49 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    public float currentHealth;
     public EnemyData enemyData;
+
+    private float currentHealth;
     private EnemyAttack attackType;
-    Rigidbody2D rb;
-    Transform playerTransform;
-    Material mainMat;
-    Transform wsCanvas;
-    PlayerManager playerManager;
+    private Rigidbody2D rb;
+    private Transform playerTransform;
+    private Material mainMat;
+    private Transform wsCanvas;
+    private PlayerManager playerManager;
+    private SpriteRenderer spriteRenderer;
 
     // Cooldown
     [SerializeField] float lastAttackTime;
     [SerializeField] bool canAttack = true;
     public bool isAttacking = false;
 
-    // Resources
-    Material flashMat;
-    TextMeshProUGUI damageTMP;
-    GameObject effectPrefab;
+    [Header("Resources")]
+    [SerializeField] Material flashMat;
+    [SerializeField] TextMeshProUGUI damageTMP;
+    [SerializeField] GameObject effectPrefab;
 
     public bool IsDead => currentHealth <= 0;
 
-    void Start()
+    void Awake()
     {
-        currentHealth = enemyData.baseHealth;
         attackType = GetComponent<EnemyAttack>();
         rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        mainMat = spriteRenderer.material;
+        spriteRenderer.material = mainMat;
+        wsCanvas = GameObject.FindGameObjectWithTag("WorldSpaceCanvas").transform;
+
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null) playerTransform = playerObj.transform;
-        flashMat = Resources.Load<Material>("HitFlashMaterial");
-        damageTMP = Resources.Load<TextMeshProUGUI>("Damage Text");
-        mainMat = GetComponent<SpriteRenderer>().material;
-        wsCanvas = GameObject.FindGameObjectWithTag("WorldSpaceCanvas").transform;
-        effectPrefab = Resources.Load<GameObject>("DeathEffect");
         playerManager = playerObj.GetComponent<PlayerManager>();
+    }
+
+    void OnEnable()
+    {
+        currentHealth = enemyData.baseHealth;
+        canAttack = true;
+        isAttacking = false;
+        spriteRenderer.material = mainMat;
     }
 
     void Update()
@@ -147,19 +156,25 @@ public class EnemyController : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            float min = enemyData.scoreGain * (1f - enemyData.scoreGainPercentage / 100f);
-            float max = enemyData.scoreGain * (1f + enemyData.scoreGainPercentage / 100f);
-            float fScoreGain = Random.Range(min, max);
-            int scoreGain = Mathf.RoundToInt(fScoreGain);
-            playerManager.AddScore(scoreGain);
-            GameObject newEffect = Instantiate(effectPrefab, transform.position, Quaternion.identity);
-
-            var mainSettings = newEffect.GetComponent<ParticleSystem>().main;
-            mainSettings.startColor = new ParticleSystem.MinMaxGradient(enemyData.colors[0], enemyData.colors[1]);
-
-            Destroy(newEffect, 1f);
-            Destroy(gameObject);
+            Die();
         }
+    }
+
+    void Die()
+    {
+        float min = enemyData.scoreGain * (1f - enemyData.scoreGainPercentage / 100f);
+        float max = enemyData.scoreGain * (1f + enemyData.scoreGainPercentage / 100f);
+        float fScoreGain = Random.Range(min, max);
+        int scoreGain = Mathf.RoundToInt(fScoreGain);
+        playerManager.AddScore(scoreGain);
+        GameObject newEffect = Instantiate(effectPrefab, transform.position, Quaternion.identity);
+
+        var mainSettings = newEffect.GetComponent<ParticleSystem>().main;
+        mainSettings.startColor = new ParticleSystem.MinMaxGradient(enemyData.colors[0], enemyData.colors[1]);
+
+        Destroy(newEffect, 1f);
+        GetComponent<SpriteRenderer>().material = mainMat;
+        EnemyPool.Instance.ReturnEnemyToPool(this.gameObject);
     }
 
     IEnumerator Flash()

@@ -17,6 +17,7 @@ MonoBehaviour:
   speed: 2
   enemyPrefab: {fileID: 2329668874063197978, guid: e1b5d88b6351f1b40824299fa6304e0c, type: 3}
   enemyType: 1
+  enemyHardness: 0
   attackDamage: 25
   attackDamagePercentage: 10
   attackRange: 9
