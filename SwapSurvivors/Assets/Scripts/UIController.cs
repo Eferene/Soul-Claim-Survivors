@@ -13,6 +13,20 @@ public class UIController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI waveDurationText;
     [SerializeField] private GameObject pauseMenu;
 
+    // Upgrade Texts
+    [SerializeField] private TextMeshProUGUI damageText;
+    [SerializeField] private TextMeshProUGUI rangeText;
+    [SerializeField] private TextMeshProUGUI speedText;
+    [SerializeField] private TextMeshProUGUI attackSpeedText;
+    [SerializeField] private TextMeshProUGUI maxHealthText;
+    [SerializeField] private TextMeshProUGUI healthRegenText;
+    [SerializeField] private TextMeshProUGUI lifeStealText;
+    [SerializeField] private TextMeshProUGUI armorText;
+    [SerializeField] private TextMeshProUGUI criticalHitText;
+    [SerializeField] private TextMeshProUGUI criticalDamageText;
+
+
+
     private PlayerManager playerManager;
 
     private void Awake()
@@ -28,6 +42,7 @@ public class UIController : MonoBehaviour
     {
         playerManager.OnHealthChanged += UpdateHealthSlider;
         playerManager.OnScoreChanged += UpdateScoreText;
+        playerManager.OnStatsUpdated += UpdateUpgradeTexts;
         controls.UI.Enable();
     }
 
@@ -35,6 +50,7 @@ public class UIController : MonoBehaviour
     {
         playerManager.OnHealthChanged -= UpdateHealthSlider;
         playerManager.OnScoreChanged -= UpdateScoreText;
+        playerManager.OnStatsUpdated -= UpdateUpgradeTexts;
         controls.UI.Disable();
     }
 
@@ -42,14 +58,31 @@ public class UIController : MonoBehaviour
     {
         UpdateScoreText(playerManager.Score);
         UpdateHealthSlider(playerManager.CurrentHealth, playerManager.MaxHealth, 1f);
+        UpdateUpgradeTexts();
     }
 
-    public void UpdateScoreText(int score)
+    private void UpdateUpgradeTexts()
+    {
+        damageText.text = "Damage: " + playerManager.CurrentDamage;
+        rangeText.text = "Range: " + playerManager.CurrentRange;
+        speedText.text = "Speed: " + playerManager.CurrentSpeed;
+        attackSpeedText.text = "Attack Speed: " + playerManager.CurrentCooldown;
+
+        maxHealthText.text = "Max Health: " + playerManager.MaxHealth;
+        healthRegenText.text = "Health Regen: " + playerManager.HealthRegenBonus;
+        lifeStealText.text = "Life Steal: " + playerManager.LifeStealPercentage + "%";
+        armorText.text = "Armor: " + playerManager.ArmorPercentage + "%";
+
+        criticalHitText.text = "Critical Hit Chance: " + playerManager.CriticalHitChance + "%";
+        criticalDamageText.text = "Critical Damage: " + playerManager.CriticalHitDamageMultiplier + "x";
+    }
+
+    private void UpdateScoreText(int score)
     {
         scoreText.text = "Score: " + score;
     }
 
-    public void UpdateHealthSlider(float maxHealt, float currentHealt, float d)
+    private void UpdateHealthSlider(float maxHealt, float currentHealt, float d)
     {
         healthText.text = playerManager.CurrentHealth + "/" + playerManager.MaxHealth;
         healthImage.fillAmount = playerManager.CurrentHealth / playerManager.MaxHealth;

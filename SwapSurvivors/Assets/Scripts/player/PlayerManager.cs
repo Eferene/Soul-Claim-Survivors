@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
+    #region Variables
     [Header("Config")]
     [SerializeField] private PlayerStats baseStats;
 
@@ -14,48 +15,41 @@ public class PlayerManager : MonoBehaviour
     public float CurrentCooldown { get; private set; }
     public float CurrentRange { get; private set; }
 
-    // --- Upgrade Stats ---
-    public float DamageMultiplier { get; private set; } = 1f;
-    public float SpeedMultiplier { get; private set; } = 1f;
-    public float RangeMultiplier { get; private set; } = 1f;
-    public float MaxHealthBonus { get; private set; } = 1f;
-    public float HealthRegenBonus { get; private set; } = 1f;
-    public float LifeStealPercentage { get; private set; } = 0f;
-    public float AttackSpeedPercentage { get; private set; } = 1f;
-    public float CriticalHitChance { get; private set; } = 0f;
-    public float CriticalHitDamageMultiplier { get; private set; } = 2f;
-
-
     // --- Level & Score ---
     public int CharacterLevel { get; private set; } = 3;
     public int Score { get; private set; }
+
+    // --- Upgrade Stats --- Kod üzerinde çarpan olarak kullanılır (x1.2 = +20%)
+    public float DamagePercentage { get; private set; }
+    public float RangePercentage { get; private set; }
+    public float SpeedPercentage { get; private set; }
+    public float AttackSpeedPercentage { get; private set; }
+
+    public float MaxHealthBonus { get; private set; }
+    public float HealthRegenBonus { get; private set; }
+    public float LifeStealPercentage { get; private set; }
+    public float ArmorPercentage { get; private set; }
+
+    public float CriticalHitChance { get; private set; }
+    public float CriticalHitDamageMultiplier { get; private set; }
 
     // --- Events (UI) ---
     public event Action<float, float, float> OnHealthChanged; // (Current, Max, Damage) gönderir
     public event Action<int> OnScoreChanged; // (New Score) gönderir
     public event Action<int> OnLevelChanged; // (New Level) gönderir
-
-    public event Action<float> OnDamageUpgraded; // (New Damage Multiplier) gönderir
-    public event Action<float> OnRangeUpgraded; // (New Range Multiplier) gönderir
-    public event Action<float> OnSpeedUpgraded; // (New Speed Multiplier) gönderir
-    public event Action<float> OnMaxHealthUpgraded; // (New Max Health Multiplier) gönderir
-    public event Action<float> OnHealthRegenUpgraded; // (New Health Regen Multiplier) gönderir
-    public event Action<float> OnLifeStealUpgraded; // (New LifeSteal Percentage) gönderir
-    public event Action<float> OnAttackSpeedUpgraded; // (New Attack Speed Multiplier) gönderir
-    public event Action<float> OnCriticalHitChanceUpgraded; // (New Critical Hit Chance) gönderir
-    public event Action<float> OnCriticalHitDamageUpgraded; // (New Critical Hit Damage Multiplier) gönderir
+    public event Action OnPlayerDied;
+    public event Action OnCriticalHitOccurred;
+    public event Action OnStatsUpdated;
 
     // --- Flags ---
-    private bool isCriticalHit = false;
+    #endregion
 
-    private void Awake()
-    {
-        InitializeStats();
-    }
+    private void Awake() => InitializeStats();
 
     private void InitializeStats()
     {
         // SO'dan verileri çekip runtime değişkenlere yazıyoruz
+        // Base attack stats
         MaxHealth = baseStats.BaseMaxHealth;
         CurrentHealth = MaxHealth;
         CurrentDamage = baseStats.BaseDamage;
@@ -63,14 +57,28 @@ public class PlayerManager : MonoBehaviour
         CurrentCooldown = baseStats.BaseAttackCooldown;
         CurrentRange = baseStats.BaseRange;
 
+        // Base upgrade stats
+        DamagePercentage = baseStats.InitialDamageMultiplier;
+        RangePercentage = baseStats.InitialRangeMultiplier;
+        SpeedPercentage = baseStats.InitialSpeedMultiplier;
+        AttackSpeedPercentage = baseStats.InitialAttackSpeedMultiplier;
+
+        CriticalHitChance = baseStats.InitialCritChance;
+        CriticalHitDamageMultiplier = baseStats.InitialCritDamageMultiplier;
+        ArmorPercentage = baseStats.InitialArmorPercentage;
+        LifeStealPercentage = baseStats.InitialLifeStealRate;
+        HealthRegenBonus = baseStats.InitialHealthRegen;
+        MaxHealthBonus = 0f;
+
         Debug.Log("PlayerManager: Statlar yüklendi");
     }
 
-    // --- Health Management Methods ---
+    #region --- Health Management Methods ---
     public void TakeDamageCharacter(float amount)
     {
-        CurrentHealth -= amount;
+        float takenDamage = amount * (1 - ArmorPercentage / 100f);
 
+        CurrentHealth -= takenDamage;
         if (CurrentHealth < 0) CurrentHealth = 0;
 
         // UI'a haber
@@ -79,6 +87,7 @@ public class PlayerManager : MonoBehaviour
         if (CurrentHealth <= 0)
         {
             Debug.Log("Die");
+            OnPlayerDied?.Invoke();
         }
     }
 
@@ -88,102 +97,108 @@ public class PlayerManager : MonoBehaviour
         if (CurrentHealth > MaxHealth) CurrentHealth = MaxHealth;
         OnHealthChanged?.Invoke(CurrentHealth, MaxHealth, amount);
     }
+    #endregion
 
-    // --- Damage Management Methods ---
+    #region --- Damage Management Methods ---
     public float GiveDamageCharacter()
     {
-        float rawDamage;
-
         // Damage hesabı
-        if (isCriticalHit)
-        {
-            isCriticalHit = false;
-            rawDamage = Mathf.RoundToInt(CurrentDamage * DamageMultiplier * CriticalHitDamageMultiplier);
-        }
-        else
-            rawDamage = CurrentDamage * DamageMultiplier;
+        float damage = CurrentDamage * DamagePercentage;
+        if (UnityEngine.Random.value <= CriticalHitChance)
+            damage *= CriticalHitDamageMultiplier;
 
         // Randomize
         float fluctuation = baseStats.DamageRangePercentage;
-        float multiplier = (UnityEngine.Random.Range(-fluctuation, fluctuation) + 100) / 100;
+        float randomFactor = (UnityEngine.Random.Range(-fluctuation, fluctuation) + 100) / 100;
+        damage *= randomFactor;
 
-        return Mathf.RoundToInt(rawDamage * multiplier);
+        return Mathf.RoundToInt(damage);
     }
+    #endregion
 
-    // --- Upgrade Management Methods ---
+    #region --- Upgrade Management Methods ---
     public void ApplyUpgrades(float damageMultiplier, float rangeMultiplier, float cooldownPercentage, float speedMultiplier, float healthMultiplier)
     {
-        DamageMultiplier *= damageMultiplier;
-        RangeMultiplier *= rangeMultiplier;
+        DamagePercentage *= damageMultiplier;
+        RangePercentage *= rangeMultiplier;
         AttackSpeedPercentage += cooldownPercentage;
-        SpeedMultiplier *= speedMultiplier;
+        SpeedPercentage *= speedMultiplier;
         MaxHealthBonus *= healthMultiplier;
 
         CurrentDamage = CurrentDamage * damageMultiplier;
         CurrentRange = CurrentRange * rangeMultiplier;
         CurrentSpeed = CurrentSpeed * speedMultiplier;
-        MaxHealth = MaxHealth * MaxHealthBonus;
+
+        UpdateMaxHealth();
     }
 
     public void IncreaseDamageUpgrade(float amount)
     {
-        DamageMultiplier += amount;
-        OnDamageUpgraded?.Invoke(DamageMultiplier);
+        DamagePercentage += amount;
+        OnStatsUpdated?.Invoke();
     }
 
     public void IncreaseRangeUpgrade(float amount)
     {
-        RangeMultiplier += amount;
-        OnRangeUpgraded?.Invoke(RangeMultiplier);
+        RangePercentage += amount;
+        OnStatsUpdated?.Invoke();
     }
 
     public void IncreaseSpeedUpgrade(float amount)
     {
-        SpeedMultiplier += amount;
-        OnSpeedUpgraded?.Invoke(SpeedMultiplier);
+        SpeedPercentage += amount;
+        OnStatsUpdated?.Invoke();
     }
 
     public void IncreaseMaxHPUpgrade(float amount)
     {
         MaxHealthBonus += amount;
-        MaxHealth = baseStats.BaseMaxHealth + MaxHealthBonus;
+        UpdateMaxHealth();
         CurrentHealth += amount;
-        OnMaxHealthUpgraded?.Invoke(MaxHealthBonus);
+        OnStatsUpdated?.Invoke();
     }
 
     public void IncreaseHPRegenUpgrade(float amount)
     {
         HealthRegenBonus += amount;
-        OnHealthRegenUpgraded?.Invoke(HealthRegenBonus);
+        OnStatsUpdated?.Invoke();
     }
 
     public void IncreaseLifeStealUpgrade(float amount)
     {
         LifeStealPercentage += amount;
-        OnLifeStealUpgraded?.Invoke(LifeStealPercentage);
+        OnStatsUpdated?.Invoke();
     }
 
     public void IncreaseAttackSpeedUpgrade(float amount)
     {
         AttackSpeedPercentage += amount;
-        OnAttackSpeedUpgraded?.Invoke(AttackSpeedPercentage);
+        OnStatsUpdated?.Invoke();
     }
 
     public void IncreaseCriticalHitChanceUpgrade(float amount)
     {
         CriticalHitChance += amount;
-        OnCriticalHitChanceUpgraded?.Invoke(CriticalHitChance);
+        OnStatsUpdated?.Invoke();
     }
 
     public void IncreaseCriticalHitDamageUpgrade(float amount)
     {
         CriticalHitDamageMultiplier += amount;
-        OnCriticalHitDamageUpgraded?.Invoke(CriticalHitDamageMultiplier);
+        OnStatsUpdated?.Invoke();
     }
 
+    public void IncreaseArmor(float amount)
+    {
+        ArmorPercentage += amount;
+    }
+    private void UpdateMaxHealth()
+    {
+        MaxHealth = baseStats.BaseMaxHealth + MaxHealthBonus;
+    }
+    #endregion
 
-
-    // --- Score and Level Management Methods ---
+    #region --- Score and Level Management Methods ---
     public void AddScore(int amount)
     {
         Score += amount;
@@ -196,4 +211,5 @@ public class PlayerManager : MonoBehaviour
             CharacterLevel += amount;
         Debug.Log("Character Level Increased to: " + CharacterLevel);
     }
+    #endregion
 }
