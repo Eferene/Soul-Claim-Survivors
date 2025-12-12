@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class ThrowAttack : EnemyAttack
 {
-    List <Vector3> selectedPoints = new List<Vector3>();
-    List <GameObject> instantiatedThrows = new List<GameObject>();
+    private List <Vector3> selectedPoints = new List<Vector3>();
+    private List <GameObject> instantiatedThrows = new List<GameObject>();
     public override bool Attack(Transform enemyTransform, Transform targetTransform, float damage, float damagePercentage, float range)
     {
         // Temizleme

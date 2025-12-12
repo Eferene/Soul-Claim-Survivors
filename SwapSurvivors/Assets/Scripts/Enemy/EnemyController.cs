@@ -17,9 +17,12 @@ public class EnemyController : MonoBehaviour
     private SpriteRenderer spriteRenderer;
 
     // Cooldown
-    [SerializeField] float lastAttackTime;
-    [SerializeField] bool canAttack = true;
+    [SerializeField] private float lastAttackTime;
+    [SerializeField] private bool canAttack = true;
     public bool isAttacking = false;
+
+    // Exploding
+    public bool isExploding = false;
 
     [Header("Resources")]
     [SerializeField] Material flashMat;
@@ -74,6 +77,7 @@ public class EnemyController : MonoBehaviour
     {
         switch (attackType)
         {
+            case SuicideAttack _:
             case MeleeAttack _:
                 MoveTowardsPlayer();
                 break;
@@ -97,7 +101,7 @@ public class EnemyController : MonoBehaviour
             if (playerObj != null) playerTransform = playerObj.transform;
         }
 
-        if (rb != null && playerTransform != null && enemyData != null)
+        if (rb != null && playerTransform != null && enemyData != null && !isExploding)
         {
             Vector2 currentPos = rb.position;
             Vector2 targetPos = (Vector2)playerTransform.position;
@@ -146,7 +150,7 @@ public class EnemyController : MonoBehaviour
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;
-        StartCoroutine(Flash());
+        if(!IsDead) StartCoroutine(Flash());
         AudioManager.Instance.PlayEnemyHurtSFX();
 
         TextMeshProUGUI newText = Instantiate(damageTMP, wsCanvas);
@@ -167,14 +171,19 @@ public class EnemyController : MonoBehaviour
         float fScoreGain = Random.Range(min, max);
         int scoreGain = Mathf.RoundToInt(fScoreGain);
         playerManager.AddScore(scoreGain);
+        DieEffect();
+        GetComponent<SpriteRenderer>().material = mainMat;
+        EnemyPool.Instance.ReturnEnemyToPool(this.gameObject);
+    }
+
+    public void DieEffect()
+    {
         GameObject newEffect = Instantiate(effectPrefab, transform.position, Quaternion.identity);
 
         var mainSettings = newEffect.GetComponent<ParticleSystem>().main;
         mainSettings.startColor = new ParticleSystem.MinMaxGradient(enemyData.colors[0], enemyData.colors[1]);
 
         Destroy(newEffect, 1f);
-        GetComponent<SpriteRenderer>().material = mainMat;
-        EnemyPool.Instance.ReturnEnemyToPool(this.gameObject);
     }
 
     IEnumerator Flash()

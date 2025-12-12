@@ -8,6 +8,7 @@ public class EnemyData : ScriptableObject
     private bool ProjectileEnemy() => enemyType == EnemyType.Projectile;
     private bool ThrowEnemy() => enemyType == EnemyType.Throw;
     private bool RaycastEnemy() => enemyType == EnemyType.Raycast;
+    private bool SuicideEnemy() => enemyType == EnemyType.Suicide;
 
     [Header("Basic Info")]
     public string enemyName;
@@ -37,6 +38,11 @@ public class EnemyData : ScriptableObject
     [ShowIf("ThrowEnemy")] public float damageOverTimeDuration = 2f;
     [ShowIf("ThrowEnemy")] public float overTimeDamageInterval = 0.1f;
 
+    [Header("Suicide Info")]
+    [ShowIf("SuicideEnemy")] public float explodeDuration = 0.5f;
+    [ShowIf("SuicideEnemy")] public float explodeAreaRadius = 2.5f;
+    [ShowIf("SuicideEnemy")] public GameObject explodeArea;
+
     [Header("Stats Values")]
     public int scoreGain;
     public float scoreGainPercentage = 10; // +- oranını belirler.
@@ -56,5 +62,6 @@ public enum EnemyType
     Melee,
     Projectile,
     Raycast,
-    Throw
+    Throw,
+    Suicide
 }
