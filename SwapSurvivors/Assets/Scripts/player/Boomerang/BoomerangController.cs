@@ -64,7 +64,7 @@ public class BoomerangController : MonoBehaviour
             if (collision.TryGetComponent(out EnemyController enemyController))
             {
                 if (enemyController.IsDead) return;
-                float boomerangDamage = playerManager.GiveDamageCharacter();
+                float boomerangDamage = playerManager.CalculateDamage();
                 enemyController.TakeDamage(boomerangDamage);
 
                 if (isBouncing)
@@ -211,7 +211,7 @@ public class BoomerangController : MonoBehaviour
 
             // Hasarı ver
             if (playerManager != null)
-                enemyController.TakeDamage(playerManager.GiveDamageCharacter());
+                enemyController.TakeDamage(playerManager.CalculateDamage());
 
             // Listeye ekle
             hitEnemiesInChain.Add(enemyObj);
@@ -264,7 +264,7 @@ public class BoomerangController : MonoBehaviour
             GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
 
             if (projectile.TryGetComponent(out ProjectileController script))
-                script.Setup(playerManager.GiveDamageCharacter() / 2, boomerangSpeed, spawnDirection);
+                script.Setup(playerManager.CalculateDamage() / 2, boomerangSpeed, spawnDirection);
         }
     }
     #endregion

@@ -16,5 +16,14 @@ MonoBehaviour:
   BaseDamage: 50
   BaseSpeed: 5
   BaseAttackCooldown: 2
-  BaseRange: 1
+  BaseRange: 5
   DamageRangePercentage: 10
+  InitialDamageMultiplier: 1
+  InitialRangeMultiplier: 1
+  InitialSpeedMultiplier: 1
+  InitialAttackSpeedMultiplier: 1
+  InitialCritChance: 1
+  InitialCritDamageMultiplier: 2
+  InitialArmorPercentage: 0
+  InitialLifeStealRate: 100
+  InitialHealthRegen: 0

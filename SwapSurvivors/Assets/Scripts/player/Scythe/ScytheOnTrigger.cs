@@ -20,7 +20,7 @@ public class ScytheOnTrigger : MonoBehaviour
         {
             if (collision.TryGetComponent(out EnemyController enemyController))
             {
-                float damage = playerManager.GiveDamageCharacter();
+                float damage = playerManager.CalculateDamage();
                 enemyController.TakeDamage(damage);
                 //Debug.Log($"{collision.name} gelen {damage} hasarı yedi.");
             }

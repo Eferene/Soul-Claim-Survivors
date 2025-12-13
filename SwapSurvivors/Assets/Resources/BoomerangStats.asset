@@ -18,13 +18,12 @@ MonoBehaviour:
   BaseAttackCooldown: 0.8
   BaseRange: 10
   DamageRangePercentage: 10
-  BaseDamagePercentage: 1
-  BaseSpeedPercentage: 1
-  BaseRangePercentage: 1
-  BaseMaxHealthBonus: 0
-  BaseHealthRegenBonus: 0
-  BaseLifeStealPercentage: 0
-  BaseArmorPercentage: 0
-  BaseAttackSpeedPercentage: 1
-  BaseCriticalHitChance: 1
-  BaseCriticalHitDamageMultiplier: 2
+  InitialDamageMultiplier: 1
+  InitialRangeMultiplier: 1
+  InitialSpeedMultiplier: 1
+  InitialAttackSpeedMultiplier: 1
+  InitialCritChance: 1
+  InitialCritDamageMultiplier: 2
+  InitialArmorPercentage: 0
+  InitialLifeStealRate: 100
+  InitialHealthRegen: 0

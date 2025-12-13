@@ -33,6 +33,10 @@ public class PlayerManager : MonoBehaviour
     public float CriticalHitChance { get; private set; }
     public float CriticalHitDamageMultiplier { get; private set; }
 
+    private const float MAX_LIFE_STEAL = 5f;
+    private const float MAX_HP_REGEN = 11f;
+    private const float SOFT_CAP_SCALE = 200f;
+
     // --- Events (UI) ---
     public event Action<float, float, float> OnHealthChanged; // (Current, Max, Damage) gönderir
     public event Action<int> OnScoreChanged; // (New Score) gönderir
@@ -100,12 +104,15 @@ public class PlayerManager : MonoBehaviour
     #endregion
 
     #region --- Damage Management Methods ---
-    public float GiveDamageCharacter()
+    public float CalculateDamage()
     {
         // Damage hesabı
         float damage = CurrentDamage * DamagePercentage;
         if (UnityEngine.Random.value <= CriticalHitChance)
+        {
             damage *= CriticalHitDamageMultiplier;
+            OnCriticalHitOccurred?.Invoke();
+        }
 
         // Randomize
         float fluctuation = baseStats.DamageRangePercentage;
@@ -114,24 +121,24 @@ public class PlayerManager : MonoBehaviour
 
         return Mathf.RoundToInt(damage);
     }
+
+    public void ApplyOnHitEffects(float damageDealt)
+    {
+        float lifeStealRate = ApplySoftCap(LifeStealPercentage, MAX_LIFE_STEAL, SOFT_CAP_SCALE) / 100;
+
+        if (lifeStealRate > 0)
+        {
+            float healAmount = Mathf.RoundToInt(damageDealt * lifeStealRate);
+            if (healAmount > 0)
+            {
+                HealCharacter(healAmount);
+                Debug.Log($"Lifesteal çalıştı: {healAmount} can geldi.");
+            }
+        }
+    }
     #endregion
 
     #region --- Upgrade Management Methods ---
-    public void ApplyUpgrades(float damageMultiplier, float rangeMultiplier, float cooldownPercentage, float speedMultiplier, float healthMultiplier)
-    {
-        DamagePercentage *= damageMultiplier;
-        RangePercentage *= rangeMultiplier;
-        AttackSpeedPercentage += cooldownPercentage;
-        SpeedPercentage *= speedMultiplier;
-        MaxHealthBonus *= healthMultiplier;
-
-        CurrentDamage = CurrentDamage * damageMultiplier;
-        CurrentRange = CurrentRange * rangeMultiplier;
-        CurrentSpeed = CurrentSpeed * speedMultiplier;
-
-        UpdateMaxHealth();
-    }
-
     public void IncreaseDamageUpgrade(float amount)
     {
         DamagePercentage += amount;
@@ -141,6 +148,7 @@ public class PlayerManager : MonoBehaviour
     public void IncreaseRangeUpgrade(float amount)
     {
         RangePercentage += amount;
+        CurrentRange = baseStats.BaseRange * RangePercentage;
         OnStatsUpdated?.Invoke();
     }
 
@@ -192,6 +200,7 @@ public class PlayerManager : MonoBehaviour
     {
         ArmorPercentage += amount;
     }
+
     private void UpdateMaxHealth()
     {
         MaxHealth = baseStats.BaseMaxHealth + MaxHealthBonus;
@@ -212,4 +221,12 @@ public class PlayerManager : MonoBehaviour
         Debug.Log("Character Level Increased to: " + CharacterLevel);
     }
     #endregion
+
+    private static float ApplySoftCap(float stat, float max, float speed)
+    {
+        // Logaritmik azalan getiri formülü
+        float A = max; // Maksimum sağlık yenileme hızı
+        float B = speed; // Azalan getiri hızı
+        return A * (1f - Mathf.Exp(-stat / B));
+    }
 }

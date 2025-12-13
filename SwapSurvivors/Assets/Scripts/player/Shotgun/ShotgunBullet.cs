@@ -5,21 +5,24 @@ public class ShotgunBullet : MonoBehaviour
 {
     private float bulletDamage;
     private float bulletRange;
-    private float bulletExplosionRange;
+    private float bulletExplosionRadius;
     private float bulletExplosionDamage;
     private float characterLevel;
     private Vector3 startPosition;
 
-    Rigidbody2D rb;
+    private PlayerManager playerManager;
+    private Rigidbody2D rb;
 
     // Bu metod, mermi özelliklerini ayarlamak için çağrılır
-    public void Setup(float bulletDamage, float bulletSpeed, float bulletRange, float bulletExplosionRange, float bulletExplosionDamage, int characterLevel)
+    public void Setup(PlayerManager playerManager, float bulletDamage, float bulletSpeed, float bulletRange, float bulletExplosionRadius, int characterLevel)
     {
+        this.playerManager = playerManager;
         this.bulletDamage = bulletDamage;
         this.bulletRange = bulletRange;
-        this.bulletExplosionRange = bulletExplosionRange;
-        this.bulletExplosionDamage = bulletExplosionDamage;
+        this.bulletExplosionRadius = bulletExplosionRadius;
         this.characterLevel = characterLevel;
+
+        bulletExplosionDamage = bulletDamage / 2;
         startPosition = transform.position;
 
         rb = GetComponent<Rigidbody2D>();
@@ -50,7 +53,7 @@ public class ShotgunBullet : MonoBehaviour
             {
                 if (enemyController.IsDead) return;
                 enemyController.TakeDamage(bulletDamage);
-                //Debug.Log($"{collision.name} gelen {bulletDamage} hasarı yedi.");
+                playerManager.ApplyOnHitEffects(bulletDamage);
 
                 if (characterLevel == 3)
                     BulletExplosion();
@@ -70,7 +73,7 @@ public class ShotgunBullet : MonoBehaviour
 
     private void BulletExplosion()
     {
-        Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, bulletExplosionRange);
+        Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, bulletExplosionRadius);
 
         foreach (var enemy in enemies)
         {
@@ -79,7 +82,7 @@ public class ShotgunBullet : MonoBehaviour
                 if (enemy.TryGetComponent(out EnemyController enemyController))
                 {
                     enemyController.TakeDamage(bulletExplosionDamage);
-                    //Debug.Log($"{enemy.name} gelen {bulletExplosionDamage} hasarı yedi.");
+                    playerManager.ApplyOnHitEffects(bulletExplosionDamage);
                 }
             }
         }

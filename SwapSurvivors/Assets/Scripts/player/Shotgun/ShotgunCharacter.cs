@@ -5,11 +5,11 @@ using UnityEngine;
 public class ShotgunCharacter : BaseCharacterController
 {
     [Header("Shotgun Stats")]
-    [SerializeField] private float detectionRadius = 10.0f;
     [SerializeField] private float spreadAngle = 30.0f;
     [SerializeField] private float bulletSpeed = 20.0f;
     [SerializeField] private float bulletExplosionRadius = 1.0f;
     [SerializeField] private int bulletCount = 5;
+    private float detectionRadius;
 
     [Header("Components")]
     [SerializeField] private Transform WeaponHolder;
@@ -108,14 +108,14 @@ public class ShotgunCharacter : BaseCharacterController
             // Bullet bileşenini alıp gerekli ayarları yapar
             if (bullet.TryGetComponent(out ShotgunBullet bulletScript))
             {
-                bulletScript.Setup(playerManager.GiveDamageCharacter(), bulletSpeed, playerManager.CurrentSpeed, bulletExplosionRadius,
-                    (playerManager.GiveDamageCharacter() / 2), playerManager.CharacterLevel);
+                bulletScript.Setup(playerManager, playerManager.CalculateDamage(), bulletSpeed, playerManager.CurrentRange, bulletExplosionRadius, playerManager.CharacterLevel);
             }
         }
     }
 
     private void FindClosestEnemy()
     {
+        detectionRadius = playerManager.CurrentRange * 2;
         Collider2D[] enemiesInRange = Physics2D.OverlapCircleAll(transform.position, detectionRadius, enemyLayer);
 
         float closestDistance = Mathf.Infinity;
@@ -189,13 +189,14 @@ public class ShotgunCharacter : BaseCharacterController
     {
         if (playerManager == null)
             return;
+        detectionRadius = playerManager.CurrentRange * 2;
 
         // Algılama menzili
-        Gizmos.color = Color.yellow;
+        Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, detectionRadius);
 
         // Mermi menzili
-        Gizmos.color = Color.red;
+        Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(FirePoint.position, playerManager.CurrentRange);
     }
 }

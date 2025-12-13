@@ -70,11 +70,11 @@ public class UIController : MonoBehaviour
 
         maxHealthText.text = "Max Health: " + playerManager.MaxHealth;
         healthRegenText.text = "Health Regen: " + playerManager.HealthRegenBonus;
-        lifeStealText.text = "Life Steal: " + playerManager.LifeStealPercentage + "%";
-        armorText.text = "Armor: " + playerManager.ArmorPercentage + "%";
+        lifeStealText.text = "Life Steal: " + playerManager.LifeStealPercentage;
+        armorText.text = $"Armor: {playerManager.ArmorPercentage}% ";
 
-        criticalHitText.text = "Critical Hit Chance: " + playerManager.CriticalHitChance + "%";
-        criticalDamageText.text = "Critical Damage: " + playerManager.CriticalHitDamageMultiplier + "x";
+        criticalHitText.text = $"Critical Chance: {playerManager.CriticalHitChance}%";
+        criticalDamageText.text = $"Critical Damage: {playerManager.CriticalHitDamageMultiplier}x";
     }
 
     private void UpdateScoreText(int score)
