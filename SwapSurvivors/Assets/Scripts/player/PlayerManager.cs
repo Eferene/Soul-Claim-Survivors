@@ -42,7 +42,7 @@ public class PlayerManager : MonoBehaviour
     public event Action<int> OnScoreChanged; // (New Score) gönderir
     public event Action<int> OnLevelChanged; // (New Level) gönderir
     public event Action OnPlayerDied;
-    public event Action OnCriticalHitOccurred;
+    public event Action<bool> OnDamageHitOccurred;
     public event Action OnStatsUpdated;
 
     // --- Flags ---
@@ -108,18 +108,22 @@ public class PlayerManager : MonoBehaviour
     {
         // Damage hesabı
         float damage = CurrentDamage * DamagePercentage;
-        if (UnityEngine.Random.value <= CriticalHitChance)
-        {
-            damage *= CriticalHitDamageMultiplier;
-            OnCriticalHitOccurred?.Invoke();
-        }
 
         // Randomize
         float fluctuation = baseStats.DamageRangePercentage;
         float randomFactor = (UnityEngine.Random.Range(-fluctuation, fluctuation) + 100) / 100;
         damage *= randomFactor;
+        damage = Mathf.RoundToInt(damage);
 
-        return Mathf.RoundToInt(damage);
+        if (UnityEngine.Random.value <= CriticalHitChance)
+        {
+            damage *= CriticalHitDamageMultiplier;
+            OnDamageHitOccurred?.Invoke(true);
+        }
+        else
+            OnDamageHitOccurred?.Invoke(false);
+
+        return damage;
     }
 
     public void ApplyOnHitEffects(float damageDealt)

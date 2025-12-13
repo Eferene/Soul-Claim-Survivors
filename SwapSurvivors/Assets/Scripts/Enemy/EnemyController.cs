@@ -147,7 +147,7 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, bool isCritical)
     {
         currentHealth -= damage;
         if(!IsDead) StartCoroutine(Flash());
@@ -156,6 +156,7 @@ public class EnemyController : MonoBehaviour
         TextMeshProUGUI newText = Instantiate(damageTMP, wsCanvas);
         newText.text = damage.ToString();
         newText.color = Color.white;
+        if(isCritical) newText.color = Color.red;
         newText.transform.position = transform.position + new Vector3(0, 1.5f, 0f);
 
         if (currentHealth <= 0)
@@ -164,7 +165,7 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    void Die()
+    private void Die()
     {
         float min = enemyData.scoreGain * (1f - enemyData.scoreGainPercentage / 100f);
         float max = enemyData.scoreGain * (1f + enemyData.scoreGainPercentage / 100f);
@@ -186,14 +187,14 @@ public class EnemyController : MonoBehaviour
         Destroy(newEffect, 1f);
     }
 
-    IEnumerator Flash()
+    private IEnumerator Flash()
     {
         GetComponent<SpriteRenderer>().material = flashMat;
         yield return new WaitForSeconds(0.075f);
         GetComponent<SpriteRenderer>().material = mainMat;
     }
 
-    void OnDrawGizmosSelected()
+    private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position + enemyData.attackOffset, enemyData != null ? enemyData.attackRange : 1f);

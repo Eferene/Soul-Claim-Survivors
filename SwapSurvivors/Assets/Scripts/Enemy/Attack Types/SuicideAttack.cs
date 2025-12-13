@@ -24,6 +24,7 @@ public class SuicideAttack : EnemyAttack
         EnemyData enemyData = GetComponent<EnemyController>().enemyData;
         GameObject expAreaClone = Instantiate(enemyData.explodeArea, transform.position, Quaternion.identity);
         expAreaClone.transform.localScale = new Vector3(enemyData.explodeAreaRadius * 2, enemyData.explodeAreaRadius * 2, enemyData.explodeAreaRadius * 2);
+        expAreaClone.transform.parent = transform;
         Color expAreaStartColor = expAreaClone.GetComponent<SpriteRenderer>().color;
         Color startColor = Color.white;
         Vector3 startScale = transform.localScale;
@@ -55,7 +56,6 @@ public class SuicideAttack : EnemyAttack
         }
 
         GetComponent<EnemyController>().DieEffect();
-        Destroy(expAreaClone);
         Destroy(gameObject);
     }
 }
