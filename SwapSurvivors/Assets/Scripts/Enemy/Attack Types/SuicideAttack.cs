@@ -7,7 +7,7 @@ public class SuicideAttack : EnemyAttack
     bool isTouched = false;
     public override bool Attack(Transform enemyTransform, Transform targetTransform, float damage, float damagePercentage, float range)
     {
-        if (Vector2.Distance(enemyTransform.position + enemyTransform.GetComponent<EnemyController>().enemyData.attackOffset, targetTransform.position) <= range && !isTouched) // Menzil kontrolü
+        if (Vector2.Distance(enemyTransform.position + enemyTransform.GetComponent<SuicideEnemyController>().enemyData.attackOffset, targetTransform.position) <= range && !isTouched) // Menzil kontrolü
         {
             int dmg = Convert.ToInt32(UnityEngine.Random.Range(damage * (1 - damagePercentage / 100f), damage * (1 + damagePercentage / 100f))); // Hasar aralığını hesapla
             isTouched = true;
@@ -20,8 +20,8 @@ public class SuicideAttack : EnemyAttack
 
     IEnumerator Explode(int dmg)
     {
-        GetComponent<EnemyController>().isExploding = true;
-        EnemyData enemyData = GetComponent<EnemyController>().enemyData;
+        GetComponent<SuicideEnemyController>().isExploding = true;
+        SuicideEnemyData enemyData = GetComponent<SuicideEnemyController>().enemyData;
         GameObject expAreaClone = Instantiate(enemyData.explodeArea, transform.position, Quaternion.identity);
         expAreaClone.transform.localScale = new Vector3(enemyData.explodeAreaRadius * 2, enemyData.explodeAreaRadius * 2, enemyData.explodeAreaRadius * 2);
         expAreaClone.transform.parent = transform;
@@ -55,7 +55,7 @@ public class SuicideAttack : EnemyAttack
             }
         }
 
-        GetComponent<EnemyController>().DieEffect();
+        GetComponent<SuicideEnemyController>().DieEffect();
         Destroy(gameObject);
     }
 }

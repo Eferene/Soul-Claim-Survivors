@@ -18,10 +18,10 @@ public class ScytheOnTrigger : MonoBehaviour
     {
         if (collision.CompareTag("Enemy"))
         {
-            if (collision.TryGetComponent(out EnemyController enemyController))
+            if (collision.TryGetComponent(out IEnemy enemyInterface))
             {
                 float damage = playerManager.CalculateDamage();
-                enemyController.TakeDamage(damage);
+                enemyInterface.TakeDamage(damage);
                 //Debug.Log($"{collision.name} gelen {damage} hasarı yedi.");
             }
         }

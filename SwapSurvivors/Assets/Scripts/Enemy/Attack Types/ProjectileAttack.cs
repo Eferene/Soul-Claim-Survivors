@@ -5,9 +5,9 @@ public class ProjectileAttack : EnemyAttack
 {
     public override bool Attack(Transform enemyTransform, Transform targetTransform, float damage, float damagePercentage, float range)
     {
-        if(Vector2.Distance(enemyTransform.position + enemyTransform.GetComponent<EnemyController>().enemyData.attackOffset, targetTransform.position) <= range) // Menzil kontrolü
+        if(Vector2.Distance(enemyTransform.position + enemyTransform.GetComponent<ProjectileEnemyController>().enemyData.attackOffset, targetTransform.position) <= range) // Menzil kontrolü
         {
-            EnemyController enemyController = enemyTransform.GetComponent<EnemyController>();
+            ProjectileEnemyController enemyController = enemyTransform.GetComponent<ProjectileEnemyController>();
             if (enemyController != null && enemyController.enemyData.projectilePrefab != null)
             {
                 GameObject projectileGameObject = Instantiate(enemyController.enemyData.projectilePrefab, enemyTransform.position + enemyController.enemyData.attackOffset, Quaternion.identity);

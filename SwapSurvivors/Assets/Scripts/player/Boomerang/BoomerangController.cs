@@ -61,11 +61,11 @@ public class BoomerangController : MonoBehaviour
         {
             // Eğer manuel hit zaten bu işi yaptıysa tekrar yapma!
             if (hitEnemiesInChain.Contains(collision.gameObject)) return;
-            if (collision.TryGetComponent(out EnemyController enemyController))
+            if (collision.TryGetComponent(out IEnemy enemyInterface))
             {
-                if (enemyController.IsDead) return;
+                if (enemyInterface.IsDead) return;
                 float boomerangDamage = playerManager.CalculateDamage();
-                enemyController.TakeDamage(boomerangDamage);
+                enemyInterface.TakeDamage(boomerangDamage);
 
                 if (isBouncing)
                 {
@@ -148,7 +148,7 @@ public class BoomerangController : MonoBehaviour
                     continue;
 
                 // Ölü düşmanı pas geç 
-                if (collider.TryGetComponent(out EnemyController enemy) && enemy.IsDead)
+                if (collider.TryGetComponent(out IEnemy enemy) && enemy.IsDead)
                     continue;
 
                 float dist = Vector2.Distance(transform.position, collider.transform.position);
@@ -205,7 +205,7 @@ public class BoomerangController : MonoBehaviour
 
         // Zaten vurduklarımız arasındaysa işlem yapma (Çifte hasarı önle)
         if (hitEnemiesInChain.Contains(enemyObj)) return;
-        if (enemyObj.TryGetComponent(out EnemyController enemyController))
+        if (enemyObj.TryGetComponent(out IEnemy enemyController))
         {
             if (enemyController.IsDead) return;
 

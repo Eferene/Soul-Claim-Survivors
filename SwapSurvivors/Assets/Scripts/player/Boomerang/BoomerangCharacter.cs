@@ -62,7 +62,7 @@ public class BoomerangCharacter : BaseCharacterController
         foreach (var enemy in enemiesInRange)
         {
             // Kendimize çok yakın ölü bir enemy'i hedef almayalım
-            if (enemy.TryGetComponent(out EnemyController ec) && ec.IsDead) continue;
+            if (enemy.TryGetComponent(out IEnemy ec) && ec.IsDead) continue;
 
             float distanceToEnemy = Vector2.Distance(transform.position, enemy.transform.position);
 

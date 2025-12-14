@@ -47,7 +47,7 @@ public class ShotgunBullet : MonoBehaviour
         // Düşmanla çarpışma kontrolü
         if (collision.CompareTag("Enemy"))
         {
-            if (collision.TryGetComponent(out EnemyController enemyController))
+            if (collision.TryGetComponent(out IEnemy enemyController))
             {
                 if (enemyController.IsDead) return;
                 bulletDamage = playerManager.CalculateDamage();
@@ -78,7 +78,7 @@ public class ShotgunBullet : MonoBehaviour
         {
             if (enemy.CompareTag("Enemy"))
             {
-                if (enemy.TryGetComponent(out EnemyController enemyController))
+                if (enemy.TryGetComponent(out IEnemy enemyController))
                 {
                     bulletExplosionDamage = playerManager.CalculateDamage() * 0.5f;
                     enemyController.TakeDamage(bulletExplosionDamage);

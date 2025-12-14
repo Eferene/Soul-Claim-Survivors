@@ -188,7 +188,7 @@ public class ScyhteCharacter : BaseCharacterController
 
     void ApplyDamage(Collider2D enemy, float damage)
     {
-        if (enemy.TryGetComponent(out EnemyController enemyController))
+        if (enemy.TryGetComponent(out IEnemy enemyController))
         {
             enemyController.TakeDamage(damage);
             //Debug.Log($"{enemy.name} gelen {damage} hasarı yedi.");

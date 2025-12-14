@@ -8,7 +8,7 @@ public class RaycastAttack : EnemyAttack
     {
         int mask = LayerMask.GetMask("Player");
 
-        Vector2 origin = enemyTransform.position + enemyTransform.GetComponent<EnemyController>().enemyData.attackOffset;
+        Vector2 origin = enemyTransform.position + enemyTransform.GetComponent<RaycastEnemyController>().enemyData.attackOffset;
         Vector2 dir = (targetTransform.position - enemyTransform.position).normalized;
 
         RaycastHit2D hit = Physics2D.Raycast(origin, dir, range, mask);
@@ -17,13 +17,13 @@ public class RaycastAttack : EnemyAttack
         {
             int dmg = Convert.ToInt32(UnityEngine.Random.Range(damage * (1 - damagePercentage / 100f), damage * (1 + damagePercentage / 100f))); // Hasar aralığını hesapla
 
-            StartCoroutine(FireLaser(enemyTransform.GetComponent<EnemyController>(), origin, hit.point, dir, 0.2f, 0.3f, dmg));
+            StartCoroutine(FireLaser(enemyTransform.GetComponent<RaycastEnemyController>(), origin, hit.point, dir, 0.2f, 0.3f, dmg));
             return true;
         }
         return false;
     }
 
-    IEnumerator FireLaser(EnemyController enemy, Vector2 origin, Vector2 hitPos, Vector2 direction, float expandTime, float laserDuration, float damage)
+    IEnumerator FireLaser(RaycastEnemyController enemy, Vector2 origin, Vector2 hitPos, Vector2 direction, float expandTime, float laserDuration, float damage)
     {
         enemy.isAttacking = true;
         Vector2 laserEndPoint = hitPos + direction * 100f;

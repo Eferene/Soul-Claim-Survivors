@@ -23,10 +23,10 @@ public class ProjectileController : MonoBehaviour
     {
         if (collision.CompareTag("Enemy"))
         {
-            if (collision.TryGetComponent<EnemyController>(out EnemyController enemyController))
+            if (collision.TryGetComponent<IEnemy>(out IEnemy enemyInterface))
             {
-                if (!enemyController.IsDead)
-                    enemyController.TakeDamage(damage);
+                if (!enemyInterface.IsDead)
+                    enemyInterface.TakeDamage(damage);
             }
         }
     }

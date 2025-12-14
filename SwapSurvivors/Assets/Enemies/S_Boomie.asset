@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 792e1b55527b9b442b7cfe5d0d3a7dc9, type: 3}
+  m_Name: S_Boomie
+  m_EditorClassIdentifier: Assembly-CSharp::SuicideEnemyData
+  enemyName: Boomie
+  baseHealth: 20
+  speed: 6
+  enemyPrefab: {fileID: 8930781146192827912, guid: 0a2716643b900cb4193500394b994fd0, type: 3}
+  enemyHardness: 0
+  attackDamage: 40
+  attackDamagePercentage: 10
+  attackRange: 1
+  attackCooldown: 0
+  attackOffset: {x: -0.02141962, y: -0.05, z: 0}
+  scoreGain: 30
+  scoreGainPercentage: 10
+  colors:
+  - {r: 0, g: 0, b: 0, a: 1}
+  - {r: 1, g: 1, b: 1, a: 1}
+  explodeDuration: 0.5
+  explodeAreaRadius: 2.5
+  explodeArea: {fileID: 8486567615083376081, guid: 730f26631ab90484787ef4661e7be53c, type: 3}

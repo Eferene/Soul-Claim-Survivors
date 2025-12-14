@@ -3,7 +3,7 @@ using System;
 
 public class ThrowObject : MonoBehaviour
 {
-    public EnemyData enemyData;
+    public ThrowEnemyData enemyData;
     private float startTime;
     private int finalDamage;
     private float radius;

@@ -47,9 +47,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   enemyPrefabs:
   - {fileID: 6755691749114657334, guid: d91644b07c4f89e4aa4712e3ef608ed4, type: 3}
-  - {fileID: 2629285573929001572, guid: 0c2acea8cc71e294d895ca7901091092, type: 3}
-  - {fileID: 2329668874063197978, guid: e1b5d88b6351f1b40824299fa6304e0c, type: 3}
-  - {fileID: 8930781146192827912, guid: 0a2716643b900cb4193500394b994fd0, type: 3}
   poolSizePerEnemy: 50
 --- !u!212 &6411530686769439214
 SpriteRenderer:

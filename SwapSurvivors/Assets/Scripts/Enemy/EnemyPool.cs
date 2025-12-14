@@ -85,8 +85,8 @@ public class EnemyPool : MonoBehaviour
             GameObject child = transform.GetChild(i).gameObject;
             if (child.gameObject.activeInHierarchy)
             {
-                EnemyController enemyController = child.transform.GetComponent<EnemyController>();
-                if(enemyController != null) enemyController.DieEffect();
+                IEnemy ienemy = child.transform.GetComponent<IEnemy>();
+                if(ienemy != null) ienemy.DieEffect();
 
                 ReturnEnemyToPool(child);
             }

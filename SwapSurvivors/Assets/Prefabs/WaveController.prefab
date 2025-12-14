@@ -46,9 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   waves:
   - {fileID: 11400000, guid: bf7de6197f582e04f971e59bb37c2feb, type: 2}
-  - {fileID: 11400000, guid: caa56fbb3114cd946afff1419b9dd27e, type: 2}
   radius: 50
   waveText: {fileID: 0}
   isBreakdown: 0
-  enemies: []
-  shopsParent: {fileID: 0}
+  breakdownGameObjects: {fileID: 0}

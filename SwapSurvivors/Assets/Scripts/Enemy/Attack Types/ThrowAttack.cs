@@ -12,9 +12,9 @@ public class ThrowAttack : EnemyAttack
         instantiatedThrows.Clear();
 
         // Saldırı
-        if(Vector2.Distance(enemyTransform.position + enemyTransform.GetComponent<EnemyController>().enemyData.attackOffset, targetTransform.position) <= range) // Menzil kontrolü
+        if(Vector2.Distance(enemyTransform.position + enemyTransform.GetComponent<ThrowEnemyController>().enemyData.attackOffset, targetTransform.position) <= range) // Menzil kontrolü
         {
-            EnemyController enemyController = enemyTransform.GetComponent<EnemyController>();
+            ThrowEnemyController enemyController = enemyTransform.GetComponent<ThrowEnemyController>();
             if (enemyController != null)
             {
                 for(int i = 0; i < enemyController.enemyData.throwCount; i++)
