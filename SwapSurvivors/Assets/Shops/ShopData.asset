@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39fd8b05a884e3644833f4fbb0781088, type: 3}
+  m_Name: ShopData
+  m_EditorClassIdentifier: Assembly-CSharp::ShopData
+  shopName: 'Ergamu''s Shop '
+  shopType: 0
+  upgrades:
+  - {fileID: 11400000, guid: 6ee5424b7d6c7b94490de83c8ecf4089, type: 2}
+  - {fileID: 11400000, guid: bac5e2fb941e66f4cbd7b3aa4d542f21, type: 2}
+  - {fileID: 11400000, guid: 21cbb93ff00374343b44474cc3946aff, type: 2}
+  - {fileID: 11400000, guid: 81d68c10e856472498274d075fe3be90, type: 2}
+  - {fileID: 11400000, guid: 91afa77a896ea3a41aef9543e5b192f7, type: 2}
+  - {fileID: 11400000, guid: 377a53372f5647a4ab8a04bc47f6671f, type: 2}
+  - {fileID: 11400000, guid: 7bfc3a556c7623d46be70f1e2deaeea7, type: 2}
+  - {fileID: 11400000, guid: 63ad8d04c5a5c204aaf84f372630e69b, type: 2}
+  - {fileID: 11400000, guid: 1487d06ec5c0e7a4d9f9a91572eeb44b, type: 2}

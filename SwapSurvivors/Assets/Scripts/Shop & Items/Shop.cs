@@ -4,9 +4,33 @@ using UnityEngine;
 public class Shop : MonoBehaviour
 {
     [SerializeField] private ShopData shopData;
-    [SerializeField] private List<int> items = new List<int>();
+    [SerializeField] private UpgradeButton[] upgradeButtons;
     [SerializeField] private GameObject panel;
     public bool playerInside = false;
+
+    private void OnEnable()
+    {
+        ChooseUpgradeRandomly();
+        for(int i = 0; i < upgradeButtons.Length; i++) upgradeButtons[i].EditButton();
+    }
+
+    private void ChooseUpgradeRandomly()
+    {
+        List<UpgradeData> upgrades = new List<UpgradeData>();
+        for(int i = 0; i < shopData.upgrades.Length; i++)
+        {
+            upgrades.Add(shopData.upgrades[i]);
+        }
+
+        for(int i = 0; i < upgradeButtons.Length; i++)
+        {
+            int index = Random.Range(0, upgrades.Count);
+            UpgradeData choosedUpgrade = upgrades[index];
+            upgrades.RemoveAt(index);
+
+            upgradeButtons[i].upgradeData = choosedUpgrade;
+        }
+    }
 
     public void OpenAndCloseShop()
     {

@@ -24,6 +24,8 @@ public class PlayerManager : MonoBehaviour
     public float RangePercentage { get; private set; }
     public float SpeedPercentage { get; private set; }
     public float AttackSpeedPercentage { get; private set; }
+    public float LuckPercentage {get; private set; }
+    public float GetLuck => ApplySoftCap(LuckPercentage, MAX_LUCK, SOFT_CAP_SCALE );
 
     public float MaxHealthBonus { get; private set; }
     public float HealthRegenBonus { get; private set; }
@@ -33,6 +35,7 @@ public class PlayerManager : MonoBehaviour
     public float CriticalHitChance { get; private set; }
     public float CriticalHitDamageMultiplier { get; private set; }
 
+    private const float MAX_LUCK = 100f;
     private const float MAX_LIFE_STEAL = 5f;
     private const float MAX_HP_REGEN = 11f;
     private const float SOFT_CAP_SCALE = 200f;
@@ -66,6 +69,7 @@ public class PlayerManager : MonoBehaviour
         RangePercentage = baseStats.InitialRangeMultiplier;
         SpeedPercentage = baseStats.InitialSpeedMultiplier;
         AttackSpeedPercentage = baseStats.InitialAttackSpeedMultiplier;
+        LuckPercentage = baseStats.InitialLuckPercentage;
 
         CriticalHitChance = baseStats.InitialCritChance;
         CriticalHitDamageMultiplier = baseStats.InitialCritDamageMultiplier;
@@ -186,6 +190,12 @@ public class PlayerManager : MonoBehaviour
     public void IncreaseAttackSpeedUpgrade(float amount)
     {
         AttackSpeedPercentage += amount;
+        OnStatsUpdated?.Invoke();
+    }
+
+    public void IncreaseLuckUpgrade(float amount)
+    {
+        LuckPercentage = amount;
         OnStatsUpdated?.Invoke();
     }
 

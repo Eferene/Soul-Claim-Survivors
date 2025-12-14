@@ -23,4 +23,5 @@ public class PlayerStats : ScriptableObject
     public float InitialArmorPercentage = 0f;
     public float InitialLifeStealRate = 0f;
     public float InitialHealthRegen = 0f;
+    public float InitialLuckPercentage = 1f;
 }
