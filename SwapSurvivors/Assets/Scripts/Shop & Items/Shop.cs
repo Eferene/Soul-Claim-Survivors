@@ -10,6 +10,7 @@ public class Shop : MonoBehaviour
 
     private void OnEnable()
     {
+        for(int i = 0; i < upgradeButtons.Length; i++) upgradeButtons[i].shop = this;
         ChooseUpgradeRandomly();
         for(int i = 0; i < upgradeButtons.Length; i++) upgradeButtons[i].EditButton();
     }

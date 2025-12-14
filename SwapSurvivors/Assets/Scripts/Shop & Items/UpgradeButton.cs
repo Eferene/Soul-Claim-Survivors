@@ -1,20 +1,22 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UpgradeButton : MonoBehaviour
+public class UpgradeButton : MonoBehaviour, IPointerClickHandler
 {
     public UpgradeData upgradeData;
     public float increase;
     public Image iconImage;
     public TextMeshProUGUI titleText, descText;
     public int rarity;
+    public Shop shop;
 
     private PlayerManager playerManager;
 
-    [SerializeField] private float luckScaling = 0.01f;
+    private float luckScaling = 0.01f;
 
-    [SerializeField] private float[] baseWeights = new float[]
+    private float[] baseWeights = new float[]
     {
         50f, // Common
         35f, // Uncommon
@@ -23,7 +25,7 @@ public class UpgradeButton : MonoBehaviour
         1f   // Legendary
     };
 
-    [SerializeField] private float[] rarityLuckMultipliers = new float[]
+    private float[] rarityLuckMultipliers = new float[]
     {
         -1.2f, // Common
         -0.3f, // Uncommon
@@ -99,6 +101,46 @@ public class UpgradeButton : MonoBehaviour
             case 4: // Legendary
                 increase = Random.Range(20, 27);
                 GetComponent<Image>().color = new Color32(255, 170, 0, 180);
+                break;
+        }
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        switch (upgradeData.upgradeType)
+        {
+            case UpgradeTypes.Damage:
+                playerManager.IncreaseDamageUpgrade(increase);
+                break;
+            case UpgradeTypes.Range:
+                playerManager.IncreaseRangeUpgrade(increase);
+                break;
+            case UpgradeTypes.Speed:
+                playerManager.IncreaseSpeedUpgrade(increase);
+                break;
+            case UpgradeTypes.AttackSpeed:
+                playerManager.IncreaseAttackSpeedUpgrade(increase);
+                break;
+            case UpgradeTypes.Luck:
+                playerManager.IncreaseLuckUpgrade(increase);
+                break;
+            case UpgradeTypes.MaxHealth:
+                playerManager.IncreaseMaxHPUpgrade(increase);
+                break;
+            case UpgradeTypes.HealthRegen:
+                playerManager.IncreaseHPRegenUpgrade(increase);
+                break;
+            case UpgradeTypes.LifeSteal:
+                playerManager.IncreaseLifeStealUpgrade(increase);
+                break;
+            case UpgradeTypes.Armor:
+                playerManager.IncreaseArmor(increase);
+                break;
+            case UpgradeTypes.CriticalHitChance:
+                playerManager.IncreaseCriticalHitChanceUpgrade(increase);
+                break;
+            case UpgradeTypes.CriticalHitDamage:
+                playerManager.IncreaseCriticalHitDamageUpgrade(increase);
                 break;
         }
     }

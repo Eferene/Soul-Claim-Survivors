@@ -15,5 +15,4 @@ MonoBehaviour:
   upgradeName: Attack Speed Syringe
   upgradeDescription: Instantly increases your attack speed by +{0}%.
   upgradeIcon: {fileID: 21300000, guid: 6ab84fe19efb5a744944e0ea2414ff4d, type: 3}
-  upgradeIncrease: 20
-  upgradeIncreasePercentage: 50
+  upgradeType: 3

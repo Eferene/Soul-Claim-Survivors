@@ -15,5 +15,4 @@ MonoBehaviour:
   upgradeName: Crit Damage Syringe
   upgradeDescription: Instantly increases your critical damage by +{0}%.
   upgradeIcon: {fileID: 21300000, guid: 95ac542817770a14a8a44c3dcc743b54, type: 3}
-  upgradeIncrease: 20
-  upgradeIncreasePercentage: 50
+  upgradeType: 10

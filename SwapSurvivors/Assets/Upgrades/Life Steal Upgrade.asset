@@ -15,5 +15,4 @@ MonoBehaviour:
   upgradeName: Life Steal Syringe
   upgradeDescription: Instantly grants +{0}% life steal on damage dealt.
   upgradeIcon: {fileID: 21300000, guid: bbea8d9da14f81d4e8a254e8a10da2d4, type: 3}
-  upgradeIncrease: 20
-  upgradeIncreasePercentage: 50
+  upgradeType: 7
