@@ -26,7 +26,7 @@ Sıradan bir hayatta kalma savaşından fazlası... Oyuna temel bir karakterle b
 
 ## 🛠️ Built With (Teknolojiler)
 
-* **Engine:** Unity 2022.3 LTS
+* **Engine:** Unity 6.2
 * **Language:** C#
 * **Architecture:** ScriptableObject tabanlı Karakter ve Wave yönetimi.
 
