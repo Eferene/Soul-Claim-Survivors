@@ -2,18 +2,21 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 
 public class UIController : MonoBehaviour
 {
     private InputActions controls;
 
+    [Header("In Game UI Elements")]
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private Image healthImage;
     [SerializeField] private TextMeshProUGUI healthText;
     [SerializeField] private TextMeshProUGUI waveDurationText;
     [SerializeField] private GameObject pauseMenu;
 
-    // Upgrade Texts
+    [Header("Stats Panel Elements")]
     [SerializeField] private TextMeshProUGUI damageText;
     [SerializeField] private TextMeshProUGUI rangeText;
     [SerializeField] private TextMeshProUGUI speedText;
@@ -26,14 +29,15 @@ public class UIController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI criticalDamageText;
     [SerializeField] private TextMeshProUGUI luckText;
 
-
+    [Header("Other References")]
+    public List<GameObject> allPanels = new List<GameObject>();
 
     private PlayerManager playerManager;
 
     private void Awake()
     {
         controls = new InputActions();
-        controls.UI.Pause.performed += ctx => OpenAndClosePanel(pauseMenu);
+        controls.UI.Pause.performed += ctx => ActivateESCMenu();
 
         GameObject playerobj = GameObject.FindWithTag("Player");
         playerManager = playerobj.GetComponent<PlayerManager>();
@@ -103,6 +107,25 @@ public class UIController : MonoBehaviour
             panel.SetActive(true);
             Time.timeScale = 0;
         }
+    }
+
+    public void CloseAllPanels()
+    {
+        foreach (GameObject panel in allPanels)
+        {
+            panel.SetActive(false);
+        }
+    }
+
+    public void ActivateESCMenu()
+    {
+        if(!pauseMenu.activeInHierarchy)
+        {
+            CloseAllPanels();
+            OpenAndClosePanel(pauseMenu);
+            return;
+        }
+        OpenAndClosePanel(pauseMenu);
     }
 
     public IEnumerator StartWaveTimer(int duration)
