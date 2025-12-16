@@ -17,7 +17,7 @@ public class UpgradeButton : MonoBehaviour, IPointerClickHandler
 
     private PlayerManager playerManager;
 
-    private float luckScaling = 0.03f;
+    private float luckScaling = 0.02f;
 
     private string[] rarityNames = { "Common", "Uncommon", "Rare", "Epic", "Legendary" };
     private string[] rarityHexColors = { "#004DFF", "#00C850", "#7850FF", "#FF0026", "#FFAA00" };

@@ -75,17 +75,11 @@ public abstract class BaseCharacterController : MonoBehaviour
         {
             if(currentObject.TryGetComponent<Shop>(out Shop currentShop))
             {
-                if (currentShop.playerInside)
-                {
-                    currentShop.OpenAndCloseShop();
-                }
+                if (currentShop.playerInside) currentShop.OpenAndCloseShop();
             }
             else if(currentObject.TryGetComponent<NewWaveArea>(out NewWaveArea newWaveArea))
             {
-                if (newWaveArea.playerInside)
-                {
-                    newWaveArea.NewWave();
-                }
+                if (newWaveArea.playerInside) newWaveArea.NewWave();
             }
         }
     }

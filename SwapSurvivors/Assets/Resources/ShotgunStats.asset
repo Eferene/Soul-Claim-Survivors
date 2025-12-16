@@ -27,4 +27,4 @@ MonoBehaviour:
   BaseArmorPercent: 0
   BaseLifeStealPercent: 0
   BaseHealthRegenPercent: 100
-  BaseLuck: 1000
+  BaseLuck: 300
