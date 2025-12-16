@@ -42,7 +42,7 @@ public class UpgradeButton : MonoBehaviour, IPointerClickHandler
 
     int GetRarityByLuck()
     {
-        float luckFactor = playerManager != null ? playerManager.GetLuck : 0f;
+        float luckFactor = playerManager != null ? playerManager.CurrentLuck : 0f;
 
         float total = 0f;
         float[] weights = new float[5];
@@ -110,37 +110,37 @@ public class UpgradeButton : MonoBehaviour, IPointerClickHandler
         switch (upgradeData.upgradeType)
         {
             case UpgradeTypes.Damage:
-                playerManager.IncreaseDamageUpgrade(increase);
+                playerManager.UpgradeDamage(increase);
                 break;
             case UpgradeTypes.Range:
-                playerManager.IncreaseRangeUpgrade(increase);
+                playerManager.UpgradeRange(increase);
                 break;
             case UpgradeTypes.Speed:
-                playerManager.IncreaseSpeedUpgrade(increase);
+                playerManager.UpgradeSpeed(increase);
                 break;
             case UpgradeTypes.AttackSpeed:
-                playerManager.IncreaseAttackSpeedUpgrade(increase);
+                playerManager.UpgradeAttackSpeed(increase);
                 break;
             case UpgradeTypes.Luck:
-                playerManager.IncreaseLuckUpgrade(increase);
+                playerManager.UpgradeLuckStat(increase);
                 break;
             case UpgradeTypes.MaxHealth:
-                playerManager.IncreaseMaxHPUpgrade(increase);
+                playerManager.UpgradeMaxHP(increase);
                 break;
             case UpgradeTypes.HealthRegen:
-                playerManager.IncreaseHPRegenUpgrade(increase);
+                playerManager.UpgradeHpRegenStat(increase);
                 break;
             case UpgradeTypes.LifeSteal:
-                playerManager.IncreaseLifeStealUpgrade(increase);
+                playerManager.UpgradeLifeStealStat(increase);
                 break;
             case UpgradeTypes.Armor:
-                playerManager.IncreaseArmor(increase);
+                playerManager.UpgradeArmorStat(increase);
                 break;
             case UpgradeTypes.CriticalHitChance:
-                playerManager.IncreaseCriticalHitChanceUpgrade(increase);
+                playerManager.UpgradeCritChance(increase);
                 break;
             case UpgradeTypes.CriticalHitDamage:
-                playerManager.IncreaseCriticalHitDamageUpgrade(increase);
+                playerManager.UpgradeCritDamage(increase);
                 break;
         }
     }

@@ -3,98 +3,128 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
-    #region Variables
-    [Header("Config")]
+    #region --- Configuration ---
+    [Header("Base Stats")]
     [SerializeField] private PlayerStats baseStats;
 
-    // --- Runtime Stats ---
-    public float CurrentHealth { get; private set; }
-    public float MaxHealth { get; private set; }
-    public float CurrentDamage { get; private set; }
-    public float CurrentSpeed { get; private set; }
-    public float CurrentCooldown { get; private set; }
-    public float CurrentRange { get; private set; }
+    // Logaritmik Soft Cap Ayarları (Sabitler)
+    private const float MAX_LUCK = 100f;        // Luck max bu değere yaklaşır
+    private const float MAX_LIFESTEAL = 0.1f;   // Max %10 can çalma
+    private const float MAX_ARMOR_RED = 0.85f;  // Max %85 hasar azaltma
+    private const float MAX_HP_REGEN_PERC = 0.04f; // Yarım saniyede MaxHP'nin en fazla %4'u yenilenir
 
-    // --- Level & Score ---
-    public int CharacterLevel { get; private set; } = 2;
-    public int Score { get; private set; }
-
-    // --- Upgrade Stats --- Kod üzerinde çarpan olarak kullanılır (x1.2 = +20%)
-    public float DamagePercentage { get; private set; }
-    public float RangePercentage { get; private set; }
-    public float SpeedPercentage { get; private set; }
-    public float AttackSpeedPercentage { get; private set; }
-    public float LuckPercentage {get; private set; }
-    public float GetLuck => ApplySoftCap(LuckPercentage, MAX_LUCK, SOFT_CAP_SCALE );
-
-    public float MaxHealthBonus { get; private set; }
-    public float HealthRegenBonus { get; private set; }
-    public float LifeStealPercentage { get; private set; }
-    public float ArmorPercentage { get; private set; }
-
-    public float CriticalHitChance { get; private set; }
-    public float CriticalHitDamageMultiplier { get; private set; }
-
-    private const float MAX_LUCK = 100f;
-    private const float MAX_LIFE_STEAL = 5f;
-    private const float MAX_HP_REGEN = 11f;
-    private const float SOFT_CAP_SCALE = 200f;
-
-    // --- Events (UI) ---
-    public event Action<float, float, float> OnHealthChanged; // (Current, Max, Damage) gönderir
-    public event Action<int> OnScoreChanged; // (New Score) gönderir
-    public event Action<int> OnLevelChanged; // (New Level) gönderir
-    public event Action OnPlayerDied;
-    public event Action<bool> OnDamageHitOccurred;
-    public event Action OnStatsUpdated;
-
-    // --- Flags ---
+    // Soft Cap eğim hızı (B değeri). Bu değer ne kadar büyükse cap'e ulaşmak o kadar zorlaşır.
+    private const float SCALE_STANDARD = 167f; // Oyuncuya gözüken değer yaklaşık 500 civarı iken sınıra ulaşır
     #endregion
+
+    #region --- Runtime Modifiers ---
+
+    // Bu değerler Bonustur. 0.1f = %10 artış demektir.
+    private float _damageMod = 0f;
+    private float _rangeMod = 0f;
+    private float _speedMod = 0f;
+    private float _attackSpeedMod = 0f;
+
+    private float _flatMaxHpBonus = 0f;
+
+    // Bu statlar birikir, hesaplanırken logaritmik cap uygulanır
+    private float _hpRegenStat = 0f;
+    private float _lifeStealStat = 0f;
+    private float _armorStat = 0f;
+    private float _luckStat = 0f;
+
+    private float _critChanceMod = 0f; // 0.05 = %5
+    private float _critDamageMod = 0f; // çarpan
+
+    private float _regenTimer = 0f;
+    #endregion
+
+    #region --- Public Properties ---
+    // ---- UI için ham değerler ---
+    public float RawRegenScore => _hpRegenStat;
+    public float RawLifeStealScore => _lifeStealStat;
+    public float RawArmorScore => _armorStat;
+    public float RawLuckScore => _luckStat;
+
+    // --- Doğrudan Çarpan & Bonus Stats ---
+    public float MaxHealth => baseStats.MaxHealth + _flatMaxHpBonus;
+    public float CurrentDamage => baseStats.AttackDamage * (1 + _damageMod);
+    public float CurrentRange => baseStats.AttackRange * (1 + _rangeMod);
+    public float CurrentSpeed => baseStats.MovementSpeed * (1 + _speedMod);
+    public float CurrentCooldown => baseStats.AttackCooldown / (1 + _attackSpeedMod);
+
+    // --- Logaritmik & Cap Stats ---
+    public float RegenPercentPerSec => ApplySoftCap(_hpRegenStat, MAX_HP_REGEN_PERC, SCALE_STANDARD); // MaxHP'nin yüzde kaçı yenilenecek? Max %10
+    public float LifeStealRate => ApplySoftCap(_lifeStealStat, MAX_LIFESTEAL, SCALE_STANDARD); // Vurulan hasarın yüzde kaçı dönecek? Max %10
+    public float DamageReduction => ApplySoftCap(_armorStat, MAX_ARMOR_RED, SCALE_STANDARD); // Alınan hasarın yüzde kaçı engellenecek? Max %85
+    public float CurrentLuck => ApplySoftCap(_luckStat, MAX_LUCK, SCALE_STANDARD); // Max 100
+    public float CritChance => Mathf.Clamp01(_critChanceMod); // 0-1 arası clamp
+    public float CritMultiplier => _critDamageMod; // Base + bonus
+    #endregion
+
+    #region --- State Variables ---
+    public float CurrentHealth { get; private set; }
+    public int CharacterLevel { get; private set; } = 1;
+    public int LevelExperience { get; private set; } = 0;
+    public int Level { get; private set; } = 0;
+    public int Score { get; private set; }
+    #endregion
+
+    #region --- Events ---
+    public event Action<float, float, float> OnHealthChanged; // Current, Max, ChangeAmount
+    public event Action<int> OnScoreChanged;
+    public event Action<int> OnLevelChanged;
+    public event Action OnPlayerDied;
+    public event Action<bool> OnDamageHitOccurred; // IsCrit?
+    public event Action OnStatsUpdated; // UI update için
+    #endregion
+
+    #region --- Unity Lifecycle Methods ---
 
     private void Awake() => InitializeStats();
 
+    private void Update() => HandleRegeneration();
+
     private void InitializeStats()
     {
-        // SO'dan verileri çekip runtime değişkenlere yazıyoruz
-        // Base attack stats
-        MaxHealth = baseStats.BaseMaxHealth;
-        CurrentHealth = MaxHealth;
-        CurrentDamage = baseStats.BaseDamage;
-        CurrentSpeed = baseStats.BaseSpeed;
-        CurrentCooldown = baseStats.BaseAttackCooldown;
-        CurrentRange = baseStats.BaseRange;
-
         // Base upgrade stats
-        DamagePercentage = baseStats.InitialDamageMultiplier;
-        RangePercentage = baseStats.InitialRangeMultiplier;
-        SpeedPercentage = baseStats.InitialSpeedMultiplier;
-        AttackSpeedPercentage = baseStats.InitialAttackSpeedMultiplier;
-        LuckPercentage = baseStats.InitialLuckPercentage;
+        _damageMod = baseStats.StartingDamageBonus;
+        _rangeMod = baseStats.StartingRangeBonus;
+        _speedMod = baseStats.StartingSpeedBonus;
+        _attackSpeedMod = baseStats.StartingAttackSpeedBonus;
 
-        CriticalHitChance = baseStats.InitialCritChance;
-        CriticalHitDamageMultiplier = baseStats.InitialCritDamageMultiplier;
-        ArmorPercentage = baseStats.InitialArmorPercentage;
-        LifeStealPercentage = baseStats.InitialLifeStealRate;
-        HealthRegenBonus = baseStats.InitialHealthRegen;
-        MaxHealthBonus = 0f;
+        _flatMaxHpBonus = 0f;
+
+        _hpRegenStat = baseStats.BaseHealthRegenPercent;
+        _lifeStealStat = baseStats.BaseLifeStealPercent;
+        _armorStat = baseStats.BaseArmorPercent;
+        _luckStat = baseStats.BaseLuck;
+
+        _critChanceMod = baseStats.BaseCritChance;
+        _critDamageMod = baseStats.BaseCritMultiplier;
+
+        CurrentHealth = MaxHealth;
+        OnHealthChanged?.Invoke(CurrentHealth, MaxHealth, 0f);
 
         Debug.Log("PlayerManager: Statlar yüklendi");
     }
 
+    #endregion
+
     #region --- Health Management Methods ---
-    public void TakeDamageCharacter(float amount)
+    public void TakeDamageCharacter(float rawDamage)
     {
-        float takenDamage = amount * (1 - ArmorPercentage / 100f);
+        float takenDamage = rawDamage * (1f - DamageReduction);
 
         CurrentHealth -= takenDamage;
-        if (CurrentHealth < 0) CurrentHealth = 0;
 
         // UI'a haber
-        OnHealthChanged?.Invoke(CurrentHealth, MaxHealth, amount);
+        OnHealthChanged?.Invoke(CurrentHealth, MaxHealth, takenDamage);
 
         if (CurrentHealth <= 0)
         {
-            Debug.Log("Die");
+            CurrentHealth = 0;
+            Debug.Log("Wasted");
             OnPlayerDied?.Invoke();
         }
     }
@@ -105,39 +135,56 @@ public class PlayerManager : MonoBehaviour
         if (CurrentHealth > MaxHealth) CurrentHealth = MaxHealth;
         OnHealthChanged?.Invoke(CurrentHealth, MaxHealth, amount);
     }
+
+    private void HandleRegeneration()
+    {
+        if (CurrentHealth >= MaxHealth || CurrentHealth <= 0)
+        {
+            _regenTimer = 0f;
+            return;
+        }
+
+        _regenTimer += Time.deltaTime;
+
+        if (_regenTimer >= 0.5f)
+        {
+            float regenPercent = RegenPercentPerSec;
+            if (regenPercent > 0)
+            {
+                // Yarım saniyede MaxHP'nin %X'i kadar iyileş
+                float amount = MaxHealth * regenPercent;
+                HealCharacter(amount);
+            }
+            _regenTimer = 0f;
+        }
+    }
     #endregion
 
     #region --- Damage Management Methods ---
     public float CalculateDamage()
     {
         // Damage hesabı
-        float damage = CurrentDamage * DamagePercentage;
+        float damage = CurrentDamage;
 
         // Randomize
-        float fluctuation = baseStats.DamageRangePercentage;
-        float randomFactor = (UnityEngine.Random.Range(-fluctuation, fluctuation) + 100) / 100;
-        damage *= randomFactor;
+        float variance = baseStats.DamageVariance;
+        damage *= UnityEngine.Random.Range(1f - variance, 1f + variance);
 
-        if (UnityEngine.Random.value <= CriticalHitChance)
-        {
-            damage *= CriticalHitDamageMultiplier;
-            OnDamageHitOccurred?.Invoke(true);
-        }
-        else
-            OnDamageHitOccurred?.Invoke(false);
+        // Crit hesabı
+        bool isCriticalHit = UnityEngine.Random.value <= CritChance;
+        if (isCriticalHit)
+            damage *= CritMultiplier;
+        OnDamageHitOccurred?.Invoke(isCriticalHit);
 
-        damage = Mathf.RoundToInt(damage);
-
-        return damage;
+        return Mathf.RoundToInt(damage);
     }
 
-    public void ApplyOnHitEffects(float damageDealt)
+    public void ApplyLifeSteal(float damageDealt)
     {
-        float lifeStealRate = ApplySoftCap(LifeStealPercentage, MAX_LIFE_STEAL, SOFT_CAP_SCALE) / 100;
-
-        if (lifeStealRate > 0)
+        float rate = LifeStealRate;
+        if (rate > 0)
         {
-            float healAmount = Mathf.RoundToInt(damageDealt * lifeStealRate);
+            float healAmount = Mathf.RoundToInt(damageDealt * rate);
             if (healAmount > 0)
             {
                 HealCharacter(healAmount);
@@ -148,78 +195,85 @@ public class PlayerManager : MonoBehaviour
     #endregion
 
     #region --- Upgrade Management Methods ---
-    public void IncreaseDamageUpgrade(float amount)
+
+    /// <param name="amount"> 0.2 = 20% artış </param>
+    public void UpgradeDamage(float amount)
     {
-        DamagePercentage += amount;
-        OnStatsUpdated?.Invoke();
+        _damageMod += amount;
+        UIUpdate();
     }
 
-    public void IncreaseRangeUpgrade(float amount)
+    /// <param name="amount"> 0.2 = 20% artış </param>
+    public void UpgradeRange(float amount)
     {
-        RangePercentage += amount;
-        CurrentRange = baseStats.BaseRange * RangePercentage;
-        OnStatsUpdated?.Invoke();
+        _rangeMod += amount;
+        UIUpdate();
     }
 
-    public void IncreaseSpeedUpgrade(float amount)
+    /// <param name="amount"> 0.2 = 20% artış </param>
+    public void UpgradeSpeed(float amount)
     {
-        SpeedPercentage += amount;
-        OnStatsUpdated?.Invoke();
+        _speedMod += amount;
+        UIUpdate();
     }
 
-    public void IncreaseMaxHPUpgrade(float amount)
+    /// <param name="amount"> 0.2 = 20% artış </param>
+    public void UpgradeAttackSpeed(float amount)
     {
-        MaxHealthBonus += amount;
-        UpdateMaxHealth();
+        _attackSpeedMod += amount;
+        UIUpdate();
+    }
+
+    /// <param name="amount"> Doğrudan HP artışı </param>
+    public void UpgradeMaxHP(float amount)
+    {
+        _flatMaxHpBonus += amount;
         CurrentHealth += amount;
-        OnStatsUpdated?.Invoke();
+        UIUpdate();
     }
 
-    public void IncreaseHPRegenUpgrade(float amount)
+    /// <param name="amount"> Doğrudan HP yenileme artışı </param>
+    public void UpgradeHpRegenStat(float amount)
     {
-        HealthRegenBonus += amount;
-        OnStatsUpdated?.Invoke();
+        _hpRegenStat += amount;
+        UIUpdate();
     }
 
-    public void IncreaseLifeStealUpgrade(float amount)
+    /// <param name="amount"> Doğrudan yüzde artışı alır. +20 = 20% </param>
+    public void UpgradeLifeStealStat(float amount)
     {
-        LifeStealPercentage += amount;
-        OnStatsUpdated?.Invoke();
+        _lifeStealStat += amount;
+        UIUpdate();
     }
 
-    public void IncreaseAttackSpeedUpgrade(float amount)
+    /// <param name="amount"> Doğrudan yüzde artışı alır. +5 = 5% </param>
+    public void UpgradeArmorStat(float amount)
     {
-        AttackSpeedPercentage += amount;
-        OnStatsUpdated?.Invoke();
+        _armorStat += amount;
     }
 
-    public void IncreaseLuckUpgrade(float amount)
+    /// <param name="amount"> Doğrudan yüzde artışı alır. +20 = 20% </param>
+    public void UpgradeLuckStat(float amount)
     {
-        LuckPercentage = amount;
-        OnStatsUpdated?.Invoke();
+        _luckStat += amount;
+        UIUpdate();
     }
 
-    public void IncreaseCriticalHitChanceUpgrade(float amount)
+    /// <param name="amount"> Doğrudan yüzde artışı alır. +5 = 5% </param>
+    public void UpgradeCritChance(float amount)
     {
-        CriticalHitChance += amount;
-        OnStatsUpdated?.Invoke();
+        _critChanceMod += amount;
+        UIUpdate();
     }
 
-    public void IncreaseCriticalHitDamageUpgrade(float amount)
+    /// <param name="amount"> Doğrudan çarpan artışı alır. +0.5 = x0.5 artış </param>
+    public void UpgradeCritDamage(float amount)
     {
-        CriticalHitDamageMultiplier += amount;
-        OnStatsUpdated?.Invoke();
+        _critDamageMod += amount;
+        UIUpdate();
     }
 
-    public void IncreaseArmor(float amount)
-    {
-        ArmorPercentage += amount;
-    }
-
-    private void UpdateMaxHealth()
-    {
-        MaxHealth = baseStats.BaseMaxHealth + MaxHealthBonus;
-    }
+    private void UIUpdate() => OnStatsUpdated?.Invoke();
     #endregion
 
     #region --- Score and Level Management Methods ---
@@ -227,6 +281,20 @@ public class PlayerManager : MonoBehaviour
     {
         Score += amount;
         OnScoreChanged?.Invoke(Score);
+    }
+
+    public void AddExperience(int amount)
+    {
+        LevelExperience += amount;
+        Debug.Log("Gained Experience: " + amount);
+    }
+
+    public void LevelUp()
+    {
+        Level += 1;
+        LevelExperience = 0;
+        OnLevelChanged?.Invoke(Level);
+        Debug.Log("Level Up! New Level: " + Level);
     }
 
     public void IncreaseCharacterLevel(int amount)
@@ -237,11 +305,21 @@ public class PlayerManager : MonoBehaviour
     }
     #endregion
 
-    private static float ApplySoftCap(float stat, float max, float speed)
+    #region --- Math Helpers ---
+    /// <summary>
+    /// Logaritmik Soft Cap Formülü
+    /// </summary>
+    /// <param name="stat"> Biriken puan </param>
+    /// <param name="maxValue"> Ulaşılabilecek teorik maksimum sınır </param>
+    /// <param name="scale"> Eğrinin yumuşaklığı. Ne kadar yüksek ise o kadar yavaş artar </param>
+    /// <returns></returns>
+    private static float ApplySoftCap(float stat, float maxValue, float scale)
     {
-        // Logaritmik azalan getiri formülü
-        float A = max; // Maksimum sağlık yenileme hızı
-        float B = speed; // Azalan getiri hızı
-        return A * (1f - Mathf.Exp(-stat / B));
+        // Stat = scale ise limitin %63ü
+        // Stat = 2scale ise % 86
+        // Stat = 3scale ise % 95
+        if (stat <= 0) return 0;
+        return maxValue * (1f - Mathf.Exp(-stat / scale));
     }
+    #endregion
 }

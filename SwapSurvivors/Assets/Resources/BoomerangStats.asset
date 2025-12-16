@@ -12,18 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47194f9f0675d204aa42e5fcb62294a6, type: 3}
   m_Name: BoomerangStats
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
-  BaseMaxHealth: 200
-  BaseDamage: 35
-  BaseSpeed: 6
-  BaseAttackCooldown: 0.8
-  BaseRange: 10
-  DamageRangePercentage: 10
-  InitialDamageMultiplier: 1
-  InitialRangeMultiplier: 1
-  InitialSpeedMultiplier: 1
-  InitialAttackSpeedMultiplier: 1
-  InitialCritChance: 1
-  InitialCritDamageMultiplier: 2
-  InitialArmorPercentage: 0
-  InitialLifeStealRate: 100
-  InitialHealthRegen: 0
+  MaxHealth: 100
+  AttackDamage: 50
+  MovementSpeed: 5
+  AttackCooldown: 1
+  AttackRange: 1
+  DamageVariance: 0.1
+  StartingDamageBonus: 0
+  StartingRangeBonus: 0
+  StartingSpeedBonus: 0
+  StartingAttackSpeedBonus: 0
+  BaseCritChance: 0.05
+  BaseCritMultiplier: 2
+  BaseArmorPercent: 0
+  BaseLifeStealPercent: 0
+  BaseHealthRegenPercent: 0
+  BaseLuck: 0

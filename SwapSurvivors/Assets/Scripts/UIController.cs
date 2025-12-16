@@ -24,6 +24,7 @@ public class UIController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI armorText;
     [SerializeField] private TextMeshProUGUI criticalHitText;
     [SerializeField] private TextMeshProUGUI criticalDamageText;
+    [SerializeField] private TextMeshProUGUI luckText;
 
 
 
@@ -69,12 +70,14 @@ public class UIController : MonoBehaviour
         attackSpeedText.text = "Attack Speed: " + playerManager.CurrentCooldown;
 
         maxHealthText.text = "Max Health: " + playerManager.MaxHealth;
-        healthRegenText.text = "Health Regen: " + playerManager.HealthRegenBonus;
-        lifeStealText.text = "Life Steal: " + playerManager.LifeStealPercentage;
-        armorText.text = $"Armor: {playerManager.ArmorPercentage}% ";
+        healthRegenText.text = "Health Regen: " + playerManager.RawRegenScore;
+        lifeStealText.text = "Life Steal: " + playerManager.RawLifeStealScore;
+        armorText.text = $"Armor: {playerManager.RawArmorScore}% ";
 
-        criticalHitText.text = $"Critical Chance: {playerManager.CriticalHitChance}%";
-        criticalDamageText.text = $"Critical Damage: {playerManager.CriticalHitDamageMultiplier}x";
+        criticalHitText.text = $"Critical Chance: {playerManager.CritChance * 100}%";
+        criticalDamageText.text = $"Critical Damage: {playerManager.CritMultiplier}x";
+
+        luckText.text = "Luck: " + playerManager.RawLuckScore;
     }
 
     private void UpdateScoreText(int score)

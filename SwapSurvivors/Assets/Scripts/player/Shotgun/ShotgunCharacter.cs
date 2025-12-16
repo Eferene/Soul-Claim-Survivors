@@ -115,7 +115,7 @@ public class ShotgunCharacter : BaseCharacterController
 
     private void FindClosestEnemy()
     {
-        detectionRadius = playerManager.CurrentRange * 2;
+        detectionRadius = playerManager.CurrentRange * 1.2f;
         Collider2D[] enemiesInRange = Physics2D.OverlapCircleAll(transform.position, detectionRadius, enemyLayer);
 
         float closestDistance = Mathf.Infinity;

@@ -52,7 +52,7 @@ public class ShotgunBullet : MonoBehaviour
                 if (enemyController.IsDead) return;
                 bulletDamage = playerManager.CalculateDamage();
                 enemyController.TakeDamage(bulletDamage);
-                playerManager.ApplyOnHitEffects(bulletDamage);
+                playerManager.ApplyLifeSteal(bulletDamage);
 
                 if (characterLevel == 3)
                     BulletExplosion();
@@ -82,7 +82,7 @@ public class ShotgunBullet : MonoBehaviour
                 {
                     bulletExplosionDamage = playerManager.CalculateDamage() * 0.5f;
                     enemyController.TakeDamage(bulletExplosionDamage);
-                    playerManager.ApplyOnHitEffects(bulletExplosionDamage);
+                    playerManager.ApplyLifeSteal(bulletExplosionDamage);
                 }
             }
         }

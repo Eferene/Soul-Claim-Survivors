@@ -12,18 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47194f9f0675d204aa42e5fcb62294a6, type: 3}
   m_Name: ShotgunStats
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
-  BaseMaxHealth: 250
-  BaseDamage: 1000
-  BaseSpeed: 5
-  BaseAttackCooldown: 0.1
-  BaseRange: 5
-  DamageRangePercentage: 10
-  InitialDamageMultiplier: 1
-  InitialRangeMultiplier: 1
-  InitialSpeedMultiplier: 1
-  InitialAttackSpeedMultiplier: 1
-  InitialCritChance: 0.5
-  InitialCritDamageMultiplier: 2
-  InitialArmorPercentage: 0
-  InitialLifeStealRate: 500
-  InitialHealthRegen: 0
+  MaxHealth: 500
+  AttackDamage: 50
+  MovementSpeed: 5
+  AttackCooldown: 1
+  AttackRange: 1
+  DamageVariance: 0.1
+  StartingDamageBonus: 0
+  StartingRangeBonus: 0
+  StartingSpeedBonus: 0
+  StartingAttackSpeedBonus: 0
+  BaseCritChance: 0.3
+  BaseCritMultiplier: 2
+  BaseArmorPercent: 0
+  BaseLifeStealPercent: 0
+  BaseHealthRegenPercent: 100
+  BaseLuck: 0

@@ -173,7 +173,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7774772395844302022, guid: 79be40db6ead75c4c8c1450a226c84f9, type: 3}
       propertyPath: bulletCount
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

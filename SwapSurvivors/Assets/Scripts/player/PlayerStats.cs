@@ -4,24 +4,27 @@
 public class PlayerStats : ScriptableObject
 {
     [Header("Base Attack Stats")]
-    public float BaseMaxHealth = 100f;
-    public float BaseDamage = 50f;
-    public float BaseSpeed = 5f;
-    public float BaseAttackCooldown = 1f;
-    public float BaseRange = 1f;
+    public float MaxHealth = 100f;
+    public float AttackDamage = 50f;
+    public float MovementSpeed = 5f;
+    public float AttackCooldown = 1f;
+    public float AttackRange = 1f;
 
-    [Header("Combat Config")]
-    public float DamageRangePercentage = 10f; // Hasar dalgalanma oranı
+    [Header("Combat Settings")]
+    [Range(0f, 1f)]
+    public float DamageVariance = 0.1f;
 
-    [Header("Initial Upgrade Stats")]
-    public float InitialDamageMultiplier = 1f;
-    public float InitialRangeMultiplier = 1f;
-    public float InitialSpeedMultiplier = 1f;
-    public float InitialAttackSpeedMultiplier = 1f;
-    public float InitialCritChance = 1f;
-    public float InitialCritDamageMultiplier = 2f;
-    public float InitialArmorPercentage = 0f;
-    public float InitialLifeStealRate = 0f;
-    public float InitialHealthRegen = 0f;
-    public float InitialLuckPercentage = 1f;
+    [Header("Starting Bonuses")]
+    public float StartingDamageBonus = 0f;
+    public float StartingRangeBonus = 0f;
+    public float StartingSpeedBonus = 0f;
+    public float StartingAttackSpeedBonus = 0f;
+
+    [Header("Starting Stats")]
+    public float BaseCritChance = 0.05f;
+    public float BaseCritMultiplier = 2f;
+    public float BaseArmorPercent = 0f;
+    public float BaseLifeStealPercent = 0f;
+    public float BaseHealthRegenPercent = 0f;
+    public float BaseLuck = 0f;
 }
