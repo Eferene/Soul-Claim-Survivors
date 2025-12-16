@@ -10,7 +10,11 @@ public class Shop : MonoBehaviour
 
     private void OnEnable()
     {
-        for(int i = 0; i < upgradeButtons.Length; i++) upgradeButtons[i].shop = this;
+        for(int i = 0; i < upgradeButtons.Length; i++)
+        {
+            upgradeButtons[i].shop = this;
+            upgradeButtons[i].InitializeButton(GameObject.FindWithTag("Player").GetComponent<PlayerManager>());
+        }
         ChooseUpgradeRandomly();
         for(int i = 0; i < upgradeButtons.Length; i++) upgradeButtons[i].EditButton();
     }
@@ -41,7 +45,7 @@ public class Shop : MonoBehaviour
             Time.timeScale = 0;
         }
         else
-        {
+        { 
             panel.SetActive(false);
             Time.timeScale = 1;
         }

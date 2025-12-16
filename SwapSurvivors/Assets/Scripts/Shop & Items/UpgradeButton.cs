@@ -2,21 +2,27 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using System.Text;
 
 public class UpgradeButton : MonoBehaviour, IPointerClickHandler
 {
+    public bool debugProbabilities = true;
+
     public UpgradeData upgradeData;
     public float increase;
     public Image iconImage;
-    public TextMeshProUGUI titleText, descText;
+    public TextMeshProUGUI titleText, descText; 
     public int rarity;
     public Shop shop;
 
     private PlayerManager playerManager;
 
-    private float luckScaling = 0.01f;
+    private float luckScaling = 0.03f;
 
-    private float[] baseWeights = new float[]
+    private string[] rarityNames = { "Common", "Uncommon", "Rare", "Epic", "Legendary" };
+    private string[] rarityHexColors = { "#004DFF", "#00C850", "#7850FF", "#FF0026", "#FFAA00" };
+
+    [SerializeField] private float[] baseWeights = new float[]
     {
         50f, // Common
         35f, // Uncommon
@@ -25,19 +31,18 @@ public class UpgradeButton : MonoBehaviour, IPointerClickHandler
         1f   // Legendary
     };
 
-    private float[] rarityLuckMultipliers = new float[]
+    [SerializeField] private float[] rarityLuckMultipliers = new float[]
     {
-        -1.2f, // Common
-        -0.3f, // Uncommon
-        1f,    // Rare
-        1.5f,  // Epic
-        3f     // Legendary
+        -1.5f, // Common
+        -0.5f, // Uncommon
+        0.5f,  // Rare
+        1.0f,  // Epic 
+        1.5f   // Legendary
     };
 
-    private void Awake()
+    public void InitializeButton(PlayerManager _playerManager)
     {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null) playerManager = player.GetComponent<PlayerManager>();
+        playerManager = _playerManager;
     }
 
     int GetRarityByLuck()
@@ -53,6 +58,20 @@ public class UpgradeButton : MonoBehaviour, IPointerClickHandler
             // Exponential scaling ile luck etkisini uygula
             weights[i] = baseWeights[i] * Mathf.Exp(rarityLuckMultipliers[i] * luckFactor * luckScaling);
             total += weights[i];
+        }
+
+        if (debugProbabilities)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine($"<b><color=yellow>--- LUCK STAT: {luckFactor} ---</color></b>");
+            
+            for (int i = 0; i < 5; i++)
+            {
+                float percentage = (weights[i] / total) * 100f;
+                // Renkli ve okunaklı format: Common: %52.34
+                sb.AppendLine($"<color={rarityHexColors[i]}>{rarityNames[i]}</color>: %{percentage:F2}");
+            }
+            Debug.Log(sb.ToString());
         }
 
         // Weighted random selection
