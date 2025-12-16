@@ -188,8 +188,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9703c2f1ffc0f7d42806ac9d4fe84576, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  shopData: {fileID: 0}
-  items: 
+  shopData: {fileID: 11400000, guid: b556c7d9aca0233448efe67a13f31380, type: 2}
+  upgradeButtons:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   panel: {fileID: 0}
   playerInside: 0
 --- !u!1 &2013147496726966546

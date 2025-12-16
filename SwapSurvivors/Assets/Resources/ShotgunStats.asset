@@ -22,9 +22,9 @@ MonoBehaviour:
   StartingRangeBonus: 0
   StartingSpeedBonus: 0
   StartingAttackSpeedBonus: 0
-  BaseCritChance: 0.3
+  BaseCritChance: 30
   BaseCritMultiplier: 2
   BaseArmorPercent: 0
   BaseLifeStealPercent: 0
-  BaseHealthRegenPercent: 100
-  BaseLuck: 1000
+  BaseHealthRegenPercent: 0
+  BaseLuck: 150

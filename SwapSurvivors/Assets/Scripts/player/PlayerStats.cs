@@ -21,7 +21,8 @@ public class PlayerStats : ScriptableObject
     public float StartingAttackSpeedBonus = 0f;
 
     [Header("Starting Stats")]
-    public float BaseCritChance = 0.05f;
+    [Range(0f, 100f)]
+    public float BaseCritChance = 0f;
     public float BaseCritMultiplier = 2f;
     public float BaseArmorPercent = 0f;
     public float BaseLifeStealPercent = 0f;

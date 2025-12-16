@@ -64,20 +64,20 @@ public class UIController : MonoBehaviour
 
     private void UpdateUpgradeTexts()
     {
-        damageText.text = "Damage: " + playerManager.CurrentDamage;
-        rangeText.text = "Range: " + playerManager.CurrentRange;
-        speedText.text = "Speed: " + playerManager.CurrentSpeed;
-        attackSpeedText.text = "Attack Speed: " + playerManager.CurrentCooldown;
+        damageText.text = $"Damage: {playerManager.UIDamageScore}x";
+        rangeText.text = $"Range: {playerManager.UIRangeScore}%";
+        speedText.text = $"Speed: {playerManager.UISpeedScore}%";
+        attackSpeedText.text = $"Attack Speed: {playerManager.UIAttackSpeedScore}%";
 
         maxHealthText.text = "Max Health: " + playerManager.MaxHealth;
-        healthRegenText.text = "Health Regen: " + playerManager.RawRegenScore;
-        lifeStealText.text = "Life Steal: " + playerManager.RawLifeStealScore;
-        armorText.text = $"Armor: {playerManager.RawArmorScore}% ";
+        healthRegenText.text = "Health Regen: " + playerManager.UIRegenScore;
+        lifeStealText.text = "Life Steal: " + playerManager.UILifeStealScore;
+        armorText.text = "Armor: " + playerManager.UIArmorScore;
+        luckText.text = "Luck: " + playerManager.UILuckScore;
 
-        criticalHitText.text = $"Critical Chance: {playerManager.CritChance * 100}%";
-        criticalDamageText.text = $"Critical Damage: {playerManager.CritMultiplier}x";
+        criticalHitText.text = $"Critical Chance: {playerManager.UICritChanceScore}%";
+        criticalDamageText.text = $"Critical Damage: {playerManager.UICritDamageScore}x";
 
-        luckText.text = "Luck: " + playerManager.RawLuckScore;
     }
 
     private void UpdateScoreText(int score)

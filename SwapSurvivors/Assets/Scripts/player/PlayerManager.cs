@@ -14,7 +14,7 @@ public class PlayerManager : MonoBehaviour
     private const float MAX_HP_REGEN_PERC = 0.04f; // Yarım saniyede MaxHP'nin en fazla %4'u yenilenir
 
     // Soft Cap eğim hızı (B değeri). Bu değer ne kadar büyükse cap'e ulaşmak o kadar zorlaşır.
-    private const float SCALE_STANDARD = 167f; // Oyuncuya gözüken değer yaklaşık 500 civarı iken sınıra ulaşır
+    private const float SCALE_STANDARD = 333f; // Oyuncuya gözüken değer yaklaşık 500 civarı iken sınıra ulaşır
     #endregion
 
     #region --- Runtime Modifiers ---
@@ -41,25 +41,31 @@ public class PlayerManager : MonoBehaviour
 
     #region --- Public Properties ---
     // ---- UI için ham değerler ---
-    public float RawRegenScore => _hpRegenStat;
-    public float RawLifeStealScore => _lifeStealStat;
-    public float RawArmorScore => _armorStat;
-    public float RawLuckScore => _luckStat;
+    public float UIDamageScore => 1 + (_damageMod / 100);
+    public float UIRangeScore => _rangeMod;
+    public float UISpeedScore => _speedMod;
+    public float UIAttackSpeedScore => _attackSpeedMod;
+    public float UIRegenScore => _hpRegenStat;
+    public float UILifeStealScore => _lifeStealStat;
+    public float UIArmorScore => _armorStat;
+    public float UILuckScore => _luckStat;
+    public float UICritChanceScore => _critChanceMod;
+    public float UICritDamageScore => 1 + (_critDamageMod / 100);
 
     // --- Doğrudan Çarpan & Bonus Stats ---
     public float MaxHealth => baseStats.MaxHealth + _flatMaxHpBonus;
-    public float CurrentDamage => baseStats.AttackDamage * (1 + _damageMod);
-    public float CurrentRange => baseStats.AttackRange * (1 + _rangeMod);
-    public float CurrentSpeed => baseStats.MovementSpeed * (1 + _speedMod);
-    public float CurrentCooldown => baseStats.AttackCooldown / (1 + _attackSpeedMod);
+    public float CurrentDamage => baseStats.AttackDamage * (1 + (_damageMod / 100));
+    public float CurrentRange => baseStats.AttackRange * (1 + (_rangeMod / 100));
+    public float CurrentSpeed => baseStats.MovementSpeed * (1 + (_speedMod / 100));
+    public float CurrentCooldown => baseStats.AttackCooldown / (1 + (_attackSpeedMod / 100));
 
     // --- Logaritmik & Cap Stats ---
     public float RegenPercentPerSec => ApplySoftCap(_hpRegenStat, MAX_HP_REGEN_PERC, SCALE_STANDARD); // MaxHP'nin yüzde kaçı yenilenecek? Max %10
     public float LifeStealRate => ApplySoftCap(_lifeStealStat, MAX_LIFESTEAL, SCALE_STANDARD); // Vurulan hasarın yüzde kaçı dönecek? Max %10
     public float DamageReduction => ApplySoftCap(_armorStat, MAX_ARMOR_RED, SCALE_STANDARD); // Alınan hasarın yüzde kaçı engellenecek? Max %85
     public float CurrentLuck => ApplySoftCap(_luckStat, MAX_LUCK, SCALE_STANDARD); // Max 100
-    public float CritChance => Mathf.Clamp01(_critChanceMod); // 0-1 arası clamp
-    public float CritMultiplier => _critDamageMod; // Base + bonus
+    public float CritChance => Mathf.Clamp01(_critChanceMod / 100); // 0-1 arası clamp
+    public float CritMultiplier => 1 + (_critDamageMod / 100); // Base + bonus
     #endregion
 
     #region --- State Variables ---
