@@ -15,5 +15,15 @@ MonoBehaviour:
   upgradeName: Damage Syringe
   upgradeDescription: Instantly increases the damage you deal by +{0}%.
   upgradeIcon: {fileID: 21300000, guid: 02405cbfea2034e46a6cfe75bd9937e3, type: 3}
-  upgradeIncrease: 20
-  upgradeIncreasePercentage: 50
+  upgradeType: 0
+  increaseValues:
+  - min: 2
+    max: 5
+  - min: 5
+    max: 9
+  - min: 9
+    max: 14
+  - min: 14
+    max: 20
+  - min: 20
+    max: 27

@@ -8,7 +8,8 @@ public abstract class EnemyData : ScriptableObject
     public int baseHealth;
     public float speed;
     public GameObject enemyPrefab;
-    [Range(0,4)] public int enemyHardness; 
+    [Range(0,4)] public int enemyHardness;
+    public int expGain;
 
     [Header("Attack Info")]
     public int attackDamage;

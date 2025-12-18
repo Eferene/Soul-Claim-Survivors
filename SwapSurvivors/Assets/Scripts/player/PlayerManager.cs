@@ -293,6 +293,7 @@ public class PlayerManager : MonoBehaviour
     {
         LevelExperience += amount;
         Debug.Log("Gained Experience: " + amount);
+        Debug.Log("Total Experience: " + LevelExperience);
     }
 
     public void LevelUp()

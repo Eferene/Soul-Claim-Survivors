@@ -7,4 +7,5 @@ public class WaveConfig : ScriptableObject
     public List<EnemyPattern> enemiesToSpawn = new List<EnemyPattern>();
     public float difficultyMultiplier = 1f;
     public int waveDurationSec = 60;
+    public int rewardTokens = 1; 
 }

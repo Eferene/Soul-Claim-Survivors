@@ -9,6 +9,7 @@ TagManager:
   - WorldSpaceCanvas
   - Enemies
   - WaveController
+  - XP
   layers:
   - Default
   - TransparentFX

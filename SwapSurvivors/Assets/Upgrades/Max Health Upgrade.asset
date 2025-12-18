@@ -16,3 +16,14 @@ MonoBehaviour:
   upgradeDescription: Instantly increases your maximum health by +{0}%.
   upgradeIcon: {fileID: 21300000, guid: ecb1cc830d4e12b4090fe7b3f421ba2f, type: 3}
   upgradeType: 5
+  increaseValues:
+  - min: 2
+    max: 5
+  - min: 5
+    max: 9
+  - min: 9
+    max: 14
+  - min: 14
+    max: 20
+  - min: 20
+    max: 27

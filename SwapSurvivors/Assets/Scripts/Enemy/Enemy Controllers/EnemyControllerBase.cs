@@ -28,6 +28,7 @@ public abstract class EnemyControllerBase<T> : MonoBehaviour, IEnemy where T : E
     [SerializeField] Material flashMat;
     [SerializeField] TextMeshProUGUI damageTMP;
     [SerializeField] GameObject effectPrefab;
+    [SerializeField] GameObject expPrefab;
 
     public bool IsDead => currentHealth <= 0;
 
@@ -157,6 +158,8 @@ public abstract class EnemyControllerBase<T> : MonoBehaviour, IEnemy where T : E
         playerManager.AddScore(scoreGain);
         DieEffect();
         GetComponent<SpriteRenderer>().material = mainMat;
+        Exp newExp = Instantiate(expPrefab, transform.position, Quaternion.identity).GetComponent<Exp>();
+        newExp.expAmount = enemyData.expGain;
         EnemyPool.Instance.ReturnEnemyToPool(this.gameObject);
     }
 

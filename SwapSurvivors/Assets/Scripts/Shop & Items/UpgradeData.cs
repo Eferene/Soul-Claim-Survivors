@@ -7,6 +7,14 @@ public class UpgradeData : ScriptableObject
     [TextArea] public string upgradeDescription;
     public Sprite upgradeIcon;
     public UpgradeTypes upgradeType;
+    public IncreaseValues[] increaseValues = new IncreaseValues[5];
+}
+
+[System.Serializable]
+public class IncreaseValues
+{
+    public float min;
+    public float max;
 }
 
 public enum UpgradeTypes

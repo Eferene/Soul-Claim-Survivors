@@ -16,3 +16,14 @@ MonoBehaviour:
   upgradeDescription: Instantly increases your movement speed by +{0}%.
   upgradeIcon: {fileID: 21300000, guid: cae79b7b0e6455b42a9f0021b1e82587, type: 3}
   upgradeType: 2
+  increaseValues:
+  - min: 2
+    max: 5
+  - min: 5
+    max: 9
+  - min: 9
+    max: 14
+  - min: 14
+    max: 20
+  - min: 20
+    max: 27

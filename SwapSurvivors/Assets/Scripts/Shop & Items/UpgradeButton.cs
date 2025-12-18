@@ -60,6 +60,7 @@ public class UpgradeButton : MonoBehaviour, IPointerClickHandler
             total += weights[i];
         }
 
+        // Debug.Log'a şansları logluyoruz
         if (debugProbabilities)
         {
             StringBuilder sb = new StringBuilder();
@@ -67,8 +68,7 @@ public class UpgradeButton : MonoBehaviour, IPointerClickHandler
             
             for (int i = 0; i < 5; i++)
             {
-                float percentage = (weights[i] / total) * 100f;
-                // Renkli ve okunaklı format: Common: %52.34
+                float percentage = weights[i] / total * 100f;
                 sb.AppendLine($"<color={rarityHexColors[i]}>{rarityNames[i]}</color>: %{percentage:F2}");
             }
             Debug.Log(sb.ToString());
@@ -102,23 +102,23 @@ public class UpgradeButton : MonoBehaviour, IPointerClickHandler
         switch (rarity)
         {
             case 0: // Common
-                increase = Random.Range(2, 5);
+                increase = Random.Range(upgradeData.increaseValues[0].min, upgradeData.increaseValues[0].max);
                 GetComponent<Image>().color = new Color32(0, 77, 255, 87);
                 break;
             case 1: // Uncommon
-                increase = Random.Range(5, 9);
+                increase = Random.Range(upgradeData.increaseValues[1].min, upgradeData.increaseValues[1].max);
                 GetComponent<Image>().color = new Color32(0, 200, 80, 120);
                 break;
             case 2: // Rare
-                increase = Random.Range(9, 14);
+                increase = Random.Range(upgradeData.increaseValues[2].min, upgradeData.increaseValues[2].max);
                 GetComponent<Image>().color = new Color32(120, 80, 255, 140);
                 break;
             case 3: // Epic
-                increase = Random.Range(14, 20);
+                increase = Random.Range(upgradeData.increaseValues[3].min, upgradeData.increaseValues[3].max);
                 GetComponent<Image>().color = new Color32(255, 0, 38, 160);
                 break;
             case 4: // Legendary
-                increase = Random.Range(20, 27);
+                increase = Random.Range(upgradeData.increaseValues[4].min, upgradeData.increaseValues[4].max);
                 GetComponent<Image>().color = new Color32(255, 170, 0, 180);
                 break;
         }

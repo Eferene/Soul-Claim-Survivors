@@ -15,6 +15,7 @@ public class UIController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI healthText;
     [SerializeField] private TextMeshProUGUI waveDurationText;
     [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private Image expSlider;
 
     [Header("Stats Panel Elements")]
     [SerializeField] private TextMeshProUGUI damageText;
