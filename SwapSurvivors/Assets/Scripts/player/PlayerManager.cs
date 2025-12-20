@@ -12,6 +12,7 @@ public class PlayerManager : MonoBehaviour
     private const float MAX_LIFESTEAL = 0.1f;   // Max %10 can çalma
     private const float MAX_ARMOR_RED = 0.85f;  // Max %85 hasar azaltma
     private const float MAX_HP_REGEN_PERC = 0.04f; // Yarım saniyede MaxHP'nin en fazla %4'u yenilenir
+    private const float MAX_PICKUP = 300f; // Pickup range max %300 olur
 
     // Soft Cap eğim hızı (B değeri). Bu değer ne kadar büyükse cap'e ulaşmak o kadar zorlaşır.
     private const float SCALE_STANDARD = 333f; // Oyuncuya gözüken değer yaklaşık 500 civarı iken sınıra ulaşır
@@ -32,6 +33,7 @@ public class PlayerManager : MonoBehaviour
     private float _lifeStealStat = 0f;
     private float _armorStat = 0f;
     private float _luckStat = 0f;
+    private float _pickupStat = 0f;
 
     private float _critChanceMod = 0f; // 0.05 = %5
     private float _critDamageMod = 0f; // çarpan
@@ -51,6 +53,7 @@ public class PlayerManager : MonoBehaviour
     public float UILuckScore => _luckStat;
     public float UICritChanceScore => _critChanceMod;
     public float UICritDamageScore => 1 + (_critDamageMod / 100);
+    public float UIPickupScore => _pickupStat;
 
     // --- Doğrudan Çarpan & Bonus Stats ---
     public float MaxHealth => baseStats.MaxHealth + _flatMaxHpBonus;
@@ -66,12 +69,13 @@ public class PlayerManager : MonoBehaviour
     public float CurrentLuck => ApplySoftCap(_luckStat, MAX_LUCK, SCALE_STANDARD); // Max 100
     public float CritChance => Mathf.Clamp01(_critChanceMod / 100); // 0-1 arası clamp
     public float CritMultiplier => 1 + (_critDamageMod / 100); // Base + bonus
+    public float PickUpRange => ApplySoftCap(_pickupStat, MAX_PICKUP, SCALE_STANDARD);
     #endregion
 
     #region --- State Variables ---
     public float CurrentHealth { get; private set; }
     public int CharacterLevel { get; private set; } = 1;
-    public int LevelExperience { get; private set; } = 0;
+    public int CurrentExperience { get; private set; } = 0;
     public int Level { get; private set; } = 0;
     public int Score { get; private set; }
     #endregion
@@ -83,6 +87,8 @@ public class PlayerManager : MonoBehaviour
     public event Action OnPlayerDied;
     public event Action<bool> OnDamageHitOccurred; // IsCrit?
     public event Action OnStatsUpdated; // UI update için
+    public event Action<int, int> OnXPGained; // XP miktarı ve gerekli XP
+    public event Action<int> OnLevelUped; // Yeni seviye
     #endregion
 
     #region --- Unity Lifecycle Methods ---
@@ -291,17 +297,28 @@ public class PlayerManager : MonoBehaviour
 
     public void AddExperience(int amount)
     {
-        LevelExperience += amount;
-        Debug.Log("Gained Experience: " + amount);
-        Debug.Log("Total Experience: " + LevelExperience);
+        int neededExp;
+        CurrentExperience += amount;
+
+        while (true)
+        {
+            neededExp = (int)(100 * Math.Pow(1.1, Level));
+
+            if (CurrentExperience < neededExp)
+                break;
+
+            LevelUp(neededExp);
+        }
+        OnXPGained?.Invoke(CurrentExperience, neededExp);
     }
 
-    public void LevelUp()
+    public void LevelUp(int neededExp)
     {
         Level += 1;
-        LevelExperience = 0;
+        CurrentExperience -= neededExp;
         OnLevelChanged?.Invoke(Level);
         Debug.Log("Level Up! New Level: " + Level);
+        OnLevelUped?.Invoke(Level);
     }
 
     public void IncreaseCharacterLevel(int amount)

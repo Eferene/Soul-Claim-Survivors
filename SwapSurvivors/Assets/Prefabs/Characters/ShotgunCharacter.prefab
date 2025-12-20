@@ -207,7 +207,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1000
   m_Sprite: {fileID: -372299716443178353, guid: d3f3d636db87118408f557ac7cc0df12, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -308,7 +308,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5891312bb03ce8040b545b0366e42dd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShotgunCharacter
-  detectionRadius: 10
   spreadAngle: 60
   bulletSpeed: 15
   bulletExplosionRadius: 1

@@ -1095,6 +1095,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1729086141276757880, guid: bb6fb95eab668e5468854add1422d109, type: 3}
+      propertyPath: waveText
+      value: 
+      objectReference: {fileID: 187043037}
+    - target: {fileID: 1729086141276757880, guid: bb6fb95eab668e5468854add1422d109, type: 3}
+      propertyPath: breakdownGameObjects
+      value: 
+      objectReference: {fileID: 1257736698}
     - target: {fileID: 6490266387763034192, guid: bb6fb95eab668e5468854add1422d109, type: 3}
       propertyPath: m_Name
       value: WaveController
@@ -1195,18 +1203,6 @@ PrefabInstance:
     - target: {fileID: 3934399534572532902, guid: 79be40db6ead75c4c8c1450a226c84f9, type: 3}
       propertyPath: m_Name
       value: ShotgunCharacter
-      objectReference: {fileID: 0}
-    - target: {fileID: 3934399534572532902, guid: 79be40db6ead75c4c8c1450a226c84f9, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7774772395844302022, guid: 79be40db6ead75c4c8c1450a226c84f9, type: 3}
-      propertyPath: detectionRadius
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 8010327508427879018, guid: 79be40db6ead75c4c8c1450a226c84f9, type: 3}
-      propertyPath: m_SortingOrder
-      value: 1000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1710,14 +1706,6 @@ PrefabInstance:
     - target: {fileID: 4611732138301687757, guid: c1a5511df08b32d4c8a8d4318d8861c0, type: 3}
       propertyPath: m_Name
       value: Breakdown Gameobjects
-      objectReference: {fileID: 0}
-    - target: {fileID: 5026227913401820971, guid: c1a5511df08b32d4c8a8d4318d8861c0, type: 3}
-      propertyPath: m_Color.a
-      value: 0.5294118
-      objectReference: {fileID: 0}
-    - target: {fileID: 5026227913401820971, guid: c1a5511df08b32d4c8a8d4318d8861c0, type: 3}
-      propertyPath: m_SortingOrder
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5705428267234838740, guid: c1a5511df08b32d4c8a8d4318d8861c0, type: 3}
       propertyPath: panel
@@ -2260,38 +2248,6 @@ PrefabInstance:
     - target: {fileID: 4828165198587778148, guid: 8b57ad5ec9d0fd945a5076058b8bf7b1, type: 3}
       propertyPath: m_Name
       value: BoomerangCharacter
-      objectReference: {fileID: 0}
-    - target: {fileID: 4828165198587778148, guid: 8b57ad5ec9d0fd945a5076058b8bf7b1, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8285025517722870144, guid: 8b57ad5ec9d0fd945a5076058b8bf7b1, type: 3}
-      propertyPath: m_Size.x
-      value: 1.1208333
-      objectReference: {fileID: 0}
-    - target: {fileID: 8285025517722870144, guid: 8b57ad5ec9d0fd945a5076058b8bf7b1, type: 3}
-      propertyPath: m_Size.y
-      value: 1.3680556
-      objectReference: {fileID: 0}
-    - target: {fileID: 8285025517722870144, guid: 8b57ad5ec9d0fd945a5076058b8bf7b1, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: -6313157299550936525, guid: 2d9bb15450145ba40900d84e271112ca, type: 3}
-    - target: {fileID: 8285025517722870144, guid: 8b57ad5ec9d0fd945a5076058b8bf7b1, type: 3}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8285025517722870144, guid: 8b57ad5ec9d0fd945a5076058b8bf7b1, type: 3}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8285025517722870144, guid: 8b57ad5ec9d0fd945a5076058b8bf7b1, type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8285025517722870144, guid: 8b57ad5ec9d0fd945a5076058b8bf7b1, type: 3}
-      propertyPath: m_WasSpriteAssigned
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8482241069000800003, guid: 8b57ad5ec9d0fd945a5076058b8bf7b1, type: 3}
       propertyPath: m_LocalPosition.x

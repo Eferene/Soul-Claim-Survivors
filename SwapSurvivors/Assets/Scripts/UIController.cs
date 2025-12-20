@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 
 public class UIController : MonoBehaviour
 {
@@ -29,6 +28,7 @@ public class UIController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI criticalHitText;
     [SerializeField] private TextMeshProUGUI criticalDamageText;
     [SerializeField] private TextMeshProUGUI luckText;
+    [SerializeField] private TextMeshProUGUI levelText;
 
     [Header("Other References")]
     public List<GameObject> allPanels = new List<GameObject>();
@@ -49,6 +49,8 @@ public class UIController : MonoBehaviour
         playerManager.OnHealthChanged += UpdateHealthSlider;
         playerManager.OnScoreChanged += UpdateScoreText;
         playerManager.OnStatsUpdated += UpdateUpgradeTexts;
+        playerManager.OnXPGained += UpdateLevelSlider;
+        playerManager.OnLevelUped += UpdateLevelText;
         controls.UI.Enable();
     }
 
@@ -57,6 +59,8 @@ public class UIController : MonoBehaviour
         playerManager.OnHealthChanged -= UpdateHealthSlider;
         playerManager.OnScoreChanged -= UpdateScoreText;
         playerManager.OnStatsUpdated -= UpdateUpgradeTexts;
+        playerManager.OnXPGained -= UpdateLevelSlider;
+        playerManager.OnLevelUped -= UpdateLevelText;
         controls.UI.Disable();
     }
 
@@ -120,7 +124,7 @@ public class UIController : MonoBehaviour
 
     public void ActivateESCMenu()
     {
-        if(!pauseMenu.activeInHierarchy)
+        if (!pauseMenu.activeInHierarchy)
         {
             CloseAllPanels();
             OpenAndClosePanel(pauseMenu);
@@ -144,4 +148,11 @@ public class UIController : MonoBehaviour
         seconds = Mathf.FloorToInt(duration % 60);
         waveDurationText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
+
+    private void UpdateLevelSlider(int currentXP, int neededXP)
+    {
+        Debug.Log(Mathf.Clamp01((float)currentXP / neededXP));
+        expSlider.fillAmount = Mathf.Clamp01((float)currentXP / neededXP);
+    }
+    private void UpdateLevelText(int level) => levelText.text = $"Level: {level}";
 }
