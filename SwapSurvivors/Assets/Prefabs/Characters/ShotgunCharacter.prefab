@@ -91,6 +91,51 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1344850758959983102
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6636675005241251446}
+  - component: {fileID: 7898973108079474916}
+  m_Layer: 6
+  m_Name: OrbitWeapon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6636675005241251446
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1344850758959983102}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2645146950989029428}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7898973108079474916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1344850758959983102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64f646ee4863e6d4a9baa7ba729271ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OrbitWeapon
+  orbitWeapon: {fileID: 0}
 --- !u!1 &1406317896479324821
 GameObject:
   m_ObjectHideFlags: 0
@@ -159,6 +204,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7206107359254844425}
+  - {fileID: 2645146950989029428}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8010327508427879018
@@ -308,10 +354,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5891312bb03ce8040b545b0366e42dd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShotgunCharacter
-  spreadAngle: 60
+  spreadAngle: 80
   bulletSpeed: 15
   bulletExplosionRadius: 1
-  bulletCount: 10
+  bulletCount: 20
   WeaponHolder: {fileID: 7206107359254844425}
   FirePoint: {fileID: 5089340113954269035}
   BulletPrefab: {fileID: 4791158969129398734, guid: 5467e2ae8052d0b4abfebfc1e6e2bdfe, type: 3}
@@ -348,6 +394,38 @@ MonoBehaviour:
   m_DefaultActionMap: df70fa95-8a34-4494-b137-73ab6b9c7d37
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!1 &4971921877543294204
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2645146950989029428}
+  m_Layer: 6
+  m_Name: SideWeapons
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2645146950989029428
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4971921877543294204}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6636675005241251446}
+  m_Father: {fileID: 989942665935530636}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5684505839717618156
 GameObject:
   m_ObjectHideFlags: 0

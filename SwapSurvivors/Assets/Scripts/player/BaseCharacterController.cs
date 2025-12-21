@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using Unity.VisualScripting;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 public abstract class BaseCharacterController : MonoBehaviour
@@ -17,7 +15,7 @@ public abstract class BaseCharacterController : MonoBehaviour
 
     // --- Combat ---
     private float lastAttackTime = 0f;
-    
+
     // --- Interactions ---
     protected Transform currentObject;
 
@@ -73,11 +71,11 @@ public abstract class BaseCharacterController : MonoBehaviour
     {
         if (currentObject != null)
         {
-            if(currentObject.TryGetComponent<Shop>(out Shop currentShop))
+            if (currentObject.TryGetComponent<Shop>(out Shop currentShop))
             {
                 if (currentShop.playerInside) currentShop.OpenAndCloseShop();
             }
-            else if(currentObject.TryGetComponent<NewWaveArea>(out NewWaveArea newWaveArea))
+            else if (currentObject.TryGetComponent<NewWaveArea>(out NewWaveArea newWaveArea))
             {
                 if (newWaveArea.playerInside) newWaveArea.NewWave();
             }

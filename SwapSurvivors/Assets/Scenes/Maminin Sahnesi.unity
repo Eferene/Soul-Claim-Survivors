@@ -171,14 +171,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShotgunCharacter
       objectReference: {fileID: 0}
-    - target: {fileID: 7774772395844302022, guid: 79be40db6ead75c4c8c1450a226c84f9, type: 3}
-      propertyPath: bulletCount
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 7774772395844302022, guid: 79be40db6ead75c4c8c1450a226c84f9, type: 3}
-      propertyPath: spreadAngle
-      value: 80
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
