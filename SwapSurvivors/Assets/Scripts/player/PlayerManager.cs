@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -42,7 +43,7 @@ public class PlayerManager : MonoBehaviour
     #endregion
 
     #region --- Public Properties ---
-    // ---- UI için ham değerler ---
+    // ---- UI için değerler ---
     public float UIDamageScore => 1 + (_damageMod / 100);
     public float UIRangeScore => _rangeMod;
     public float UISpeedScore => _speedMod;
@@ -77,18 +78,23 @@ public class PlayerManager : MonoBehaviour
     public int CharacterLevel { get; private set; } = 1;
     public int CurrentExperience { get; private set; } = 0;
     public int Level { get; private set; } = 0;
-    public int Score { get; private set; }
+    public int Score { get; private set; } = 0;
+    public int Token { get; private set; } = 0;
+    public int Gold { get; set; } = 0;
     #endregion
 
     #region --- Events ---
     public event Action<float, float, float> OnHealthChanged; // Current, Max, ChangeAmount
     public event Action<int> OnScoreChanged;
     public event Action<int> OnLevelChanged;
+    public event Action<int> OnCharacterLevelChanged;
     public event Action OnPlayerDied;
     public event Action<bool> OnDamageHitOccurred; // IsCrit?
     public event Action OnStatsUpdated; // UI update için
     public event Action<int, int> OnXPGained; // XP miktarı ve gerekli XP
     public event Action<int> OnLevelUped; // Yeni seviye
+    public event Action<int> OnTokenChanged; // Yeni token miktarı
+    public event Action<int> OnGoldChanged; // Yeni altın miktarı
     #endregion
 
     #region --- Unity Lifecycle Methods ---
@@ -316,16 +322,42 @@ public class PlayerManager : MonoBehaviour
     {
         Level += 1;
         CurrentExperience -= neededExp;
+
+        Token += Level / 10 + 1; // Her 10 seviyede +1 token kazancı
+
         OnLevelChanged?.Invoke(Level);
-        Debug.Log("Level Up! New Level: " + Level);
         OnLevelUped?.Invoke(Level);
+        OnTokenChanged?.Invoke(Token);
     }
 
     public void IncreaseCharacterLevel(int amount)
     {
         if (CharacterLevel < 3)
             CharacterLevel += amount;
-        Debug.Log("Character Level Increased to: " + CharacterLevel);
+        OnLevelChanged?.Invoke(CharacterLevel);
+    }
+
+    public void GainGold(int amount)
+    {
+        if (amount <= 0) return;
+        Gold += amount;
+        OnGoldChanged?.Invoke(Gold);
+    }
+
+    public void SpendGold(int amount)
+    {
+        if (amount <= 0) return;
+        Gold -= amount;
+        if (Gold < 0) Gold = 0;
+        OnGoldChanged?.Invoke(Gold);
+    }
+
+    public void SpendToken(int amount)
+    {
+        if (amount <= 0) return;
+        Token -= amount;
+        if (Token < 0) Token = 0;
+        OnTokenChanged?.Invoke(Token);
     }
     #endregion
 

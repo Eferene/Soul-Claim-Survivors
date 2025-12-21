@@ -29,6 +29,8 @@ public class UIController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI criticalDamageText;
     [SerializeField] private TextMeshProUGUI luckText;
     [SerializeField] private TextMeshProUGUI levelText;
+    [SerializeField] private TextMeshProUGUI goldText;
+    [SerializeField] private TextMeshProUGUI tokenText;
 
     [Header("Other References")]
     public List<GameObject> allPanels = new List<GameObject>();
@@ -51,6 +53,8 @@ public class UIController : MonoBehaviour
         playerManager.OnStatsUpdated += UpdateUpgradeTexts;
         playerManager.OnXPGained += UpdateLevelSlider;
         playerManager.OnLevelUped += UpdateLevelText;
+        playerManager.OnGoldChanged += UpdateGold;
+        playerManager.OnTokenChanged += UpdateTokens;
         controls.UI.Enable();
     }
 
@@ -61,6 +65,8 @@ public class UIController : MonoBehaviour
         playerManager.OnStatsUpdated -= UpdateUpgradeTexts;
         playerManager.OnXPGained -= UpdateLevelSlider;
         playerManager.OnLevelUped -= UpdateLevelText;
+        playerManager.OnGoldChanged -= UpdateGold;
+        playerManager.OnTokenChanged -= UpdateTokens;
         controls.UI.Disable();
     }
 
@@ -86,8 +92,10 @@ public class UIController : MonoBehaviour
 
         criticalHitText.text = $"Critical Chance: {playerManager.UICritChanceScore}%";
         criticalDamageText.text = $"Critical Damage: {playerManager.UICritDamageScore}x";
-
     }
+
+    private void UpdateGold(int gold) => goldText.text = $"{gold}";
+    private void UpdateTokens(int token) => tokenText.text = $"{token}";
 
     private void UpdateScoreText(int score)
     {
