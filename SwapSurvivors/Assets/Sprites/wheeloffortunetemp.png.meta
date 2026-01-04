@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: fe101155afa5bad488c700ec99accc78
+guid: c21e82ca9c3a36c449817751f21f6f58
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7280532954602043111
-    second: token_0
+      213: -729610421308876162
+    second: wheeloffortune_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: token_0
+      name: wheeloffortune_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 64
-        height: 64
+        y: 8
+        width: 63
+        height: 49
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7e67496f526a90560800000000000000
-      internalID: 7280532954602043111
+      spriteID: e7a167dff27efd5f0800000000000000
+      internalID: -729610421308876162
       vertices: []
       indices: 
       edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      token_0: 7280532954602043111
+      wheeloffortune_0: -729610421308876162
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

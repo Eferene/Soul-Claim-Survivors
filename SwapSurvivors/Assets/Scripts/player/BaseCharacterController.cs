@@ -71,13 +71,17 @@ public abstract class BaseCharacterController : MonoBehaviour
     {
         if (currentObject != null)
         {
-            if (currentObject.TryGetComponent<Shop>(out Shop currentShop))
+            if (currentObject.TryGetComponent(out Shop currentShop))
             {
-                if (currentShop.playerInside) currentShop.OpenAndCloseShop();
+                if (currentShop.playerInside) currentShop.OpenAndClosePanel();
             }
-            else if (currentObject.TryGetComponent<NewWaveArea>(out NewWaveArea newWaveArea))
+            else if (currentObject.TryGetComponent(out NewWaveArea newWaveArea))
             {
                 if (newWaveArea.playerInside) newWaveArea.NewWave();
+            }
+            else if(currentObject.TryGetComponent(out WheelOfFortune wheel))
+            {
+                if (wheel.playerInside) wheel.OpenAndClosePanel();
             }
         }
     }

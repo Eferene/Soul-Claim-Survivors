@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Upgrade", menuName = "Upgrade")]
+[CreateAssetMenu(fileName = "New Upgrade", menuName = "Upgrades/Upgrade")]
 public class UpgradeData : ScriptableObject
 {
     public string upgradeName;
@@ -8,6 +8,7 @@ public class UpgradeData : ScriptableObject
     public Sprite upgradeIcon;
     public UpgradeTypes upgradeType;
     public IncreaseValues[] increaseValues = new IncreaseValues[5];
+    public int cost;
 }
 
 [System.Serializable]

@@ -151,13 +151,23 @@ public abstract class EnemyControllerBase<T> : MonoBehaviour, IEnemy where T : E
 
     private void Die()
     {
+        // Skor kazanç hesaplama
         float min = enemyData.scoreGain * (1f - enemyData.scoreGainPercentage / 100f);
         float max = enemyData.scoreGain * (1f + enemyData.scoreGainPercentage / 100f);
         float fScoreGain = Random.Range(min, max);
         int scoreGain = Mathf.RoundToInt(fScoreGain);
         playerManager.AddScore(scoreGain);
+
+        // Altın kazanç hesaplama
+        min = enemyData.goldGain * (1f - enemyData.goldGainPercentage / 100f);
+        max = enemyData.goldGain * (1f + enemyData.goldGainPercentage / 100f);
+        float fGoldGain = Random.Range(min, max);
+        int goldGain = Mathf.RoundToInt(fGoldGain);
+        playerManager.GainGold(goldGain);
+
         DieEffect();
         GetComponent<SpriteRenderer>().material = mainMat;
+        
         Exp newExp = Instantiate(expPrefab, transform.position, Quaternion.identity).GetComponent<Exp>();
         newExp.expAmount = enemyData.expGain;
         EnemyPool.Instance.ReturnEnemyToPool(this.gameObject);

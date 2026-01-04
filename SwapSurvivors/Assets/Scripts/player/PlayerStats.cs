@@ -28,4 +28,5 @@ public class PlayerStats : ScriptableObject
     public float BaseLifeStealPercent = 0f;
     public float BaseHealthRegenPercent = 0f;
     public float BaseLuck = 0f;
+    public float BasePickUpRange = 5f;
 }

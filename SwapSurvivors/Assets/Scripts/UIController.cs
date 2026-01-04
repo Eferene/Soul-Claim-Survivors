@@ -92,6 +92,9 @@ public class UIController : MonoBehaviour
 
         criticalHitText.text = $"Critical Chance: {playerManager.UICritChanceScore}%";
         criticalDamageText.text = $"Critical Damage: {playerManager.UICritDamageScore}x";
+
+        goldText.text = $"{playerManager.Gold}";
+        tokenText.text = $"{playerManager.Token}";
     }
 
     private void UpdateGold(int gold) => goldText.text = $"{gold}";
@@ -110,16 +113,8 @@ public class UIController : MonoBehaviour
 
     public void OpenAndClosePanel(GameObject panel)
     {
-        if (panel.activeInHierarchy)
-        {
-            panel.SetActive(false);
-            Time.timeScale = 1;
-        }
-        else
-        {
-            panel.SetActive(true);
-            Time.timeScale = 0;
-        }
+        if(panel.TryGetComponent(out IPanel p)) p.OpenAndClosePanel();
+        else Debug.LogWarning("IPanel tanımlanmamış.");
     }
 
     public void CloseAllPanels()
@@ -127,6 +122,7 @@ public class UIController : MonoBehaviour
         foreach (GameObject panel in allPanels)
         {
             panel.SetActive(false);
+            Time.timeScale = 1f;
         }
     }
 
@@ -136,9 +132,11 @@ public class UIController : MonoBehaviour
         {
             CloseAllPanels();
             OpenAndClosePanel(pauseMenu);
+            Time.timeScale = 0f;
             return;
         }
         OpenAndClosePanel(pauseMenu);
+        Time.timeScale = 1f;
     }
 
     public IEnumerator StartWaveTimer(int duration)

@@ -120,6 +120,8 @@ public class PlayerManager : MonoBehaviour
         _critChanceMod = baseStats.BaseCritChance;
         _critDamageMod = baseStats.BaseCritMultiplier;
 
+        _pickupStat = baseStats.BasePickUpRange;
+
         CurrentHealth = MaxHealth;
         OnHealthChanged?.Invoke(CurrentHealth, MaxHealth, 0f);
 

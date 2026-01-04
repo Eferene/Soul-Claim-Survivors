@@ -42,7 +42,6 @@ public class WaveController : MonoBehaviour
     public void NewWave()
     {
         StopShopPhase();
-        isBreakdown = false;
         WaveConfig cWave = waves[currentWave];
         waveText.text = "Wave " + (currentWave + 1);
 
@@ -72,12 +71,14 @@ public class WaveController : MonoBehaviour
     {
         float timer = 0f;
 
-        while(timer < waveDuration)
+        while(timer < waveDuration && !isBreakdown)
         {
             yield return new WaitForSeconds(enemyPattern.spawningDurationSec);
 
             foreach(var enemyPatternObject in enemyPattern.enemySequence)
             {
+                if(isBreakdown) yield break;
+
                 for(int i = 0; i < enemyPatternObject.quantity; i++)
                 {
                     GameObject newEnemy = EnemyPool.Instance.GetEnemyFromPool(enemyPatternObject.enemyData.enemyPrefab);
@@ -105,6 +106,7 @@ public class WaveController : MonoBehaviour
 
     private void StopShopPhase()
     {
+        isBreakdown = false;
         for(int i = 0; i < breakdownGameObjects.childCount; i++)
         {
             breakdownGameObjects.GetChild(i).gameObject.SetActive(false);
@@ -119,8 +121,8 @@ public class WaveController : MonoBehaviour
 
     private Vector3 GetRandomPoint()
     {
-        float r = Mathf.Sqrt(UnityEngine.Random.Range(0f, 1f)) * radius;
-        float angle = UnityEngine.Random.Range(0, Mathf.PI * 2f);
+        float r = Mathf.Sqrt(Random.Range(0f, 1f)) * radius;
+        float angle = Random.Range(0, Mathf.PI * 2f);
         return new Vector3(
             Mathf.Cos(angle) * r,
             Mathf.Sin(angle) * r,

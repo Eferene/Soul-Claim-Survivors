@@ -21,6 +21,8 @@ public abstract class EnemyData : ScriptableObject
     [Header("Stats Values")]
     public int scoreGain;
     public float scoreGainPercentage = 10; // +- oranını belirler.
+    public int goldGain;
+    public float goldGainPercentage = 50; // +- oranını belirler.
 
     [Header("Effects")]
     public Color[] colors = new Color[2];

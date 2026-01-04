@@ -25,6 +25,8 @@ MonoBehaviour:
   attackOffset: {x: -0.02141962, y: -0.05, z: 0}
   scoreGain: 30
   scoreGainPercentage: 10
+  goldGain: 3
+  goldGainPercentage: 50
   colors:
   - {r: 0, g: 0, b: 0, a: 1}
   - {r: 1, g: 1, b: 1, a: 1}

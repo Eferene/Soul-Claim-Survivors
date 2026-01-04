@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Shop : MonoBehaviour
+public class Shop : MonoBehaviour, IPanel
 {
     [SerializeField] private ShopData shopData;
     [SerializeField] private UpgradeButton[] upgradeButtons;
@@ -37,7 +37,7 @@ public class Shop : MonoBehaviour
         }
     }
 
-    public void OpenAndCloseShop()
+    public void OpenAndClosePanel()
     {
         if(!panel.activeInHierarchy)
         {
