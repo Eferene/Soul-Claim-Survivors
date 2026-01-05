@@ -13,6 +13,7 @@ public class WheelOfFortune : MonoBehaviour, IPanel
     public int numberOfPieces = 8;
     public bool playerInside = false;
     private bool isSpinned = false;
+    public int spinPrice = 100;
 
     [Header("Piece Settings")]
     public Transform pieceParent;
@@ -38,6 +39,7 @@ public class WheelOfFortune : MonoBehaviour, IPanel
     [SerializeField] private Transform infoObjsPanel;
     [SerializeField] private GameObject infoObj;
     [SerializeField] private ParticleSystem particleEffect;
+    [SerializeField] private ParticleSystem burstEffect;
     
     private List<WheelPiece> wheelPieces = new List<WheelPiece>();
     private WheelPiece selectedPiece;
@@ -135,16 +137,17 @@ public class WheelOfFortune : MonoBehaviour, IPanel
 
     public void Spin(Button b)
     {
-        if(playerManager.Gold < 100 || isSpinned) return;
+        if(playerManager.Gold < spinPrice || isSpinned) return;
         
-        playerManager.SpendGold(100);
+       // playerManager.SpendGold(spinPrice);
         StartCoroutine(SpinWheel());
 
-        if(b != null) b.interactable = false;
+        //if(b != null) b.interactable = false;
     }
 
     private IEnumerator SpinWheel()
     {
+        particleEffect.Stop();
         int randomChoice = Random.Range(0, 100); // pieceChance toplamı 100 olacak şekilde ayarlandığı için 0,100 arasında değer isteniyor.
         int cumulative = 0; // Kümülatif toplam
         for(int i = 0; i < pieceChance.Length; i++)
@@ -180,6 +183,12 @@ public class WheelOfFortune : MonoBehaviour, IPanel
         wheelTransform.eulerAngles = new Vector3(0, 0, targetAngle);
 
         playerManager.GainGold(selectedPiece.coinValue);
+        if(selectedPiece.coinValue > spinPrice)
+        {
+            burstEffect.Play();
+        }
+        particleEffect.Play();
+        //isSpinned = true;
     }
 }
 
