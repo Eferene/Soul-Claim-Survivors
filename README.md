@@ -52,8 +52,8 @@ Projeyi denemek ve geliştirmek için:
 - [x] Temel Hareket ve Savaş Sistemi
 - [x] Wave Spawner Mantığı
 - [x] Boss Yapay Zekası (AI) ve State Machine
-- [ ] Upgrade sistemi
-- [ ] Merchants spawn
+- [x] Upgrade sistemi
+- [x] Merchants spawn
 - [ ] Karakter Kilit (Unlock) Sistemi ve Save/Load
 - [ ] "The Amalgamation" Final Boss Tasarımı
 - [ ] UI/UX (Karakter Seçim Ekranı)
