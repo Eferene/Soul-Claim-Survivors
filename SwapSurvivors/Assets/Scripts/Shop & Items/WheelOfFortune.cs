@@ -139,10 +139,10 @@ public class WheelOfFortune : MonoBehaviour, IPanel
     {
         if(playerManager.Gold < spinPrice || isSpinned) return;
         
-       // playerManager.SpendGold(spinPrice);
+        playerManager.SpendGold(spinPrice);
         StartCoroutine(SpinWheel());
 
-        //if(b != null) b.interactable = false;
+        if(b != null) b.interactable = false;
     }
 
     private IEnumerator SpinWheel()
@@ -188,7 +188,7 @@ public class WheelOfFortune : MonoBehaviour, IPanel
             burstEffect.Play();
         }
         particleEffect.Play();
-        //isSpinned = true;
+        isSpinned = true;
     }
 }
 

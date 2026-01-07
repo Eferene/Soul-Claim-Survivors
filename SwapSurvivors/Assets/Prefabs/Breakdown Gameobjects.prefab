@@ -742,6 +742,7 @@ MonoBehaviour:
   wheelTransform: {fileID: 0}
   numberOfPieces: 4
   playerInside: 0
+  spinPrice: 100
   pieceParent: {fileID: 0}
   piecePrefab: {fileID: 4126426112977426121, guid: 8e994084489ed2142a388f6aa8e22f03, type: 3}
   pieceColorsArray:
@@ -762,3 +763,4 @@ MonoBehaviour:
   infoObjsPanel: {fileID: 0}
   infoObj: {fileID: 2018425586340126596, guid: 23405577afec3a44697ff48db82977a0, type: 3}
   particleEffect: {fileID: 0}
+  burstEffect: {fileID: 0}

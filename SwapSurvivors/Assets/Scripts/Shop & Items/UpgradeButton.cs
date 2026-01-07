@@ -10,8 +10,9 @@ public class UpgradeButton : MonoBehaviour, IPointerClickHandler
 
     public UpgradeData upgradeData;
     public float increase;
+    public int price;
     public Image iconImage;
-    public TextMeshProUGUI titleText, descText; 
+    public TextMeshProUGUI titleText, descText, priceText; 
     public int rarity;
     public Shop shop;
 
@@ -38,6 +39,15 @@ public class UpgradeButton : MonoBehaviour, IPointerClickHandler
         0.5f,  // Rare
         1.0f,  // Epic 
         1.5f   // Legendary
+    };
+
+    [SerializeField] private int[] rarityPriceRanges = new int[]
+    {
+        3,
+        6,
+        10,
+        15,
+        20
     };
 
     public void InitializeButton(PlayerManager _playerManager)
@@ -74,7 +84,7 @@ public class UpgradeButton : MonoBehaviour, IPointerClickHandler
             Debug.Log(sb.ToString());
         }
 
-        // Weighted random selection
+        // Rastgele bir sayı ile rarity seç (Ağırlık bazlı seçim)
         float roll = Random.Range(0f, total);
         float current = 0f;
 
@@ -93,6 +103,7 @@ public class UpgradeButton : MonoBehaviour, IPointerClickHandler
         iconImage.sprite = upgradeData.upgradeIcon;
         titleText.text = upgradeData.upgradeName;
         descText.text = string.Format(upgradeData.upgradeDescription, (int)increase);
+        priceText.text = price.ToString();
     }
 
     public void SelectRarity()
@@ -103,22 +114,27 @@ public class UpgradeButton : MonoBehaviour, IPointerClickHandler
         {
             case 0: // Common
                 increase = Random.Range(upgradeData.increaseValues[0].min, upgradeData.increaseValues[0].max);
+                price = Random.Range(1, rarityPriceRanges[0]);
                 GetComponent<Image>().color = new Color32(0, 77, 255, 87);
                 break;
             case 1: // Uncommon
                 increase = Random.Range(upgradeData.increaseValues[1].min, upgradeData.increaseValues[1].max);
+                price = Random.Range(rarityPriceRanges[0], rarityPriceRanges[1]);
                 GetComponent<Image>().color = new Color32(0, 200, 80, 120);
                 break;
             case 2: // Rare
                 increase = Random.Range(upgradeData.increaseValues[2].min, upgradeData.increaseValues[2].max);
+                price = Random.Range(rarityPriceRanges[1], rarityPriceRanges[2]);
                 GetComponent<Image>().color = new Color32(120, 80, 255, 140);
                 break;
             case 3: // Epic
                 increase = Random.Range(upgradeData.increaseValues[3].min, upgradeData.increaseValues[3].max);
+                price = Random.Range(rarityPriceRanges[2], rarityPriceRanges[3]);
                 GetComponent<Image>().color = new Color32(255, 0, 38, 160);
                 break;
             case 4: // Legendary
                 increase = Random.Range(upgradeData.increaseValues[4].min, upgradeData.increaseValues[4].max);
+                price = Random.Range(rarityPriceRanges[3], rarityPriceRanges[4]);
                 GetComponent<Image>().color = new Color32(255, 170, 0, 180);
                 break;
         }
@@ -126,6 +142,13 @@ public class UpgradeButton : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if(price > playerManager.Token)
+        {
+            Debug.LogWarning("Yeterince tokene sahip değil");
+            return;
+        }
+
+        playerManager.SpendToken(price);
         switch (upgradeData.upgradeType)
         {
             case UpgradeTypes.Damage:
