@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ScyhteCharacter : BaseCharacterController
 {
-    [SerializeField] private float offset;                      // Tırpanın karakterden ne kadar uzakta başlayacağını belirler
+    [SerializeField] private float offset; // Tırpanın karakterden ne kadar uzakta başlayacağını belirler
     [SerializeField] private LayerMask enemyLayer;
 
     [Header("Visuals")]

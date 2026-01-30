@@ -1204,6 +1204,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShotgunCharacter
       objectReference: {fileID: 0}
+    - target: {fileID: 7898973108079474916, guid: 79be40db6ead75c4c8c1450a226c84f9, type: 3}
+      propertyPath: orbitWeapon
+      value: 
+      objectReference: {fileID: 8357247311116834308, guid: 03d119c00f55f18488db39ae3694c5ea, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

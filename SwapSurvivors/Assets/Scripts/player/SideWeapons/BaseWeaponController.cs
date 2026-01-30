@@ -13,7 +13,7 @@ public abstract class BaseWeaponController : MonoBehaviour
     protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        playerManager = GetComponent<PlayerManager>();
+        playerManager = GetComponentInParent<PlayerManager>();
     }
 
     protected virtual void Update()
