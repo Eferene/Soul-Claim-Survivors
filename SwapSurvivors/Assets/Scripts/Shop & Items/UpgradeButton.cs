@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Text;
+using DG.Tweening;
 
 public class UpgradeButton : MonoBehaviour, IPointerClickHandler
 {
@@ -144,7 +145,13 @@ public class UpgradeButton : MonoBehaviour, IPointerClickHandler
     {
         if(price > playerManager.Token)
         {
-            Debug.LogWarning("Yeterince tokene sahip değil");
+            // AudioManager.Instance.PlayNegativeSFX();
+            RectTransform rect = GetComponent<RectTransform>();
+            if (rect != null)
+            {
+                rect.DOKill(true);
+                rect.DOPunchScale(Vector3.one * 0.2f, 0.3f, 10, 1f);
+            }
             return;
         }
 

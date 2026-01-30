@@ -4,6 +4,7 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using DG.Tweening;
 
 public class WheelOfFortune : MonoBehaviour, IPanel
 {
@@ -186,6 +187,7 @@ public class WheelOfFortune : MonoBehaviour, IPanel
         if(selectedPiece.coinValue > spinPrice)
         {
             burstEffect.Play();
+            Camera.main.transform.DOShakePosition(0.5f, 0.2f);
         }
         particleEffect.Play();
         isSpinned = true;

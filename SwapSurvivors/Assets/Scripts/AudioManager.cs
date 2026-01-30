@@ -6,9 +6,12 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance;
     AudioSource sfxSource;
-    [SerializeField] List<AudioClip> enemyHurtSFXClips = new List<AudioClip>();
-    [SerializeField] List<AudioClip> playerLeftStepSFXClips = new List<AudioClip>();
-    [SerializeField] List<AudioClip> playerRightStepSFXClips = new List<AudioClip>();
+    [SerializeField] private List<AudioClip> enemyHurtSFXClips = new List<AudioClip>();
+    [SerializeField] private List<AudioClip> playerLeftStepSFXClips = new List<AudioClip>();
+    [SerializeField] private List<AudioClip> playerRightStepSFXClips = new List<AudioClip>();
+    [SerializeField] private AudioClip negativeSFXClip;
+    [SerializeField] private AudioClip positiveSFXClip;
+    
     bool isLeft;
 
     private void Awake()
@@ -39,5 +42,17 @@ public class AudioManager : MonoBehaviour
         else clip = playerRightStepSFXClips[Random.Range(0, playerRightStepSFXClips.Count)];
         sfxSource.pitch = Random.Range(0.8f, 1.2f);
         sfxSource.PlayOneShot(clip, 0.35f);
+    }
+
+    public void PlayNegativeSFX()
+    {
+        sfxSource.pitch = 1f;
+        sfxSource.PlayOneShot(negativeSFXClip, 0.5f);
+    }
+
+    public void PlayPositiveSFX()
+    {
+        sfxSource.pitch = 1f;
+        sfxSource.PlayOneShot(positiveSFXClip, 0.5f);
     }
 }

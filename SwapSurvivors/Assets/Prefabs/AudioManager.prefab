@@ -143,8 +143,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   enemyHurtSFXClips:
-  - {fileID: 8300000, guid: 20da4dc8e6363094b97371cf951a9182, type: 3}
-  - {fileID: 8300000, guid: 118870c068edb5b40b8b4e7483f945ef, type: 3}
+  - {fileID: 8300000, guid: 48553808db6ccc342968fea6468b00c0, type: 3}
+  - {fileID: 8300000, guid: af2eb44edf20b4947ad28f59d88755dd, type: 3}
+  - {fileID: 8300000, guid: bc85a8231d1a75143b7ba7b382d8306d, type: 3}
+  - {fileID: 8300000, guid: 5525075249e268e4996755d2aef38c05, type: 3}
   playerLeftStepSFXClips:
   - {fileID: 8300000, guid: 8cef84185f775ee459b90b62793b407d, type: 3}
   - {fileID: 8300000, guid: 52cace07565c97a408a4f4a773beeac6, type: 3}
@@ -153,3 +155,5 @@ MonoBehaviour:
   - {fileID: 8300000, guid: b5843f3520a339644bfdc0f2ebe04bcd, type: 3}
   - {fileID: 8300000, guid: a99db637c3bd70045a195d035fc96b35, type: 3}
   - {fileID: 8300000, guid: c3e210a5bbc8d3f47af8771ba4822ff8, type: 3}
+  negativeSFXClip: {fileID: 8300000, guid: 578004ed76ce61d499370b19caea3cc0, type: 3}
+  positiveSFXClip: {fileID: 0}
