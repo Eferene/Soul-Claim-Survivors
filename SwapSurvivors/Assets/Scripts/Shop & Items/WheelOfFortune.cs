@@ -187,7 +187,7 @@ public class WheelOfFortune : MonoBehaviour, IPanel
         if(selectedPiece.coinValue > spinPrice)
         {
             burstEffect.Play();
-            Camera.main.transform.DOShakePosition(0.5f, 0.2f);
+            CameraFX.Instance.PunchCamera(new Vector3(-0.5f, 0.5f, -0.5f), 1f, 10, 1f);
         }
         particleEffect.Play();
         isSpinned = true;

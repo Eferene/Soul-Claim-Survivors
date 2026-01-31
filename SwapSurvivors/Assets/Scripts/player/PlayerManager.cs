@@ -137,6 +137,8 @@ public class PlayerManager : MonoBehaviour
 
         CurrentHealth -= takenDamage;
 
+        CameraFX.Instance.DamagePunch(takenDamage);
+
         // UI'a haber
         OnHealthChanged?.Invoke(CurrentHealth, MaxHealth, takenDamage);
 

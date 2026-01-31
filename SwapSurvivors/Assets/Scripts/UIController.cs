@@ -105,10 +105,10 @@ public class UIController : MonoBehaviour
         scoreText.text = "Score: " + score;
     }
 
-    private void UpdateHealthSlider(float maxHealt, float currentHealt, float d)
+    private void UpdateHealthSlider(float currentHealth, float maxHealth, float d)
     {
-        healthText.text = playerManager.CurrentHealth + "/" + playerManager.MaxHealth;
-        healthImage.fillAmount = playerManager.CurrentHealth / playerManager.MaxHealth;
+        healthText.text = (int)currentHealth + "/" + maxHealth;
+        healthImage.fillAmount = currentHealth / maxHealth;
     }
 
     public void OpenAndClosePanel(GameObject panel)
