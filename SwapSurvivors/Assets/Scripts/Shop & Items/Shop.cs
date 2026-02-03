@@ -1,25 +1,41 @@
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Shop : MonoBehaviour, IPanel
 {
     [SerializeField] private ShopData shopData;
     [SerializeField] private UpgradeButton[] upgradeButtons;
     [SerializeField] private GameObject panel;
+    [SerializeField] private TextMeshProUGUI refreshCostText;
     public bool playerInside = false;
+    private PlayerManager playerManager;
+    public int refreshCount = 0;
+    private int firstRefreshCost = 5;
+    public int refreshCost
+    {
+        get
+        {
+            return firstRefreshCost + (refreshCount * 15);
+        }
+    }
 
     private void OnEnable()
     {
+        refreshCostText.text = refreshCost.ToString();
+        playerManager = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerManager>();
+
         for(int i = 0; i < upgradeButtons.Length; i++)
         {
             upgradeButtons[i].shop = this;
-            upgradeButtons[i].InitializeButton(GameObject.FindWithTag("Player").GetComponent<PlayerManager>());
+            upgradeButtons[i].InitializeButton(playerManager);
         }
         ChooseUpgradeRandomly();
-        for(int i = 0; i < upgradeButtons.Length; i++) upgradeButtons[i].EditButton();
+
+        playerManager.OnTokenChanged += UpdateButtons;
     }
 
-    private void ChooseUpgradeRandomly()
+    public void ChooseUpgradeRandomly()
     {
         List<UpgradeData> upgrades = new List<UpgradeData>();
         for(int i = 0; i < shopData.upgrades.Length; i++)
@@ -34,20 +50,40 @@ public class Shop : MonoBehaviour, IPanel
             upgrades.RemoveAt(index);
 
             upgradeButtons[i].upgradeData = choosedUpgrade;
+            upgradeButtons[i].EditButton();
         }
     }
+
+    /*
+    public void ChooseUpgradeRandomly(UpgradeButton button)
+    {
+        List<UpgradeData> upgrades = new List<UpgradeData>();
+        for(int i = 0; i < shopData.upgrades.Length; i++)
+        {
+            upgrades.Add(shopData.upgrades[i]);
+        }
+
+        int index = Random.Range(0, upgrades.Count);
+        UpgradeData choosedUpgrade = upgrades[index];
+
+        button.upgradeData = choosedUpgrade;
+        button.EditButton();
+    }
+    */
 
     public void OpenAndClosePanel()
     {
         if(!panel.activeInHierarchy)
         {
             panel.SetActive(true);
-            Time.timeScale = 0;
+            foreach (var button in upgradeButtons)
+            {
+                button.ControlButton();
+            }
         }
         else
         { 
             panel.SetActive(false);
-            Time.timeScale = 1;
         }
     }
 
@@ -76,6 +112,14 @@ public class Shop : MonoBehaviour, IPanel
                 playerInside = false;
                 controller.ClearCurrentObject();
             }
+        }
+    }
+
+    private void UpdateButtons(int token)
+    {
+        for(int i = 0; i < upgradeButtons.Length; i++)
+        {
+            upgradeButtons[i].ControlButton();
         }
     }
 }

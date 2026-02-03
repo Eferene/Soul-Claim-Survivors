@@ -78,7 +78,7 @@ public class PlayerManager : MonoBehaviour
     public int CurrentExperience { get; private set; } = 0;
     public int Level { get; private set; } = 0;
     public int Score { get; private set; } = 0;
-    public int Token { get; private set; } = 0;
+    public int Token { get; private set; } = 50;
     public int Gold { get; set; } = 0;
     #endregion
 
@@ -137,10 +137,7 @@ public class PlayerManager : MonoBehaviour
 
         CurrentHealth -= takenDamage;
 
-        CameraFX.Instance.DamagePunch(takenDamage);
-
-        // UI'a haber
-        OnHealthChanged?.Invoke(CurrentHealth, MaxHealth, takenDamage);
+        CameraFX.Instance.DamagePunch(MaxHealth, takenDamage);
 
         if (CurrentHealth <= 0)
         {
@@ -148,6 +145,8 @@ public class PlayerManager : MonoBehaviour
             Debug.Log("Wasted");
             OnPlayerDied?.Invoke();
         }
+
+        OnHealthChanged?.Invoke(CurrentHealth, MaxHealth, takenDamage);
     }
 
     public void HealCharacter(float amount)

@@ -13,6 +13,6 @@ public class CameraFollower : MonoBehaviour
     {
         if (playerRB == null) playerRB = GameObject.FindWithTag("Player").GetComponent<Rigidbody2D>();
         Vector2 playerPos = playerRB.transform.position;
-        gameObject.transform.position = new Vector3(playerPos.x, playerPos.y, -10);
+        transform.position = new Vector3(playerPos.x, playerPos.y, -10);
     }
 }

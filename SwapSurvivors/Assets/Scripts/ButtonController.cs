@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;      
 
@@ -19,5 +20,18 @@ public class ButtonController : MonoBehaviour
     {
         SceneData.sceneToLoad = id;
         SceneManager.LoadScene("LoadingScene");
+    }
+
+    public void RefreshAllUpgradeButtons()
+    {
+        Shop shop = FindFirstObjectByType<Shop>();
+        PlayerManager playerManager = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerManager>();
+
+        if (shop != null && playerManager.Gold >= shop.refreshCost)
+        {
+            shop.refreshCount++;
+            shop.ChooseUpgradeRandomly();
+            playerManager.SpendGold(shop.refreshCost);
+        }
     }
 }

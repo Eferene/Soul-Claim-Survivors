@@ -194,7 +194,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   panel: {fileID: 0}
+  refreshCostText: {fileID: 0}
   playerInside: 0
+  refreshCount: 0
 --- !u!1 &1683346771707272441
 GameObject:
   m_ObjectHideFlags: 0
@@ -427,7 +429,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1329152754670702086
 Transform:
   m_ObjectHideFlags: 0
@@ -742,7 +744,7 @@ MonoBehaviour:
   wheelTransform: {fileID: 0}
   numberOfPieces: 4
   playerInside: 0
-  spinPrice: 100
+  spinPrice: 75
   pieceParent: {fileID: 0}
   piecePrefab: {fileID: 4126426112977426121, guid: 8e994084489ed2142a388f6aa8e22f03, type: 3}
   pieceColorsArray:

@@ -7,15 +7,18 @@ using DG.Tweening;
 
 public class UpgradeButton : MonoBehaviour, IPointerClickHandler
 {
-    public bool debugProbabilities = true;
+    private bool debugProbabilities = true;
 
     public UpgradeData upgradeData;
-    public float increase;
-    public int price;
-    public Image iconImage;
-    public TextMeshProUGUI titleText, descText, priceText; 
-    public int rarity;
+    private float increase;
+    private int price;
+    [SerializeField] private Image iconImage;
+    [SerializeField] private TextMeshProUGUI titleText, descText, priceText;
+    private bool canBuy;
+    private bool isPurchased = false;
+    private int rarity;
     public Shop shop;
+    public GameObject A_panel_indicating_that_the_player_cannot_purchase_it; // favorite variable name ever <3
 
     private PlayerManager playerManager;
 
@@ -100,11 +103,13 @@ public class UpgradeButton : MonoBehaviour, IPointerClickHandler
 
     public void EditButton()
     {
+        isPurchased = false;
         SelectRarity();
         iconImage.sprite = upgradeData.upgradeIcon;
         titleText.text = upgradeData.upgradeName;
         descText.text = string.Format(upgradeData.upgradeDescription, (int)increase);
         priceText.text = price.ToString();
+        ControlButton();
     }
 
     public void SelectRarity()
@@ -143,15 +148,9 @@ public class UpgradeButton : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if(price > playerManager.Token)
+        if(!canBuy)
         {
-            // AudioManager.Instance.PlayNegativeSFX();
-            RectTransform rect = GetComponent<RectTransform>();
-            if (rect != null)
-            {
-                rect.DOKill(true);
-                rect.DOPunchScale(Vector3.one * 0.2f, 0.3f, 10, 1f);
-            }
+            CameraFX.Instance.ShakeCamera(0.3f, 0.3f, 10);
             return;
         }
 
@@ -192,5 +191,16 @@ public class UpgradeButton : MonoBehaviour, IPointerClickHandler
                 playerManager.UpgradeCritDamage(increase);
                 break;
         }
+        isPurchased = true;
+        ControlButton();
+    }
+
+    public void ControlButton()
+    {
+        if(price > playerManager.Token || isPurchased) canBuy = false;
+        else canBuy = true;
+
+        if(canBuy) A_panel_indicating_that_the_player_cannot_purchase_it.SetActive(false);
+        else A_panel_indicating_that_the_player_cannot_purchase_it.SetActive(true);
     }
 }
