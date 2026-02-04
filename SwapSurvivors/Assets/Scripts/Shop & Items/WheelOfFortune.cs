@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using DG.Tweening;
+using Unity.VisualScripting;
 
 public class WheelOfFortune : MonoBehaviour, IPanel
 {
@@ -41,6 +42,7 @@ public class WheelOfFortune : MonoBehaviour, IPanel
     [SerializeField] private GameObject infoObj;
     [SerializeField] private ParticleSystem particleEffect;
     [SerializeField] private ParticleSystem burstEffect;
+    [SerializeField] private Button spinButton;
     
     private List<WheelPiece> wheelPieces = new List<WheelPiece>();
     private WheelPiece selectedPiece;
@@ -56,6 +58,21 @@ public class WheelOfFortune : MonoBehaviour, IPanel
         {
             wheelTransform.parent.gameObject.SetActive(false);
             particleEffect.Stop();
+        }
+    }
+
+    private void OnEnable()
+    {
+        playerManager = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerManager>();
+
+        playerManager.OnGoldChanged += UpdateSpinButton;
+    }
+
+    private void OnDisable()
+    {
+        if(playerManager != null)
+        {
+            playerManager.OnGoldChanged -= UpdateSpinButton;
         }
     }
 
@@ -136,14 +153,14 @@ public class WheelOfFortune : MonoBehaviour, IPanel
         }
     }
 
-    public void Spin(Button b)
+    public void Spin()
     {
         if(playerManager.Gold < spinPrice || isSpinned) return;
         
         playerManager.SpendGold(spinPrice);
         StartCoroutine(SpinWheel());
 
-        if(b != null) b.interactable = false;
+        if(spinButton != null) spinButton.interactable = false;
     }
 
     private IEnumerator SpinWheel()
@@ -191,6 +208,18 @@ public class WheelOfFortune : MonoBehaviour, IPanel
         }
         particleEffect.Play();
         isSpinned = true;
+    }
+
+    private void UpdateSpinButton(int gold)
+    {
+        if(playerManager.Gold >= spinPrice && !isSpinned)
+        {
+            spinButton.interactable = true;
+        }
+        else
+        {
+            spinButton.interactable = false;
+        }
     }
 }
 

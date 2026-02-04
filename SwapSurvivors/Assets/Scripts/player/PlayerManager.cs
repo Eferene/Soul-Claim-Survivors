@@ -354,6 +354,13 @@ public class PlayerManager : MonoBehaviour
         OnGoldChanged?.Invoke(Gold);
     }
 
+    public void GainToken(int amount)
+    {
+        if (amount <= 0) return;
+        Token += amount;
+        OnTokenChanged?.Invoke(Token);
+    }
+
     public void SpendToken(int amount)
     {
         if (amount <= 0) return;

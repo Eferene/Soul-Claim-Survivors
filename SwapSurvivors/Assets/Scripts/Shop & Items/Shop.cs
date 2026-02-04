@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class Shop : MonoBehaviour, IPanel
 {
@@ -8,6 +9,7 @@ public class Shop : MonoBehaviour, IPanel
     [SerializeField] private UpgradeButton[] upgradeButtons;
     [SerializeField] private GameObject panel;
     [SerializeField] private TextMeshProUGUI refreshCostText;
+    [SerializeField] private Button refreshButton;
     public bool playerInside = false;
     private PlayerManager playerManager;
     public int refreshCount = 0;
@@ -32,7 +34,17 @@ public class Shop : MonoBehaviour, IPanel
         }
         ChooseUpgradeRandomly();
 
-        playerManager.OnTokenChanged += UpdateButtons;
+        playerManager.OnTokenChanged += UpdateUpgradeButtons;
+        playerManager.OnGoldChanged += UpdateRefreshButton;
+    }
+
+    private void OnDisable()
+    {
+        if(playerManager != null)
+        {
+            playerManager.OnTokenChanged -= UpdateUpgradeButtons;
+            playerManager.OnGoldChanged -= UpdateRefreshButton;
+        }
     }
 
     public void ChooseUpgradeRandomly()
@@ -115,11 +127,34 @@ public class Shop : MonoBehaviour, IPanel
         }
     }
 
-    private void UpdateButtons(int token)
+    private void UpdateUpgradeButtons(int token)
     {
         for(int i = 0; i < upgradeButtons.Length; i++)
         {
             upgradeButtons[i].ControlButton();
+        }
+    }
+
+    private void UpdateRefreshButton(int gold)
+    {
+        if(refreshCostText == null || refreshButton == null || playerManager == null || !gameObject.activeInHierarchy)
+        {
+            Debug.LogWarning("refresh button güncellenemedi!");
+            Debug.Log(refreshCostText);
+            Debug.Log(refreshButton);
+            Debug.Log(playerManager);
+            Debug.Log(gameObject.activeInHierarchy);
+            return;
+        }
+
+        refreshCostText.text = refreshCost.ToString();
+        if(playerManager.Gold < refreshCost)
+        {
+            refreshButton.interactable = false;
+        }
+        else
+        {
+            refreshButton.interactable = true;
         }
     }
 }
