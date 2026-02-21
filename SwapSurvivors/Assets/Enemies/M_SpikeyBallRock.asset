@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08c8ecdd2dddf5744b3447a5d6cb9874, type: 3}
+  m_Name: M_SpikeyBallRock
+  m_EditorClassIdentifier: Assembly-CSharp::MeleeEnemyData
+  enemyName: Spikey Ball Rock
+  baseHealth: 50
+  speed: 2
+  enemyPrefab: {fileID: 881368016178500694, guid: 8be4c1b56a64c8049b9708dea57b01a2, type: 3}
+  enemyHardness: 0
+  expGain: 5
+  attackDamage: 10
+  attackDamagePercentage: 10
+  attackRange: 1.5
+  attackCooldown: 0.5
+  attackOffset: {x: 0, y: 0, z: 0}
+  scoreGain: 30
+  scoreGainPercentage: 10
+  goldGain: 5
+  goldGainPercentage: 50
+  colors:
+  - {r: 0.83921576, g: 0.8431373, b: 0.83921576, a: 1}
+  - {r: 0.4784314, g: 0.5568628, b: 0.32156864, a: 1}

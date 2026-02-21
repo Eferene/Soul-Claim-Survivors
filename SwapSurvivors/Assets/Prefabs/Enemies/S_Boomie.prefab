@@ -34,6 +34,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4754017218221613970
 SpriteRenderer:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -79,6 +80,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 0.5019608}
   m_FlipX: 0
@@ -88,7 +90,6 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &8930781146192827912
 GameObject:
@@ -131,6 +132,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4011541725745311513
 SpriteRenderer:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -176,6 +178,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_Sprite: {fileID: -4595210851810989348, guid: ed0c4a83bc2df95498a4e89e729e57bd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -185,7 +188,6 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!95 &6259805681773245234
 Animator:
@@ -325,9 +327,11 @@ MonoBehaviour:
   lastAttackTime: 0
   canAttack: 1
   isAttacking: 0
+  statueMode: 0
   flashMat: {fileID: 2100000, guid: 2033525844189c74c9a8efe7fcfd90b1, type: 2}
   damageTMP: {fileID: 6596860959123858565, guid: 4e8bb5aead498594c8487b6d70166e82, type: 3}
   effectPrefab: {fileID: 1089789980245224067, guid: d3daaa0287982f74c94dffe73b734e18, type: 3}
+  expPrefab: {fileID: 407427392238368104, guid: 5f1c0a8c4d5be564892621a6bfc49996, type: 3}
   isExploding: 0
 --- !u!114 &7632462095104295163
 MonoBehaviour:

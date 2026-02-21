@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08c8ecdd2dddf5744b3447a5d6cb9874, type: 3}
+  m_Name: M_GolemRuby
+  m_EditorClassIdentifier: Assembly-CSharp::MeleeEnemyData
+  enemyName: Golem Ruby
+  baseHealth: 300
+  speed: 0.85
+  enemyPrefab: {fileID: 203978344881832822, guid: cc3e8ffafd717ee40806ee0045222049, type: 3}
+  enemyHardness: 0
+  expGain: 5
+  attackDamage: 15
+  attackDamagePercentage: 10
+  attackRange: 2.25
+  attackCooldown: 1
+  attackOffset: {x: 0.1, y: 0, z: 0}
+  scoreGain: 30
+  scoreGainPercentage: 10
+  goldGain: 5
+  goldGainPercentage: 50
+  colors:
+  - {r: 0.38823533, g: 0.6666667, b: 0.77647066, a: 1}
+  - {r: 0.8078432, g: 0.91372555, b: 0.9960785, a: 1}

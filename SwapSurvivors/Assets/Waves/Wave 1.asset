@@ -15,5 +15,5 @@ MonoBehaviour:
   enemiesToSpawn:
   - {fileID: 11400000, guid: d49e05c10b885cc49ba682f8f3ffcb9a, type: 2}
   difficultyMultiplier: 1
-  waveDurationSec: 30
+  waveDurationSec: 0
   rewardTokens: 5

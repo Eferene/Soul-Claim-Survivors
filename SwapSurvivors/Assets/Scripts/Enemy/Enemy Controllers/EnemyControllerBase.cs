@@ -20,6 +20,7 @@ public abstract class EnemyControllerBase<T> : MonoBehaviour, IEnemy where T : E
     [SerializeField] private bool canAttack = true;
 
     public bool isAttacking = false;
+    [SerializeField] private bool statueMode = false;
 
     private bool isCritical = false;
     private float currentHealth;
@@ -84,7 +85,7 @@ public abstract class EnemyControllerBase<T> : MonoBehaviour, IEnemy where T : E
     protected virtual bool CanMove()
     {
         if(playerTransform == null) playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-        return rb != null && playerTransform != null && enemyData != null;
+        return statueMode == false && rb != null && playerTransform != null && enemyData != null;
     }
 
     protected void MoveTowardsPlayer()
@@ -113,21 +114,22 @@ public abstract class EnemyControllerBase<T> : MonoBehaviour, IEnemy where T : E
 
     protected void KeepDistanceMovement()
     {
-        CanMove();
-
-        if (rb != null && playerTransform != null && enemyData != null && Vector2.Distance(rb.position, playerTransform.position) > enemyData.attackRange)
+        if(CanMove())
         {
-            if (isAttacking) return;
+            if (rb != null && playerTransform != null && enemyData != null && Vector2.Distance(rb.position, playerTransform.position) > enemyData.attackRange)
+            {
+                if (isAttacking) return;
 
-            Vector2 currentPos = rb.position;
-            Vector2 targetPos = (Vector2)playerTransform.position;
-            Vector2 direction = (targetPos - currentPos).normalized;
+                Vector2 currentPos = rb.position;
+                Vector2 targetPos = (Vector2)playerTransform.position;
+                Vector2 direction = (targetPos - currentPos).normalized;
 
-            rb.linearVelocity = direction * enemyData.speed;
-        }
-        else
-        {
-            rb.linearVelocity = Vector2.zero;
+                rb.linearVelocity = direction * enemyData.speed;
+            }
+            else
+            {
+                rb.linearVelocity = Vector2.zero;
+            }
         }
     }
 
@@ -192,6 +194,8 @@ public abstract class EnemyControllerBase<T> : MonoBehaviour, IEnemy where T : E
 
     private void OnDrawGizmosSelected()
     {
+        if(enemyData == null) return;
+
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position + enemyData.attackOffset, enemyData != null ? enemyData.attackRange : 1f);
     }

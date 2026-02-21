@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2942200537532123407}
   - component: {fileID: 2959600865916027332}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,14 +26,15 @@ Transform:
   m_GameObject: {fileID: 3070694050374995670}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.228, z: 0.5}
-  m_LocalScale: {x: 1.1375, y: 0.12512499, z: 1}
+  m_LocalPosition: {x: -0.0434, y: -0.245, z: 0.5}
+  m_LocalScale: {x: 1.050595, y: 0.12512499, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6008328833795426671}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2959600865916027332
 SpriteRenderer:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -79,6 +80,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -499
+  m_MaskInteraction: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 0.5019608}
   m_FlipX: 0
@@ -88,7 +90,6 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &6755691749114657334
 GameObject:
@@ -131,6 +132,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &9063294618299599467
 SpriteRenderer:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -176,6 +178,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_Sprite: {fileID: -8360822012285532143, guid: 5d07a236e27ebf44b8b6f369b11a2cf6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -185,7 +188,6 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!95 &5165829087849515463
 Animator:
@@ -325,6 +327,7 @@ MonoBehaviour:
   lastAttackTime: 0
   canAttack: 1
   isAttacking: 0
+  statueMode: 0
   flashMat: {fileID: 2100000, guid: 2033525844189c74c9a8efe7fcfd90b1, type: 2}
   damageTMP: {fileID: 6596860959123858565, guid: 4e8bb5aead498594c8487b6d70166e82, type: 3}
   effectPrefab: {fileID: 1089789980245224067, guid: d3daaa0287982f74c94dffe73b734e18, type: 3}

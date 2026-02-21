@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d915690927368e14ea5efe22f901d1a8, type: 3}
+  m_Name: R_Flower
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectileEnemyData
+  enemyName: Flower
+  baseHealth: 30
+  speed: 2
+  enemyPrefab: {fileID: 2329668874063197978, guid: e1b5d88b6351f1b40824299fa6304e0c, type: 3}
+  enemyHardness: 0
+  expGain: 3
+  attackDamage: 15
+  attackDamagePercentage: 10
+  attackRange: 8
+  attackCooldown: 0.6
+  attackOffset: {x: 0, y: 0, z: 0}
+  scoreGain: 20
+  scoreGainPercentage: 10
+  goldGain: 3
+  goldGainPercentage: 50
+  colors:
+  - {r: 0.93725497, g: 0.68235296, b: 0.21960786, a: 1}
+  - {r: 0.08235294, g: 0.43921572, b: 0.21176472, a: 1}
+  projectilePrefab: {fileID: 3082521190359396072, guid: ccf90275d4172af41ab37c0459f252d3, type: 3}
+  projectileSpeed: 1
