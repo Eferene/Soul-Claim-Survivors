@@ -1,25 +1,34 @@
-using System.Collections;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class OrbitProjectile : MonoBehaviour
 {
     private float speed;
+    private float damage;
     private GameObject player;
-    private PlayerManager playerManager;
 
-    public void Init(float speed) => this.speed = speed;
+    // Hangi düşmana en son ne zaman vurduk? (InstanceID, Zaman)
+    private Dictionary<int, float> lastHitTimes = new Dictionary<int, float>();
+    [SerializeField] private float hitDelay = 0.5f;
 
-    private void Awake()
+    public void Init(float speed, float damage)
     {
-        player = GameObject.FindGameObjectWithTag("Player");
-        playerManager = player.GetComponent<PlayerManager>();
+        this.speed = speed;
+        this.damage = damage;
     }
 
-    private void Start() => transform.localScale = Vector3.zero;
+    private void Awake() => player = GameObject.FindGameObjectWithTag("Player");
+
+    private void Start()
+    {
+        StartCoroutine(Scale());
+        transform.localScale = Vector3.zero;
+    }
 
     private void Update()
     {
-        StartCoroutine(Scale());
+        if (player == null) return;
         transform.RotateAround(player.transform.position, Vector3.forward, speed * Time.deltaTime);
     }
 
@@ -34,7 +43,7 @@ public class OrbitProjectile : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.CompareTag("Enemy"))
         {
@@ -42,10 +51,24 @@ public class OrbitProjectile : MonoBehaviour
             {
                 if (enemyController.IsDead) return;
 
-                float damage = playerManager.CalculateDamage();
-                enemyController.TakeDamage(damage);
-                playerManager.ApplyLifeSteal(damage);
+                int enemyID = collision.gameObject.GetInstanceID();
+                // Eğer bu düşmana daha önce vurulmadıysa veya bekleme süresi dolduysa
+                if (!lastHitTimes.ContainsKey(enemyID) || Time.time >= lastHitTimes[enemyID] + hitDelay)
+                {
+                    enemyController.TakeDamage(damage);
+
+                    // Vuruş zamanını güncelle
+                    lastHitTimes[enemyID] = Time.time;
+                }
             }
         }
+    }
+
+    // Düşman mermiden çıkarsa listeden silinir
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        int enemyID = collision.gameObject.GetInstanceID();
+        if (lastHitTimes.ContainsKey(enemyID))
+            lastHitTimes.Remove(enemyID);
     }
 }
