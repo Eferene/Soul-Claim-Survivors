@@ -5,6 +5,7 @@ public class OrbitWeapon : BaseWeaponController
     [SerializeField] private GameObject orbitWeapon;
     [SerializeField] private float projectileCount = 3;
     [SerializeField] private float projectileDuration = 2;
+    [SerializeField] private float projectileDamage = 10;
     [SerializeField] private float orbitRadius = 2f;
     [SerializeField] private float projectileSpeed = 150;
 
@@ -29,7 +30,7 @@ public class OrbitWeapon : BaseWeaponController
             instance.transform.SetParent(transform);
 
             if (instance.TryGetComponent(out OrbitProjectile opScript))
-                opScript.Init(projectileSpeed);
+                opScript.Init(projectileSpeed, projectileDamage);
 
             Destroy(instance, projectileDuration);
         }
@@ -38,4 +39,5 @@ public class OrbitWeapon : BaseWeaponController
     // --- Upgrade Methods ---
     public void UpgradeProjectileCount(int amount) => projectileCount += amount;
     public void UpgradeProjectileDuration(int amount) => projectileDuration += amount;
+    public void UpgradeProjectileDamage(int amount) => projectileDamage += amount;
 }

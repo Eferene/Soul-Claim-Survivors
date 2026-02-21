@@ -125,7 +125,13 @@ public class PlayerManager : MonoBehaviour
         CurrentHealth = MaxHealth;
         OnHealthChanged?.Invoke(CurrentHealth, MaxHealth, 0f);
 
-        Debug.Log("PlayerManager: Statlar yüklendi");
+        // --- Stat Analiz Logu ---
+        Debug.Log($"<color=green>=== Başlangıç Stat Analizi (Puan -> Gerçek Değer) ===</color>\n" +
+                  $"Luck: {_luckStat} Puan -> <color=yellow>{CurrentLuck:F2}</color>\n" +
+                  $"Lifesteal: {_lifeStealStat} Puan -> <color=yellow>%{LifeStealRate * 100f:F2}</color>\n" +
+                  $"Armor: {_armorStat} Puan -> <color=yellow>%{DamageReduction * 100f:F2}</color>\n" +
+                  $"Regen: {_hpRegenStat} Puan -> <color=yellow>%{RegenPercentPerSec * 100f:F2}</color>\n" +
+                  $"Pickup: {_pickupStat} Puan -> <color=yellow>%{PickUpRange:F2}</color>");
     }
 
     #endregion
@@ -137,7 +143,7 @@ public class PlayerManager : MonoBehaviour
 
         CurrentHealth -= takenDamage;
 
-        CameraFX.Instance.DamagePunch(MaxHealth, takenDamage);
+        // CameraFX.Instance.DamagePunch(MaxHealth, takenDamage);
 
         if (CurrentHealth <= 0)
         {
@@ -194,6 +200,7 @@ public class PlayerManager : MonoBehaviour
         bool isCriticalHit = UnityEngine.Random.value <= CritChance;
         if (isCriticalHit)
             damage *= CritMultiplier;
+
         OnDamageHitOccurred?.Invoke(isCriticalHit);
 
         return Mathf.RoundToInt(damage);
@@ -204,12 +211,9 @@ public class PlayerManager : MonoBehaviour
         float rate = LifeStealRate;
         if (rate > 0)
         {
-            float healAmount = Mathf.RoundToInt(damageDealt * rate);
-            if (healAmount > 0)
-            {
-                HealCharacter(healAmount);
-                Debug.Log($"Lifesteal çalıştı: {healAmount} can geldi.");
-            }
+            float healAmount = damageDealt * rate;
+            HealCharacter(healAmount);
+            Debug.Log($"Lifesteal çalıştı: {healAmount} can geldi.");
         }
     }
     #endregion

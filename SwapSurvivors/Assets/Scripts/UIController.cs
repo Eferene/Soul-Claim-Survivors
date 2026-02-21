@@ -107,13 +107,14 @@ public class UIController : MonoBehaviour
 
     private void UpdateHealthSlider(float currentHealth, float maxHealth, float d)
     {
-        healthText.text = (int)currentHealth + "/" + maxHealth;
+        int uiCurrent = Mathf.CeilToInt(currentHealth);
+        healthText.text = $"{uiCurrent} / {maxHealth}";
         healthImage.fillAmount = currentHealth / maxHealth;
     }
 
     public void OpenAndClosePanel(GameObject panel)
     {
-        if(panel.TryGetComponent(out IPanel p)) p.OpenAndClosePanel();
+        if (panel.TryGetComponent(out IPanel p)) p.OpenAndClosePanel();
         else Debug.LogWarning("IPanel tanımlanmamış.");
     }
 
