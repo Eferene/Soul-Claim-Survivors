@@ -1,6 +1,6 @@
 # ⚔️ Soul Claim: Survivors
 
-![Unity](https://img.shields.io/badge/Unity-6000.2%2B-000000?style=for-the-badge&logo=unity&logoColor=white)
+![Unity](https://img.shields.io/badge/Unity-6000.3%2B-000000?style=for-the-badge&logo=unity&logoColor=white)
 ![C#](https://img.shields.io/badge/C%23-Scripting-239120?style=for-the-badge&logo=c-sharp&logoColor=white)
 ![Status](https://img.shields.io/badge/Status-In%20Development-orange?style=for-the-badge)
 
@@ -26,7 +26,7 @@ Sıradan bir hayatta kalma savaşından fazlası... Oyuna temel bir karakterle b
 
 ## 🛠️ Built With (Teknolojiler)
 
-* **Engine:** Unity 6.2
+* **Engine:** Unity 6.3
 * **Language:** C#
 * **Architecture:** ScriptableObject tabanlı Karakter ve Wave yönetimi.
 
