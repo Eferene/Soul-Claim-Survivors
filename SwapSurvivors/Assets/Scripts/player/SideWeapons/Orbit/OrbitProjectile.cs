@@ -8,12 +8,15 @@ public class OrbitProjectile : MonoBehaviour
     private PlayerManager playerManager;
 
     public void Init(float speed) => this.speed = speed;
+
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         playerManager = player.GetComponent<PlayerManager>();
     }
+
     private void Start() => transform.localScale = Vector3.zero;
+
     private void Update()
     {
         StartCoroutine(Scale());

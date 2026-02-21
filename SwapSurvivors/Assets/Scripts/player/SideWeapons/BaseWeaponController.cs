@@ -16,10 +16,7 @@ public abstract class BaseWeaponController : MonoBehaviour
         playerManager = GetComponentInParent<PlayerManager>();
     }
 
-    protected virtual void Update()
-    {
-        ApplyAttack();
-    }
+    protected virtual void Update() => ApplyAttack();
 
     protected virtual void ApplyAttack()
     {
