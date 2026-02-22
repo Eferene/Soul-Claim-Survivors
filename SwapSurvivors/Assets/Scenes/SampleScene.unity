@@ -1207,11 +1207,23 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShotgunCharacter
       objectReference: {fileID: 0}
+    - target: {fileID: 6621432336499036160, guid: 79be40db6ead75c4c8c1450a226c84f9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 2645146950989029428, guid: 79be40db6ead75c4c8c1450a226c84f9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2057471918}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 79be40db6ead75c4c8c1450a226c84f9, type: 3}
+--- !u!4 &734395375 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2645146950989029428, guid: 79be40db6ead75c4c8c1450a226c84f9, type: 3}
+  m_PrefabInstance: {fileID: 734395374}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &782336247
 GameObject:
   m_ObjectHideFlags: 0
@@ -2185,6 +2197,58 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 006ff7242a8cbb048b232e36ee5fa6c8, type: 3}
+--- !u!1 &2057471917
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2057471918}
+  - component: {fileID: 2057471919}
+  m_Layer: 6
+  m_Name: TimeBeam
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2057471918
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2057471917}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 734395375}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2057471919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2057471917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c92a89bcf7a3fe47b4bab6c1afc18b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TimeBeam
+  duration: 2
+  beamWidth: 5
+  beamRange: 50
+  projectileCount: 1
+  cooldown: 2
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!1001 &326318351220550501
 PrefabInstance:
   m_ObjectHideFlags: 0

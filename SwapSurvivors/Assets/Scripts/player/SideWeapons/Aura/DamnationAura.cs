@@ -9,7 +9,6 @@ public class DamnationAura : MonoBehaviour
     [SerializeField] private float size;
     [SerializeField] private LayerMask enemyLayer;
 
-    // --- Tırpan Kodundaki Optimize Fieldlar ---
     private List<Collider2D> hitBuffer = new List<Collider2D>();
     private ContactFilter2D filter = new ContactFilter2D();
     private float timer;

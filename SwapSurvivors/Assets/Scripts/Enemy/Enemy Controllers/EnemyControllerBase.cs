@@ -20,7 +20,7 @@ public abstract class EnemyControllerBase<T> : MonoBehaviour, IEnemy where T : E
     [SerializeField] private bool canAttack = true;
 
     public bool isAttacking = false;
-    [SerializeField] private bool statueMode = false;
+    [SerializeField] private bool isFreezed = false;
 
     private bool isCritical = false;
     private float currentHealth;
@@ -32,6 +32,7 @@ public abstract class EnemyControllerBase<T> : MonoBehaviour, IEnemy where T : E
     [SerializeField] GameObject expPrefab;
 
     public bool IsDead => currentHealth <= 0;
+
 
     protected virtual void Awake()
     {
@@ -84,8 +85,8 @@ public abstract class EnemyControllerBase<T> : MonoBehaviour, IEnemy where T : E
 
     protected virtual bool CanMove()
     {
-        if(playerTransform == null) playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-        return statueMode == false && rb != null && playerTransform != null && enemyData != null;
+        if (playerTransform == null) playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        return isFreezed == false && rb != null && playerTransform != null && enemyData != null;
     }
 
     protected void MoveTowardsPlayer()
@@ -114,7 +115,7 @@ public abstract class EnemyControllerBase<T> : MonoBehaviour, IEnemy where T : E
 
     protected void KeepDistanceMovement()
     {
-        if(CanMove())
+        if (CanMove())
         {
             if (rb != null && playerTransform != null && enemyData != null && Vector2.Distance(rb.position, playerTransform.position) > enemyData.attackRange)
             {
@@ -169,7 +170,7 @@ public abstract class EnemyControllerBase<T> : MonoBehaviour, IEnemy where T : E
 
         DieEffect();
         GetComponent<SpriteRenderer>().material = mainMat;
-        
+
         Exp newExp = Instantiate(expPrefab, transform.position, Quaternion.identity).GetComponent<Exp>();
         newExp.expAmount = enemyData.expGain;
         EnemyPool.Instance.ReturnEnemyToPool(this.gameObject);
@@ -194,15 +195,27 @@ public abstract class EnemyControllerBase<T> : MonoBehaviour, IEnemy where T : E
 
     private void OnDrawGizmosSelected()
     {
-        if(enemyData == null) return;
+        if (enemyData == null) return;
 
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position + enemyData.attackOffset, enemyData != null ? enemyData.attackRange : 1f);
     }
-    
+
+    public virtual void ApplyFreeze(float duration)
+    {
+        StartCoroutine(FreezeCoroutine(duration));
+    }
+
+    IEnumerator FreezeCoroutine(float duration)
+    {
+        isFreezed = true;
+        yield return new WaitForSeconds(duration);
+        isFreezed = false;
+    }
+
     #region ABSTRACT METHODS
-    
+
     protected abstract void Move();
-    
+
     #endregion
 }

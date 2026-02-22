@@ -2,6 +2,7 @@
 
 public class OrbitWeapon : BaseWeaponController
 {
+    [Header("Stats")]
     [SerializeField] private GameObject orbitWeapon;
     [SerializeField] private float projectileCount = 3;
     [SerializeField] private float projectileDuration = 2;
