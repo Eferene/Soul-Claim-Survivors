@@ -30,3 +30,11 @@ MonoBehaviour:
   colors:
   - {r: 0.7411765, g: 0.9686275, b: 0.9960785, a: 1}
   - {r: 0.14509805, g: 0.16078432, b: 0.24313727, a: 1}
+  healthMultiplier: 1.5
+  damageMultiplier: 1.5
+  speedMultiplier: 1.1
+  expMultiplier: 1.5
+  scoreMultiplier: 1.5
+  goldMultiplier: 1.5
+  eliteScaleMultiplier: 1.2
+  crownOffset: {x: 0, y: 0.5}

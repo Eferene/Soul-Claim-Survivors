@@ -58,7 +58,7 @@ public class WaveController : MonoBehaviour
 
         foreach(var enemyPattern in wave.enemiesToSpawn)
         {
-            StartCoroutine(ExecuteEnemyPattern(enemyPattern, wave.waveDurationSec));
+            StartCoroutine(ExecuteEnemyPattern(enemyPattern, wave.waveDurationSec, wave));
         }
 
         yield return new WaitForSeconds(wave.waveDurationSec + 0.1f);
@@ -67,7 +67,7 @@ public class WaveController : MonoBehaviour
         StartShopPhase();
     }
 
-    private IEnumerator ExecuteEnemyPattern(EnemyPattern enemyPattern, float waveDuration)
+    private IEnumerator ExecuteEnemyPattern(EnemyPattern enemyPattern, float waveDuration, WaveConfig wave)
     {
         float timer = 0f;
 
@@ -82,6 +82,13 @@ public class WaveController : MonoBehaviour
                 for(int i = 0; i < enemyPatternObject.quantity; i++)
                 {
                     GameObject newEnemy = EnemyPool.Instance.GetEnemyFromPool(enemyPatternObject.enemyData.enemyPrefab);
+
+                    float eliteRoll = Random.Range(0f, 100f);
+                    if(eliteRoll < wave.eliteChance)
+                    {
+                        IEnemy enemy = newEnemy.GetComponent<IEnemy>();
+                        if (enemy != null) enemy.MakeElite();
+                    }
 
                     Vector3 randomPoint = GetRandomPoint();
                     while (IsVisibleByCamera(randomPoint)) randomPoint = GetRandomPoint();

@@ -8,4 +8,5 @@ public class WaveConfig : ScriptableObject
     public float difficultyMultiplier = 1f;
     public int waveDurationSec = 60;
     public int rewardTokens = 1; 
+    [Range(0f, 100f)] public float eliteChance = 1f;
 }

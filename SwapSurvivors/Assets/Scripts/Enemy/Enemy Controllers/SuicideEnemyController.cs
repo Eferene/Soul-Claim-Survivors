@@ -6,7 +6,7 @@ public class SuicideEnemyController : EnemyControllerBase<SuicideEnemyData>
 
     protected override bool CanMove()
     {
-        return base.CanMove() && !isExploding;
+        return base.CanMove() && isExploding == false;
     }
     
     protected override void Move() => KeepDistanceMovement(); 
