@@ -1,38 +1,37 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class DamnationAura : MonoBehaviour
+public class DamnationAura : BaseWeaponController
 {
-    [Header("Stats")]
+    [Header("Settings")]
+    [SerializeField] private LayerMask enemyLayer;
+
+    [Header("Combat Stats")]
     [SerializeField] private float damage;
     [SerializeField] private float cooldown;
+
+    [Header("Area Stats")]
     [SerializeField] private float size;
-    [SerializeField] private LayerMask enemyLayer;
 
     private List<Collider2D> hitBuffer = new List<Collider2D>();
     private ContactFilter2D filter = new ContactFilter2D();
-    private float timer;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         filter.SetLayerMask(enemyLayer);
         filter.useTriggers = true;
     }
 
-    private void Update()
+    protected override void Update()
     {
-        timer += Time.deltaTime;
-
-        if (timer >= cooldown)
-        {
-            DoAttack();
-            timer = 0;
-        }
-
+        base.Update();
         transform.localScale = Vector3.one * size * 2; // Size upgrade
     }
 
-    private void DoAttack()
+    protected override float GetCooldown() => cooldown;
+
+    protected override void Attack()
     {
         Vector2 attackPos = transform.position;
 
@@ -42,20 +41,15 @@ public class DamnationAura : MonoBehaviour
         for (int i = 0; i < hitCount; i++)
         {
             var enemyCollider = hitBuffer[i];
-            if (enemyCollider != null)
-                ApplyDamage(enemyCollider, damage);
+            if (enemyCollider != null && enemyCollider.TryGetComponent(out IEnemy enemyController))
+            {
+                if (enemyController.IsDead) return;
+                enemyController.TakeDamage(damage);
+            }
         }
     }
 
-    private void ApplyDamage(Collider2D enemy, float damageAmount)
-    {
-        if (enemy.TryGetComponent(out IEnemy enemyController))
-        {
-            if (enemyController.IsDead) return;
-            enemyController.TakeDamage(damageAmount);
-        }
-    }
-
+    // --- Upgrade Methods ---
     public void UpgradeDamage(float amount) => damage += amount;
     public void UpgradeSize(float amount) => size += amount;
     public void UpgradeCooldown(float amount) => cooldown = Mathf.Max(0.1f, cooldown - amount);

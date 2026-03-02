@@ -136,12 +136,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64f646ee4863e6d4a9baa7ba729271ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OrbitWeapon
-  orbitWeapon: {fileID: 8357247311116834308, guid: 03d119c00f55f18488db39ae3694c5ea, type: 3}
+  projectilePrefab: {fileID: 0}
+  damage: 10
+  cooldown: 4
+  duration: 2
+  radius: 2
+  rotationSpeed: 150
   projectileCount: 3
-  projectileDuration: 2
-  projectileDamage: 10
-  orbitRadius: 2.5
-  projectileSpeed: 150
 --- !u!1 &1406317896479324821
 GameObject:
   m_ObjectHideFlags: 0
@@ -401,6 +402,61 @@ MonoBehaviour:
   m_DefaultActionMap: df70fa95-8a34-4494-b137-73ab6b9c7d37
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!1 &4698331218994430522
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1593620179225767602}
+  - component: {fileID: 5680128489698479734}
+  m_Layer: 6
+  m_Name: FireZone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1593620179225767602
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4698331218994430522}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2645146950989029428}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5680128489698479734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4698331218994430522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d3db5eb5cd21f94bbc788b48684e928, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FireZoneBase
+  fireZonePrefab: {fileID: 0}
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  spawnCooldown: 0
+  projectileCount: 3
+  spawnRadius: 50
+  damage: 5
+  size: 3
+  duration: 3
+  damageCooldown: 2
 --- !u!1 &4971921877543294204
 GameObject:
   m_ObjectHideFlags: 0
@@ -433,6 +489,7 @@ Transform:
   - {fileID: 6636675005241251446}
   - {fileID: 3501683037485551512}
   - {fileID: 3327659026594072056}
+  - {fileID: 1593620179225767602}
   m_Father: {fileID: 989942665935530636}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5019917677736528942
@@ -452,7 +509,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3327659026594072056
 Transform:
   m_ObjectHideFlags: 0
@@ -480,12 +537,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bc2b120700402349b3b34ff539dba1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DamnationAura
-  damage: 5
-  cooldown: 0.5
-  size: 5
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128
+  damage: 5
+  cooldown: 0.5
+  size: 5
 --- !u!212 &3946025657321006728
 SpriteRenderer:
   serializedVersion: 2
@@ -512,7 +569,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9972736761a160047975079944d87a31, type: 2}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -536,7 +593,7 @@ SpriteRenderer:
   m_SortingOrder: 500
   m_MaskInteraction: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.6320754, g: 0, b: 0.35178763, a: 0.6}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -620,11 +677,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c92a89bcf7a3fe47b4bab6c1afc18b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TimeBeam
-  duration: 2
-  beamWidth: 5
-  beamRange: 50
-  projectileCount: 1
-  cooldown: 2
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128
+  cooldown: 2
+  freezeDuration: 0
+  beamRange: 50
+  beamWidth: 5
+  projectileCount: 1

@@ -1,59 +1,56 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class TimeBeam : MonoBehaviour
+public class TimeBeam : BaseWeaponController
 {
-    [Header("Stats")]
-    [SerializeField] private float duration;
-    [SerializeField] private float beamWidth;
-    [SerializeField] private float beamRange;
-    [SerializeField] private float projectileCount;
-    [SerializeField] private float cooldown;
+    [Header("Settings")]
     [SerializeField] private LayerMask enemyLayer;
+
+    [Header("Combat Stats")]
+    [SerializeField] private float cooldown;
+    [SerializeField] private float freezeDuration;
+
+    [Header("Beam Shape")]
+    [SerializeField] private float beamRange;
+    [SerializeField] private float beamWidth;
+    [SerializeField] private int projectileCount;
 
 
     private List<RaycastHit2D> hitBuffer = new List<RaycastHit2D>();
     private ContactFilter2D filter = new ContactFilter2D();
-    private float timer;
 
     private Vector2 lastDirection;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         filter.SetLayerMask(enemyLayer);
         filter.useTriggers = true;
     }
 
-    private void Update()
+    protected override float GetCooldown() => cooldown;
+
+    protected override void Attack()
     {
-        timer += Time.deltaTime;
-        if (timer >= cooldown)
-        {
-            for (int i = 0; i < projectileCount; i++)
-                FireBeam();
-            timer = 0;
-        }
+        for (int i = 0; i < projectileCount; i++)
+            FireBeam();
     }
 
     private void FireBeam()
     {
-
         lastDirection = Random.insideUnitCircle.normalized; // Rastgele bir yön
         Vector2 origin = transform.position;
 
         int hitCount = Physics2D.BoxCast(origin, new Vector2(0.1f, beamWidth), 0f, lastDirection, filter, hitBuffer, beamRange);
 
 
-        for (int j = 0; j < hitCount; j++)
+        for (int i = 0; i < hitCount; i++)
         {
-            var hit = hitBuffer[j];
+            var hit = hitBuffer[i];
             if (hit.collider != null && hit.collider.TryGetComponent(out IEnemy enemy))
             {
                 if (!enemy.IsDead)
-                {
-                    enemy.ApplyFreeze(duration);
-                    Debug.Log($"Hit enemy: {enemy}");
-                }
+                    enemy.ApplyFreeze(freezeDuration);
             }
         }
     }
