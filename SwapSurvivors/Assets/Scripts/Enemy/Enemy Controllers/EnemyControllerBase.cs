@@ -24,6 +24,14 @@ public abstract class EnemyControllerBase<T> : MonoBehaviour, IEnemy where T : E
 
     private bool isCritical = false;
     private float currentHealth;
+    
+    // Elite-specific stats (for this instance only)
+    private int eliteAttackDamage;
+    private float eliteSpeed;
+    private int eliteExpGain;
+    private int eliteScoreGain;
+    private int eliteGoldGain;
+    private bool isElite = false;
 
     [Header("Resources")]
     [SerializeField] Material flashMat;
@@ -68,7 +76,8 @@ public abstract class EnemyControllerBase<T> : MonoBehaviour, IEnemy where T : E
         // Basit saldırı
         if (attackType != null && canAttack && !isAttacking)
         {
-            bool attackSuccessful = attackType.Attack(transform, playerTransform, enemyData.attackDamage, enemyData.attackDamagePercentage, enemyData.attackRange);
+            int damageToUse = isElite ? eliteAttackDamage : enemyData.attackDamage;
+            bool attackSuccessful = attackType.Attack(transform, playerTransform, damageToUse, enemyData.attackDamagePercentage, enemyData.attackRange);
             if (attackSuccessful)
             {
                 lastAttackTime = Time.time;
@@ -86,6 +95,7 @@ public abstract class EnemyControllerBase<T> : MonoBehaviour, IEnemy where T : E
     protected virtual bool CanMove()
     {
         if (playerTransform == null) playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        
         return isFreezed == false && rb != null && playerTransform != null && enemyData != null;
     }
 
@@ -105,7 +115,8 @@ public abstract class EnemyControllerBase<T> : MonoBehaviour, IEnemy where T : E
                 GetComponent<SpriteRenderer>().flipX = false;
             }
 
-            rb.linearVelocity = direction * enemyData.speed;
+            float speedToUse = isElite ? eliteSpeed : enemyData.speed;
+            rb.linearVelocity = direction * speedToUse;
         }
         else
         {
@@ -115,22 +126,26 @@ public abstract class EnemyControllerBase<T> : MonoBehaviour, IEnemy where T : E
 
     protected void KeepDistanceMovement()
     {
-        if (CanMove())
+        if (!CanMove())
         {
-            if (rb != null && playerTransform != null && enemyData != null && Vector2.Distance(rb.position, playerTransform.position) > enemyData.attackRange)
-            {
-                if (isAttacking) return;
+            if (rb != null) rb.linearVelocity = Vector2.zero;
+            return;
+        }
 
-                Vector2 currentPos = rb.position;
-                Vector2 targetPos = (Vector2)playerTransform.position;
-                Vector2 direction = (targetPos - currentPos).normalized;
+        if (rb != null && playerTransform != null && enemyData != null && Vector2.Distance(rb.position, playerTransform.position) > enemyData.attackRange)
+        {
+            if (isAttacking) return;
 
-                rb.linearVelocity = direction * enemyData.speed;
-            }
-            else
-            {
-                rb.linearVelocity = Vector2.zero;
-            }
+            Vector2 currentPos = rb.position;
+            Vector2 targetPos = (Vector2)playerTransform.position;
+            Vector2 direction = (targetPos - currentPos).normalized;
+
+            float speedToUse = isElite ? eliteSpeed : enemyData.speed;
+            rb.linearVelocity = direction * speedToUse;
+        }
+        else
+        {
+            rb.linearVelocity = Vector2.zero;
         }
     }
 
@@ -155,15 +170,17 @@ public abstract class EnemyControllerBase<T> : MonoBehaviour, IEnemy where T : E
     private void Die()
     {
         // Skor kazanç hesaplama
-        float min = enemyData.scoreGain * (1f - enemyData.scoreGainPercentage / 100f);
-        float max = enemyData.scoreGain * (1f + enemyData.scoreGainPercentage / 100f);
+        int scoreGainValue = isElite ? eliteScoreGain : enemyData.scoreGain;
+        float min = scoreGainValue * (1f - enemyData.scoreGainPercentage / 100f);
+        float max = scoreGainValue * (1f + enemyData.scoreGainPercentage / 100f);
         float fScoreGain = Random.Range(min, max);
         int scoreGain = Mathf.RoundToInt(fScoreGain);
         playerManager.AddScore(scoreGain);
 
         // Altın kazanç hesaplama
-        min = enemyData.goldGain * (1f - enemyData.goldGainPercentage / 100f);
-        max = enemyData.goldGain * (1f + enemyData.goldGainPercentage / 100f);
+        int goldGainValue = isElite ? eliteGoldGain : enemyData.goldGain;
+        min = goldGainValue * (1f - enemyData.goldGainPercentage / 100f);
+        max = goldGainValue * (1f + enemyData.goldGainPercentage / 100f);
         float fGoldGain = Random.Range(min, max);
         int goldGain = Mathf.RoundToInt(fGoldGain);
         playerManager.GainGold(goldGain);
@@ -172,7 +189,8 @@ public abstract class EnemyControllerBase<T> : MonoBehaviour, IEnemy where T : E
         GetComponent<SpriteRenderer>().material = mainMat;
 
         Exp newExp = Instantiate(expPrefab, transform.position, Quaternion.identity).GetComponent<Exp>();
-        newExp.expAmount = enemyData.expGain;
+        int expGainValue = isElite ? eliteExpGain : enemyData.expGain;
+        newExp.expAmount = expGainValue;
         EnemyPool.Instance.ReturnEnemyToPool(this.gameObject);
     }
 
@@ -211,6 +229,23 @@ public abstract class EnemyControllerBase<T> : MonoBehaviour, IEnemy where T : E
         isFreezed = true;
         yield return new WaitForSeconds(duration);
         isFreezed = false;
+    }
+
+    public virtual void MakeElite()
+    {
+        isElite = true;
+        currentHealth *= enemyData.healthMultiplier;
+        eliteAttackDamage = Mathf.RoundToInt(enemyData.attackDamage * enemyData.damageMultiplier);
+        eliteSpeed = enemyData.speed * enemyData.speedMultiplier;
+        eliteExpGain = Mathf.RoundToInt(enemyData.expGain * enemyData.expMultiplier);
+        eliteScoreGain = Mathf.RoundToInt(enemyData.scoreGain * enemyData.scoreMultiplier);
+        eliteGoldGain = Mathf.RoundToInt(enemyData.goldGain * enemyData.goldMultiplier);
+        transform.localScale *= enemyData.eliteScaleMultiplier;
+
+        // Taç objesi ekleme
+        GameObject crown = Instantiate(Resources.Load<GameObject>("Crown"));
+        crown.transform.parent = this.transform;
+        crown.transform.localPosition = new Vector3(enemyData.crownOffset.x, enemyData.crownOffset.y, 0);
     }
 
     #region ABSTRACT METHODS

@@ -14,19 +14,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MeleeEnemyData
   enemyName: Pumpkin
   baseHealth: 20
-  speed: 2
+  speed: 5
   enemyPrefab: {fileID: 6755691749114657334, guid: d91644b07c4f89e4aa4712e3ef608ed4, type: 3}
   enemyHardness: 0
-  expGain: 4
-  attackDamage: 5
+  expGain: 10
+  attackDamage: 1
   attackDamagePercentage: 10
   attackRange: 1
   attackCooldown: 0.1
   attackOffset: {x: -0.015, y: 0.005, z: 0}
-  scoreGain: 20
+  scoreGain: 18
   scoreGainPercentage: 10
-  goldGain: 3
+  goldGain: 10
   goldGainPercentage: 50
   colors:
   - {r: 0.93725497, g: 0.5529412, b: 0.19215688, a: 1}
   - {r: 0.4039216, g: 0.43137258, b: 0.18431373, a: 1}
+  healthMultiplier: 1.5
+  damageMultiplier: 1.5
+  speedMultiplier: 1.1
+  expMultiplier: 1.5
+  scoreMultiplier: 1.5
+  goldMultiplier: 1.5
+  eliteScaleMultiplier: 1.2
+  crownOffset: {x: 0, y: 0.5}

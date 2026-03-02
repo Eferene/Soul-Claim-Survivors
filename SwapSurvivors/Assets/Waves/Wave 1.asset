@@ -17,3 +17,4 @@ MonoBehaviour:
   difficultyMultiplier: 1
   waveDurationSec: 20
   rewardTokens: 5
+  eliteChance: 100

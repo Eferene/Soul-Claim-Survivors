@@ -26,6 +26,16 @@ public abstract class EnemyData : ScriptableObject
 
     [Header("Effects")]
     public Color[] colors = new Color[2];
+
+    [Header("Elite Values")]
+    public float healthMultiplier = 1.5f;
+    public float damageMultiplier = 1.5f;
+    public float speedMultiplier = 1.2f;
+    public float expMultiplier = 1.5f;
+    public float scoreMultiplier = 1.5f;
+    public float goldMultiplier = 1.5f;
+    public float eliteScaleMultiplier = 1.2f;
+    public Vector2 crownOffset = new Vector2(0, 0.5f);
 }
 
 public enum ThrowDamageType

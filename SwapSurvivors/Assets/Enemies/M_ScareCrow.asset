@@ -14,19 +14,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MeleeEnemyData
   enemyName: Scare Crow
   baseHealth: 20
-  speed: 2
+  speed: 5
   enemyPrefab: {fileID: 2629285573929001572, guid: 0c2acea8cc71e294d895ca7901091092, type: 3}
   enemyHardness: 0
-  expGain: 6
-  attackDamage: 10
+  expGain: 20
+  attackDamage: 2
   attackDamagePercentage: 10
   attackRange: 1.75
   attackCooldown: 0.25
   attackOffset: {x: -0.05508697, y: -0.02, z: 0}
   scoreGain: 20
   scoreGainPercentage: 10
-  goldGain: 3
+  goldGain: 10
   goldGainPercentage: 50
   colors:
   - {r: 0.6784314, g: 0.427451, b: 0.1254902, a: 1}
   - {r: 0.54901963, g: 0.6039216, b: 0.25490198, a: 1}
+  healthMultiplier: 1.5
+  damageMultiplier: 1.5
+  speedMultiplier: 1.1
+  expMultiplier: 1.5
+  scoreMultiplier: 1.5
+  goldMultiplier: 1.5
+  eliteScaleMultiplier: 1.2
+  crownOffset: {x: 0, y: 0.5}

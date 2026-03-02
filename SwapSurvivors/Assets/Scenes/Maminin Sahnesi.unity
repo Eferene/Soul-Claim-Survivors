@@ -635,6 +635,55 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 006ff7242a8cbb048b232e36ee5fa6c8, type: 3}
+--- !u!1 &875699060
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 875699062}
+  - component: {fileID: 875699061}
+  m_Layer: 0
+  m_Name: Global Volume
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &875699061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 875699060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.Volume
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 8.07
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: 9a72d7356726087429bc0957e7dab231, type: 2}
+--- !u!4 &875699062
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 875699060}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 16.231594, y: 0.8937859, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &1033265127 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 596365852134111916, guid: 1b6b556d6628f7e4e8998aacf5733f3a, type: 3}
@@ -701,6 +750,10 @@ PrefabInstance:
     - target: {fileID: 6755691749114657334, guid: d91644b07c4f89e4aa4712e3ef608ed4, type: 3}
       propertyPath: m_Name
       value: 'M_Pumpkin Enemy '
+      objectReference: {fileID: 0}
+    - target: {fileID: 6755691749114657334, guid: d91644b07c4f89e4aa4712e3ef608ed4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6786347883351655278, guid: d91644b07c4f89e4aa4712e3ef608ed4, type: 3}
       propertyPath: statueMode
@@ -843,6 +896,10 @@ PrefabInstance:
     - target: {fileID: 2329668874063197978, guid: e1b5d88b6351f1b40824299fa6304e0c, type: 3}
       propertyPath: m_Name
       value: R_Flower
+      objectReference: {fileID: 0}
+    - target: {fileID: 2329668874063197978, guid: e1b5d88b6351f1b40824299fa6304e0c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6562476760318337134, guid: e1b5d88b6351f1b40824299fa6304e0c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1042,6 +1099,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: M_ScareCrow Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 2629285573929001572, guid: 0c2acea8cc71e294d895ca7901091092, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4442619847114723197, guid: 0c2acea8cc71e294d895ca7901091092, type: 3}
       propertyPath: m_LocalPosition.x
       value: -12.700161
@@ -1142,6 +1203,10 @@ PrefabInstance:
     - target: {fileID: 8930781146192827912, guid: 0a2716643b900cb4193500394b994fd0, type: 3}
       propertyPath: m_Name
       value: S_Boomie
+      objectReference: {fileID: 0}
+    - target: {fileID: 8930781146192827912, guid: 0a2716643b900cb4193500394b994fd0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1442,6 +1507,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: M_Spikey_ball_ice
       objectReference: {fileID: 0}
+    - target: {fileID: 1206509554576429295, guid: f534112823e13534fa567d294a5e4352, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1263581584079140552, guid: f534112823e13534fa567d294a5e4352, type: 3}
       propertyPath: statueMode
       value: 1
@@ -1502,6 +1571,10 @@ PrefabInstance:
     - target: {fileID: 4659299126178493344, guid: f34ee1f6022dcf54ca700b8788984080, type: 3}
       propertyPath: m_Name
       value: M_Spikey_ball_water
+      objectReference: {fileID: 0}
+    - target: {fileID: 4659299126178493344, guid: f34ee1f6022dcf54ca700b8788984080, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6197402833932984105, guid: f34ee1f6022dcf54ca700b8788984080, type: 3}
       propertyPath: statueMode
@@ -1564,6 +1637,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: M_Spikey_ball_Rock
       objectReference: {fileID: 0}
+    - target: {fileID: 881368016178500694, guid: 8be4c1b56a64c8049b9708dea57b01a2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4808530626780457864, guid: 8be4c1b56a64c8049b9708dea57b01a2, type: 3}
       propertyPath: statueMode
       value: 1
@@ -1624,6 +1701,10 @@ PrefabInstance:
     - target: {fileID: 1269369344151158468, guid: fd6d3cd15d7362340b7f5accddad8999, type: 3}
       propertyPath: m_Name
       value: M_Golem_base
+      objectReference: {fileID: 0}
+    - target: {fileID: 1269369344151158468, guid: fd6d3cd15d7362340b7f5accddad8999, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1777159126479837129, guid: fd6d3cd15d7362340b7f5accddad8999, type: 3}
       propertyPath: statueMode
@@ -1730,6 +1811,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: M_Sprit_form3
       objectReference: {fileID: 0}
+    - target: {fileID: 5865888048502294308, guid: a46c7a26b10a34b44b33cf28a3fcd432, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1750,6 +1835,10 @@ PrefabInstance:
     - target: {fileID: 7677170972229207333, guid: 0d860d8f3f80e7d449e2403f4df1c4ea, type: 3}
       propertyPath: m_Name
       value: M_Sprit_base
+      objectReference: {fileID: 0}
+    - target: {fileID: 7677170972229207333, guid: 0d860d8f3f80e7d449e2403f4df1c4ea, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7731518107851228152, guid: 0d860d8f3f80e7d449e2403f4df1c4ea, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1869,6 +1958,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: M_Golem_Emerald
       objectReference: {fileID: 0}
+    - target: {fileID: 4780608791645636803, guid: 06dbe047223506449ac6562224e845f9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8956067707519146988, guid: 06dbe047223506449ac6562224e845f9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -13
@@ -1925,6 +2018,10 @@ PrefabInstance:
     - target: {fileID: 4434586225579411838, guid: 120cd3dafcbdf8343a2024a0afe40d14, type: 3}
       propertyPath: m_Name
       value: M_Sprit_form4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4434586225579411838, guid: 120cd3dafcbdf8343a2024a0afe40d14, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4763116393719495127, guid: 120cd3dafcbdf8343a2024a0afe40d14, type: 3}
       propertyPath: statueMode
@@ -2132,6 +2229,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: M_Spikey_ball
       objectReference: {fileID: 0}
+    - target: {fileID: 6734869802049902998, guid: d177f8bef82e00344a5a59d979360b4b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8432415564348324705, guid: d177f8bef82e00344a5a59d979360b4b, type: 3}
       propertyPath: statueMode
       value: 1
@@ -2197,6 +2298,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: M_Sprit_form2
       objectReference: {fileID: 0}
+    - target: {fileID: 7017606872957389081, guid: 807c018287eaa5f40b8c34087bc79e2f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2213,6 +2318,10 @@ PrefabInstance:
     - target: {fileID: 203978344881832822, guid: cc3e8ffafd717ee40806ee0045222049, type: 3}
       propertyPath: m_Name
       value: M_Golem_Ruby
+      objectReference: {fileID: 0}
+    - target: {fileID: 203978344881832822, guid: cc3e8ffafd717ee40806ee0045222049, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6309968536451120639, guid: cc3e8ffafd717ee40806ee0045222049, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2372,6 +2481,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: M_Golem_Aquamarin
       objectReference: {fileID: 0}
+    - target: {fileID: 7491241569840677963, guid: 96c4ea1872d651640ad4e9e10e525ee9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7980878871814453481, guid: 96c4ea1872d651640ad4e9e10e525ee9, type: 3}
       propertyPath: statueMode
       value: 1
@@ -2386,6 +2499,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 225844221}
+  - {fileID: 875699062}
   - {fileID: 619394802}
   - {fileID: 211792502685358464}
   - {fileID: 1506450065}
