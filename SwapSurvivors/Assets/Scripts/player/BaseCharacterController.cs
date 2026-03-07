@@ -71,7 +71,7 @@ public abstract class BaseCharacterController : MonoBehaviour
     {
         if (currentObject != null)
         {
-            if (currentObject.TryGetComponent(out Shop currentShop))
+            if (currentObject.TryGetComponent(out UpgradeShop currentShop))
             {
                 if (currentShop.playerInside) currentShop.OpenAndClosePanel();
             }
@@ -82,6 +82,10 @@ public abstract class BaseCharacterController : MonoBehaviour
             else if(currentObject.TryGetComponent(out WheelOfFortune wheel))
             {
                 if (wheel.playerInside) wheel.OpenAndClosePanel();
+            }
+            else if(currentObject.TryGetComponent(out WeaponShop weaponShop))
+            {
+                if (weaponShop.playerInside) weaponShop.OpenAndClosePanel();
             }
         }
     }

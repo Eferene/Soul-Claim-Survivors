@@ -24,14 +24,6 @@ public abstract class EnemyControllerBase<T> : MonoBehaviour, IEnemy where T : E
 
     private bool isCritical = false;
     private float currentHealth;
-    
-    // Elite-specific stats (for this instance only)
-    private int eliteAttackDamage;
-    private float eliteSpeed;
-    private int eliteExpGain;
-    private int eliteScoreGain;
-    private int eliteGoldGain;
-    private bool isElite = false;
 
     [Header("Resources")]
     [SerializeField] Material flashMat;
@@ -76,8 +68,7 @@ public abstract class EnemyControllerBase<T> : MonoBehaviour, IEnemy where T : E
         // Basit saldırı
         if (attackType != null && canAttack && !isAttacking)
         {
-            int damageToUse = isElite ? eliteAttackDamage : enemyData.attackDamage;
-            bool attackSuccessful = attackType.Attack(transform, playerTransform, damageToUse, enemyData.attackDamagePercentage, enemyData.attackRange);
+            bool attackSuccessful = attackType.Attack(transform, playerTransform, enemyData.attackDamage, enemyData.attackDamagePercentage, enemyData.attackRange);
             if (attackSuccessful)
             {
                 lastAttackTime = Time.time;
@@ -115,8 +106,7 @@ public abstract class EnemyControllerBase<T> : MonoBehaviour, IEnemy where T : E
                 GetComponent<SpriteRenderer>().flipX = false;
             }
 
-            float speedToUse = isElite ? eliteSpeed : enemyData.speed;
-            rb.linearVelocity = direction * speedToUse;
+            rb.linearVelocity = direction * enemyData.speed;
         }
         else
         {
@@ -140,8 +130,7 @@ public abstract class EnemyControllerBase<T> : MonoBehaviour, IEnemy where T : E
             Vector2 targetPos = (Vector2)playerTransform.position;
             Vector2 direction = (targetPos - currentPos).normalized;
 
-            float speedToUse = isElite ? eliteSpeed : enemyData.speed;
-            rb.linearVelocity = direction * speedToUse;
+            rb.linearVelocity = direction * enemyData.speed;
         }
         else
         {
@@ -170,17 +159,15 @@ public abstract class EnemyControllerBase<T> : MonoBehaviour, IEnemy where T : E
     private void Die()
     {
         // Skor kazanç hesaplama
-        int scoreGainValue = isElite ? eliteScoreGain : enemyData.scoreGain;
-        float min = scoreGainValue * (1f - enemyData.scoreGainPercentage / 100f);
-        float max = scoreGainValue * (1f + enemyData.scoreGainPercentage / 100f);
+        float min = enemyData.scoreGain * (1f - enemyData.scoreGainPercentage / 100f);
+        float max = enemyData.scoreGain * (1f + enemyData.scoreGainPercentage / 100f);
         float fScoreGain = Random.Range(min, max);
         int scoreGain = Mathf.RoundToInt(fScoreGain);
         playerManager.AddScore(scoreGain);
 
         // Altın kazanç hesaplama
-        int goldGainValue = isElite ? eliteGoldGain : enemyData.goldGain;
-        min = goldGainValue * (1f - enemyData.goldGainPercentage / 100f);
-        max = goldGainValue * (1f + enemyData.goldGainPercentage / 100f);
+        min = enemyData.goldGain * (1f - enemyData.goldGainPercentage / 100f);
+        max = enemyData.goldGain * (1f + enemyData.goldGainPercentage / 100f);
         float fGoldGain = Random.Range(min, max);
         int goldGain = Mathf.RoundToInt(fGoldGain);
         playerManager.GainGold(goldGain);
@@ -189,8 +176,7 @@ public abstract class EnemyControllerBase<T> : MonoBehaviour, IEnemy where T : E
         GetComponent<SpriteRenderer>().material = mainMat;
 
         Exp newExp = Instantiate(expPrefab, transform.position, Quaternion.identity).GetComponent<Exp>();
-        int expGainValue = isElite ? eliteExpGain : enemyData.expGain;
-        newExp.expAmount = expGainValue;
+        newExp.expAmount = enemyData.expGain;
         EnemyPool.Instance.ReturnEnemyToPool(this.gameObject);
     }
 
@@ -230,16 +216,14 @@ public abstract class EnemyControllerBase<T> : MonoBehaviour, IEnemy where T : E
         yield return new WaitForSeconds(duration);
         isFreezed = false;
     }
-
-    public virtual void MakeElite()
+    public void MakeElite()
     {
-        isElite = true;
         currentHealth *= enemyData.healthMultiplier;
-        eliteAttackDamage = Mathf.RoundToInt(enemyData.attackDamage * enemyData.damageMultiplier);
-        eliteSpeed = enemyData.speed * enemyData.speedMultiplier;
-        eliteExpGain = Mathf.RoundToInt(enemyData.expGain * enemyData.expMultiplier);
-        eliteScoreGain = Mathf.RoundToInt(enemyData.scoreGain * enemyData.scoreMultiplier);
-        eliteGoldGain = Mathf.RoundToInt(enemyData.goldGain * enemyData.goldMultiplier);
+        enemyData.attackDamage = Mathf.RoundToInt(enemyData.attackDamage * enemyData.damageMultiplier);
+        enemyData.speed *= enemyData.speedMultiplier;
+        enemyData.expGain = Mathf.RoundToInt(enemyData.expGain * enemyData.expMultiplier);
+        enemyData.scoreGain = Mathf.RoundToInt(enemyData.scoreGain * enemyData.scoreMultiplier);
+        enemyData.goldGain = Mathf.RoundToInt(enemyData.goldGain * enemyData.goldMultiplier);
         transform.localScale *= enemyData.eliteScaleMultiplier;
 
         // Taç objesi ekleme

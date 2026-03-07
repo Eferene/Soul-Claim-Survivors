@@ -49,7 +49,6 @@ public class ProjectilePredictive : ProjectileBase
                     float t1 = (-b + sqrtD) / (2f * a);
                     float t2 = (-b - sqrtD) / (2f * a);
 
-                    // choose smallest positive time
                     float tPos = float.MaxValue;
                     if (t1 > 0f && t1 < tPos) tPos = t1;
                     if (t2 > 0f && t2 < tPos) tPos = t2;
@@ -62,7 +61,7 @@ public class ProjectilePredictive : ProjectileBase
                 aimDirection = (toPlayer + playerVelocity * t).normalized;
             }
 
-            currentVelocity = aimDirection * speed; // speed 
+            currentVelocity = aimDirection * speed;
             tracked = true;
         }
         else

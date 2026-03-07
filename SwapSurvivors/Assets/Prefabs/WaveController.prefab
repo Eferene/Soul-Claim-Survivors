@@ -46,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   waves:
   - {fileID: 11400000, guid: bf7de6197f582e04f971e59bb37c2feb, type: 2}
+  - {fileID: 11400000, guid: 6fa6fc33dd8cefe48a0505c4eaaf1297, type: 2}
   radius: 50
   waveText: {fileID: 0}
   isBreakdown: 0

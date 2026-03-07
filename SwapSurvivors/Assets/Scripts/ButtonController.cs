@@ -26,7 +26,7 @@ public class ButtonController : MonoBehaviour
 
     public void RefreshAllUpgradeButtons()
     {
-        Shop shop = FindFirstObjectByType<Shop>();
+        UpgradeShop shop = FindFirstObjectByType<UpgradeShop>();
         PlayerManager playerManager = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerManager>();
 
         if (shop != null && playerManager.Gold >= shop.refreshCost)

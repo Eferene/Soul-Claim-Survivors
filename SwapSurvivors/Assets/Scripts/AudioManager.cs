@@ -5,14 +5,15 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance;
-    AudioSource sfxSource;
+    private AudioSource sfxSource;
     [SerializeField] private List<AudioClip> enemyHurtSFXClips = new List<AudioClip>();
     [SerializeField] private List<AudioClip> playerLeftStepSFXClips = new List<AudioClip>();
     [SerializeField] private List<AudioClip> playerRightStepSFXClips = new List<AudioClip>();
     [SerializeField] private AudioClip negativeSFXClip;
     [SerializeField] private AudioClip positiveSFXClip;
     
-    bool isLeft;
+    private bool isLeft;
+    private Dictionary<string, float> sfxCooldowns = new Dictionary<string, float>();
 
     private void Awake()
     {
@@ -28,8 +29,21 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    private bool CanPlaySound(string soundId, float cooldown)
+    {
+        if (sfxCooldowns.TryGetValue(soundId, out float lastPlayedTime))
+        {
+            if (Time.time - lastPlayedTime < cooldown) return false;
+        }
+
+        sfxCooldowns[soundId] = Time.time;
+        return true;
+    }
+
     public void PlayEnemyHurtSFX()
     {
+        if (!CanPlaySound("EnemyHurt", 0.05f)) return;
+        
         AudioClip clip = enemyHurtSFXClips[Random.Range(0, enemyHurtSFXClips.Count)];
         sfxSource.pitch = Random.Range(0.5f, 1.5f);
         sfxSource.PlayOneShot(clip, 0.5f);

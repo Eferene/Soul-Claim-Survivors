@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f98a0e647c3864246a89a431e9ae33a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  enableDebugMenu: 0
+  enableDebugMenu: 1
   isMenuOpen: 0
   isGodMode: 0
 --- !u!4 &141707143
@@ -272,13 +272,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShotgunCharacter
       objectReference: {fileID: 0}
+    - target: {fileID: 4698331218994430522, guid: 79be40db6ead75c4c8c1450a226c84f9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4971921877543294204, guid: 79be40db6ead75c4c8c1450a226c84f9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5019917677736528942, guid: 79be40db6ead75c4c8c1450a226c84f9, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7774772395844302022, guid: 79be40db6ead75c4c8c1450a226c84f9, type: 3}
       propertyPath: bulletCount
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -687,6 +695,11 @@ Transform:
 --- !u!224 &1033265127 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 596365852134111916, guid: 1b6b556d6628f7e4e8998aacf5733f3a, type: 3}
+  m_PrefabInstance: {fileID: 211792502685358464}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1049159476 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4666959953574901271, guid: 1b6b556d6628f7e4e8998aacf5733f3a, type: 3}
   m_PrefabInstance: {fileID: 211792502685358464}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1062128167 stripped
@@ -1213,6 +1226,97 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0a2716643b900cb4193500394b994fd0, type: 3}
+--- !u!1 &2055001509
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2055001511}
+  - component: {fileID: 2055001510}
+  m_Layer: 0
+  m_Name: Snake_0
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!212 &2055001510
+SpriteRenderer:
+  serializedVersion: 2
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2055001509}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 62
+  m_MaskInteraction: 0
+  m_Sprite: {fileID: 21300000, guid: 76cb346994820aa4c89b0ca141e98914, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 0.64, y: 0.64}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_SpriteSortPoint: 0
+--- !u!4 &2055001511
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2055001509}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.75, y: 0.08, z: 0}
+  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2088520863 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5211486843703874200, guid: 1b6b556d6628f7e4e8998aacf5733f3a, type: 3}
@@ -2080,6 +2184,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 514770906633950565, guid: c1a5511df08b32d4c8a8d4318d8861c0, type: 3}
+      propertyPath: panel
+      value: 
+      objectReference: {fileID: 1049159476}
     - target: {fileID: 3919879729551216292, guid: c1a5511df08b32d4c8a8d4318d8861c0, type: 3}
       propertyPath: spinButton
       value: 
@@ -2530,3 +2638,4 @@ SceneRoots:
   - {fileID: 7150766881618522379}
   - {fileID: 1661212649346678730}
   - {fileID: 5964092240273091144}
+  - {fileID: 2055001511}

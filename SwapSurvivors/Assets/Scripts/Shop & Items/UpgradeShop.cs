@@ -3,7 +3,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public class Shop : MonoBehaviour, IPanel
+public class UpgradeShop : MonoBehaviour, IPanel
 {
     [SerializeField] private ShopData shopData;
     [SerializeField] private UpgradeButton[] upgradeButtons;

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MeleeEnemyData
   enemyName: Scare Crow
   baseHealth: 20
-  speed: 5
+  speed: 2
   enemyPrefab: {fileID: 2629285573929001572, guid: 0c2acea8cc71e294d895ca7901091092, type: 3}
   enemyHardness: 0
   expGain: 20

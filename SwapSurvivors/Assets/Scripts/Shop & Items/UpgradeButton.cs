@@ -17,7 +17,7 @@ public class UpgradeButton : MonoBehaviour, IPointerClickHandler
     private bool canBuy;
     private bool isPurchased = false;
     private int rarity;
-    public Shop shop;
+    public UpgradeShop shop;
     public GameObject A_panel_indicating_that_the_player_cannot_purchase_it; // favorite variable name ever <3
 
     private PlayerManager playerManager;
